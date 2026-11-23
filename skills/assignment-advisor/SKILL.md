@@ -29,7 +29,9 @@ team's recent activity. It suggests only: the user, or a session with that permi
 2. **Exclude** who cannot take it: for a pull request its author and anyone who already approved it; for a Jira task
    its current assignee. Former members are never candidates.
 3. **Gather activity.** Dispatch the `team-activity-scout` agent with the register's path, a 42-day window and the
-   remaining members whose Areas or Roles fit the work (all remaining members if none fits).
+   remaining members whose Areas or Roles fit the work (all remaining members if none fits). Always dispatch it, even
+   when Areas alone seem to settle the choice: recent activity and open load are part of every answer, and wait for
+   its report before ranking.
 4. **Rank** the candidates, in this order of weight:
    1. Areas matching the areas of the work;
    2. recent activity in the repositories involved: pull requests authored and reviewed there;
