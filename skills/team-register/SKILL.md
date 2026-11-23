@@ -57,8 +57,8 @@ The project declares it with a line `- Team register: \`<path>\`` in its `AGENTS
    - **New people**: its `Unmapped accounts`. A GitHub login and a Jira account may belong to the same person: ask.
      For each person the user accepts, ask for the fields you cannot infer (name, organization, roles, areas).
    - **Inactive**: active members whose `Last activity` is `none` when every source in which they have an account
-     was `ok`. Members with no account in any checked source, or with an account in a source that could not be read,
-     are not inactive: there is not enough to judge them by.
+     was `ok`. Members with no account in any checked source, with an account in a source that could not be read,
+     or whose open period started inside the window are not inactive: there is not enough to judge them by.
      Accepting one closes their open period today and removes them from Active team.
    - **Missing accounts**: active members without a GitHub or Jira account when an unmapped account plausibly
      belongs to them.

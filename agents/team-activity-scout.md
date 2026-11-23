@@ -48,8 +48,11 @@ as unavailable. For each project and each covered member with a Jira account ID,
 - active in window: `project = <KEY> AND (assignee = "<accountId>" OR reporter = "<accountId>") AND updated >= "<start>"`;
   its latest `updated` is the person's latest Jira date.
 
-For unmapped accounts: `project = <KEY> AND updated >= "<start>" AND assignee is not EMPTY`, then keep the assignees
-that the register does not map, leaving out app and automation accounts.
+For unmapped accounts: `project = <KEY> AND updated >= "<start>" AND assignee is not EMPTY`, asking for the
+`assignee` field with its account ID and account type (with the Atlassian MCP server, name the fields explicitly and
+use the full view: the compact view returns only display names), and reading every page. Keep the assignees whose
+account ID the register does not map, leaving out app and automation accounts (account type `app`). Compare account
+IDs, never display names.
 
 `Last activity` is the latest date seen for the person in any source within the window, or `none` when there is
 none.
@@ -63,8 +66,8 @@ Return only this, in Markdown:
    Counts are numbers; write `n/a` where the person has no account in that system or the source was unavailable.
    `Repos touched` lists repositories where the person authored or reviewed a pull request.
 2. `Unmapped accounts`: one line per account active in the window that the register does not map, with the system,
-   the login or account ID, the display name if the source gives it, and what it did (for example "3 PRs authored in
-   acme/web"). Write `none` if there are none.
+   the GitHub login or the Jira account ID (always the ID for Jira), the display name if the source gives it, and what
+   it did (for example "3 PRs authored in acme/web"). Write `none` if there are none.
 3. `Sources checked`: one line per source with `ok`, `auth expired` or `unavailable: <reason>`.
 
 No advice, no proposals to change the register: the caller decides what to do with the facts.

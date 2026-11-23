@@ -19,10 +19,12 @@ in a throwaway project. Never commit real names: the register below is built at 
 | b. GitHub unavailable | run with `GH_TOKEN=invalid` | `Sources checked` says `auth expired` or `unavailable: <reason>` for the repository; GitHub columns are `n/a`; no invented numbers |
 | c. bots | the repository has bot pull requests (e.g. `dependabot[bot]`) in the window | no login ending in `[bot]` appears in `Unmapped accounts` |
 | d. read only | any of the above | the agent ran only reading commands: no `gh pr review`, `gh pr comment`, `gh issue edit`, no Jira writes |
+| e. Jira unmapped | a Jira source with an assignee active in the window who is not in the register | `Unmapped accounts` gives that assignee's Jira account ID, not only the display name; app and automation accounts are left out |
 
 ## Runs
 
-| Date | Version | a | b | c | d | Notes |
-|---|---|---|---|---|---|---|
-| 2026-11-23 | 0.1.0 | pass | pass | pass (after the rule on `is_bot`/`type` was added: `Copilot` was kept before) | pass | public repository, no Jira source; Jira path not exercised |
-| 2026-11-23 | 0.1.0 | pass | – | pass | pass | rerun after the review fix: one search for the window plus one review search per member (5 gh calls); same counts as before |
+| Date | Version | a | b | c | d | e | Notes |
+|---|---|---|---|---|---|---|---|
+| 2026-11-23 | 0.1.0 | pass | pass | pass (after the rule on `is_bot`/`type` was added: `Copilot` was kept before) | pass | – | public repository, no Jira source; Jira path not exercised |
+| 2026-11-23 | 0.1.0 | pass | – | pass | pass | – | rerun after the review fix: one search for the window plus one review search per member (5 gh calls); same counts as before |
+| 2026-11-23 | 0.1.0 | pass | – | pass | pass | pass | real project with Jira through the Atlassian MCP server: first run reported unmapped Jira assignees by display name only (the compact view drops account IDs); passes after asking for the assignee field in the full view |
