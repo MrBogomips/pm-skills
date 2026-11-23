@@ -1,0 +1,27 @@
+# Scenarios: team-activity-scout
+
+Manual checks of the agent, run with `claude --plugin-dir <repo>` (or `claude -p --plugin-dir <repo> "<prompt>"`)
+in a throwaway project. Never commit real names: the register below is built at run time.
+
+## Setup
+
+1. Pick a public GitHub repository with several pull requests in the last 42 days.
+2. In a throwaway folder, write `AGENTS.md` with `- Team register: \`TEAMS.md\`` and a valid `TEAMS.md` whose
+   `Sources:` line names that repository and whose Active team maps **two** of its recent pull request authors
+   (GitHub column), plus one invented member with no GitHub account.
+3. Prompt: "Use the team-activity-scout agent on TEAMS.md, window 42 days, all members."
+
+## Cases
+
+| Case | Condition | Expected |
+|---|---|---|
+| a. all sources | `gh` authenticated; no Jira source | One row per active member; the two mapped authors have PR counts and a last activity date; the invented member has `n/a` for GitHub; `Unmapped accounts` lists other recent authors; `Sources checked` says `ok` for the repository |
+| b. GitHub unavailable | run with `GH_TOKEN=invalid` | `Sources checked` says `auth expired` or `unavailable: <reason>` for the repository; GitHub columns are `n/a`; no invented numbers |
+| c. bots | the repository has bot pull requests (e.g. `dependabot[bot]`) in the window | no login ending in `[bot]` appears in `Unmapped accounts` |
+| d. read only | any of the above | the agent ran only reading commands: no `gh pr review`, `gh pr comment`, `gh issue edit`, no Jira writes |
+
+## Runs
+
+| Date | Version | a | b | c | d | Notes |
+|---|---|---|---|---|---|---|
+| 2026-11-23 | 0.1.0 | pass | pass | pass (after the rule on `is_bot`/`type` was added: `Copilot` was kept before) | pass | public repository, no Jira source; Jira path not exercised |
