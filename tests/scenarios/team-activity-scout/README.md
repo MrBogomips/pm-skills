@@ -25,3 +25,4 @@ in a throwaway project. Never commit real names: the register below is built at 
 | Date | Version | a | b | c | d | Notes |
 |---|---|---|---|---|---|---|
 | 2026-11-23 | 0.1.0 | pass | pass | pass (after the rule on `is_bot`/`type` was added: `Copilot` was kept before) | pass | public repository, no Jira source; Jira path not exercised |
+| 2026-11-23 | 0.1.0 | pass | – | pass | pass | rerun after the review fix: one search for the window plus one review search per member (5 gh calls); same counts as before |

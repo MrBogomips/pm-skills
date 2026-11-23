@@ -128,6 +128,24 @@ class Rejections(unittest.TestCase):
                       "| ada-l | 2026-01-12 | 2026-11-23 | developer |\n| ada-l | 2026-11-23 |  | tech lead |")
         self.assertError(text, 19, "overlaps")
 
+    def test_rejects_duplicate_github_login(self):
+        self.assertError(edited("| bok |", "| ADAL |"), 11, "GitHub 'ADAL' is also on line 10")
+
+    def test_rejects_duplicate_jira_account(self):
+        self.assertError(edited("| 712020:1f2e3d4c-aaaa-bbbb-cccc-0123456789ab |", "| 5b10ac8d82e05b22cc7d4ef5 |"),
+                         11, "Jira '5b10ac8d82e05b22cc7d4ef5' is also on line 10")
+
+    def test_accepts_dates_and_year_ranges_in_text(self):
+        text = edited("| api, data model |", "| api, release 2026-11-20 |").replace(
+            "| ada-l | 2026-01-12 |  | developer |", "| ada-l | 2026-01-12 |  | developer 2024-2025 |")
+        self.assertEqual(tr.validate(text), [])
+
+    def test_accepts_numeric_github_login(self):
+        self.assertEqual(tr.validate(edited("| bok |", "| u1234567890 |")), [])
+
+    def test_rejects_phone_next_to_a_date(self):
+        self.assertError(edited("| api, data model |", "| api 2026-11-20, call 333 123 4567 |"), 10, "phone")
+
     def test_rejects_bad_source(self):
         self.assertError(edited("jira:ACME", "jira:acme"), 4, "source")
 

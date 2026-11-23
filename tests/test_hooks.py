@@ -45,6 +45,11 @@ class FindRegister(unittest.TestCase):
             project = make_project(tmp, "- Team register: `TEAMS.md` (authoritative, committed)")
             self.assertEqual(tr.find_register(project), project / "TEAMS.md")
 
+    def test_find_register_ignores_fenced_example(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            project = make_project(tmp, "```markdown\n- Team register: `TEAMS.md`\n```")
+            self.assertIsNone(tr.find_register(project))
+
     def test_find_register_falls_back_to_claude_md(self):
         with tempfile.TemporaryDirectory() as tmp:
             project = make_project(tmp, instructions="CLAUDE.md")

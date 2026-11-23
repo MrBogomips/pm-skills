@@ -35,7 +35,9 @@ INSTRUCTION_FILES = ("AGENTS.md", "CLAUDE.md")
 STALE_AFTER_DAYS = 42
 SKILL = "/pm-skills:team-register"
 SEPARATOR_CELL_RE = re.compile(r"^:?-+:?$")
-NO_PHONE_CHECK = {"Jira", "From", "To"}
+NO_PHONE_CHECK = {"Slug", "GitHub", "Jira", "From", "To"}
+DATES_AND_RANGES_RE = re.compile(r"\b\d{4}-\d{2}-\d{2}\b|\b\d{4}\s*[-–]\s*\d{4}\b")
+FENCE_RE = re.compile(r"^\s*(```|~~~)")
 
 
 @dataclass(frozen=True)
@@ -166,7 +168,7 @@ def _check_personal_data(row: _Row, errors: list[str]) -> None:
     for column, value in row.cells.items():
         if EMAIL_RE.search(value):
             errors.append(f"line {row.line}: {column} contains an email address: contacts do not belong here")
-        elif column not in NO_PHONE_CHECK and PHONE_RE.search(value):
+        elif column not in NO_PHONE_CHECK and PHONE_RE.search(DATES_AND_RANGES_RE.sub(" ", value)):
             errors.append(f"line {row.line}: {column} contains a phone number: contacts do not belong here")
 
 
@@ -210,6 +212,17 @@ def _cross_checks(active: tuple[Member, ...], history: tuple[Period, ...], error
         if member.slug in seen:
             errors.append(f"line {member.line}: duplicate slug '{member.slug}' (first on line {seen[member.slug]})")
         seen.setdefault(member.slug, member.line)
+    for column, key in (("GitHub", lambda m: m.github.lower()), ("Jira", lambda m: m.jira)):
+        first: dict[str, Member] = {}
+        for member in active:
+            value = key(member)
+            if not value:
+                continue
+            if value in first:
+                shown = member.github if column == "GitHub" else member.jira
+                errors.append(f"line {member.line}: {column} '{shown}' is also on line {first[value].line}: "
+                              "one account belongs to one person")
+            first.setdefault(value, member)
     for member in active:
         open_periods = [p for p in history if p.slug == member.slug and p.end is None]
         if len(open_periods) != 1:
@@ -255,8 +268,12 @@ def find_register(project_dir: Path) -> Optional[Path]:
             lines = (project_dir / name).read_text(encoding="utf-8").splitlines()
         except OSError:
             continue
+        in_fence = False
         for line in lines:
-            match = DECLARATION_RE.match(line)
+            if FENCE_RE.match(line):
+                in_fence = not in_fence
+                continue
+            match = None if in_fence else DECLARATION_RE.match(line)
             if match:
                 return project_dir / match.group(1)
     return None

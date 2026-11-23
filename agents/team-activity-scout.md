@@ -17,29 +17,36 @@ If the register has no sources and the caller gives none, say so and stop.
 
 ## Method
 
-Compute the start date of the window (today minus the window). Run one `gh` or `acli` command per call and filter
-its output with its own `--jq` option, without pipes, `cd`, loops or other shell commands: projects often allow these
+Compute the start date of the window (today minus the window). Run one `gh` or `acli` command per call, without
+pipes, `cd`, loops or other shell commands (filter `gh` output with its `--jq` option): projects often allow these
 CLIs alone, and a pipeline would stop on a permission prompt. For every source, check access first and record the
 outcome; never fill a gap with a guess.
 
 **GitHub**, with the `gh` CLI. Check `gh auth status`; if `gh` is missing or not authenticated, mark every GitHub
-source as unavailable and go on with Jira. For each repository and each covered member with a GitHub login:
+source as unavailable and go on with Jira. Keep the number of searches small, because GitHub allows about 30 search
+requests a minute; `--repo` can be repeated to cover every repository in one search:
 
-- authored: `gh search prs --repo <owner>/<repo> --author <login> --created ">=<start>" --json number,updatedAt --limit 200`
-- reviewed: `gh search prs --repo <owner>/<repo> --reviewed-by <login> --updated ">=<start>" --json number,updatedAt --limit 200`
+- all pull requests of the window, once:
+  `gh search prs --repo <r1> --repo <r2> --updated ">=<start>" --json author,repository,number,createdAt,updatedAt --limit 1000`.
+  From it take, per login, the pull requests authored (created in the window), the repositories touched and the
+  latest date; and the unmapped accounts: logins that no member of the register maps, leaving out bots (logins
+  ending in `[bot]`, authors whose `is_bot` is true or whose `type` is `Bot`);
+- reviews, once per covered member with a GitHub login:
+  `gh search prs --repo <r1> --repo <r2> --reviewed-by <login> --updated ">=<start>" --json repository,number,updatedAt --limit 1000`.
 
-For unmapped accounts: `gh search prs --repo <owner>/<repo> --updated ">=<start>" --json author --limit 1000`, then
-keep the logins that no member of the register maps (Active team or not), leaving out bots: logins ending in `[bot]`
-and authors whose `is_bot` is true or whose `type` is `Bot`.
-
-When a search returns exactly as many results as its `--limit`, it was cut short: raise the limit and run it again.
+When a search returns exactly 1000 results it was cut short: split the window in two and run it for each half. When
+a search fails for a rate limit, mark the source `unavailable: rate limited` and report no counts from it, never
+zeros.
 
 **Jira**, through an Atlassian MCP server if one is connected (a JQL search tool), otherwise the `acli` CLI if it is
 installed and logged in (`acli jira workitem search --jql "<JQL>"`). If neither is available, mark every Jira source
-as unavailable. For each project and each covered member with a Jira account ID:
+as unavailable. For each project and each covered member with a Jira account ID, asking for the `updated` and
+`resolutiondate` fields:
 
 - open: `project = <KEY> AND assignee = "<accountId>" AND statusCategory != Done`
 - done in window: `project = <KEY> AND assignee = "<accountId>" AND statusCategory = Done AND resolved >= "<start>"`
+- active in window: `project = <KEY> AND (assignee = "<accountId>" OR reporter = "<accountId>") AND updated >= "<start>"`;
+  its latest `updated` is the person's latest Jira date.
 
 For unmapped accounts: `project = <KEY> AND updated >= "<start>" AND assignee is not EMPTY`, then keep the assignees
 that the register does not map, leaving out app and automation accounts.

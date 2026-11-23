@@ -9,7 +9,8 @@ A project declares where its register lives with one line in its `AGENTS.md` (or
 - Team register: `TEAMS.md`
 ```
 
-The path is relative to the project root; text after the closing backtick is ignored. The default location is
+The path is relative to the project root; text after the closing backtick is ignored, and so is a line inside a
+fenced code block, which is an example. The default location is
 `TEAMS.md` at the root.
 
 ## Example
@@ -66,7 +67,10 @@ Headings and column names are schema keys: they stay in English whatever the lan
 5. The periods of one person never overlap. A person who leaves and comes back has two periods.
 6. A role change closes the current period on the day before the change and opens a new one on the day it takes
    effect.
-7. No cell holds an email address; no cell other than `Jira`, `From` and `To` holds a phone number.
+7. No cell holds an email address; no free-text cell holds a phone number (dates and year ranges such as
+   `2024-2025` do not count).
+8. One account belongs to one person: no two members of Active team share a GitHub login (in any case) or a Jira
+   account ID.
 
 ## What does not belong here
 
