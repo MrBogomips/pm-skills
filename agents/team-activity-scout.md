@@ -17,7 +17,9 @@ If the register has no sources and the caller gives none, say so and stop.
 
 ## Method
 
-Compute the start date of the window (today minus the window). For every source, check access first and record the
+Compute the start date of the window (today minus the window). Run one `gh` or `acli` command per call and filter
+its output with its own `--jq` option, without pipes, `cd`, loops or other shell commands: projects often allow these
+CLIs alone, and a pipeline would stop on a permission prompt. For every source, check access first and record the
 outcome; never fill a gap with a guess.
 
 **GitHub**, with the `gh` CLI. Check `gh auth status`; if `gh` is missing or not authenticated, mark every GitHub

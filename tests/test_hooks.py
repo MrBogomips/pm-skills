@@ -40,6 +40,11 @@ class FindRegister(unittest.TestCase):
             project = make_project(tmp, "- Team register: `team/TEAMS.md`")
             self.assertEqual(tr.find_register(project), project / "team" / "TEAMS.md")
 
+    def test_find_register_allows_trailing_text(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            project = make_project(tmp, "- Team register: `TEAMS.md` (authoritative, committed)")
+            self.assertEqual(tr.find_register(project), project / "TEAMS.md")
+
     def test_find_register_falls_back_to_claude_md(self):
         with tempfile.TemporaryDirectory() as tmp:
             project = make_project(tmp, instructions="CLAUDE.md")

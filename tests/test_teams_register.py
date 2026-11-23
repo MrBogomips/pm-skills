@@ -41,6 +41,11 @@ class ValidRegister(unittest.TestCase):
         self.assertEqual(errors, [])
         self.assertEqual(len([p for p in register.history if p.slug == "cy-t"]), 2)
 
+    def test_role_change_closes_the_day_before(self):
+        text = edited("| ada-l | 2026-01-12 |  | developer |",
+                      "| ada-l | 2026-01-12 | 2026-11-22 | developer |\n| ada-l | 2026-11-23 |  | tech lead |")
+        self.assertEqual(tr.validate(text), [])
+
     def test_optional_preamble_lines(self):
         text = edited("Last reconciled: 2026-11-20\nSources: github:acme/web, github:acme/api, jira:ACME\n", "")
         register, errors = tr.parse(text)
@@ -117,6 +122,11 @@ class Rejections(unittest.TestCase):
 
     def test_rejects_overlapping_periods(self):
         self.assertError(edited("| cy-t | 2026-09-01 |", "| cy-t | 2026-05-01 |"), 21, "overlaps")
+
+    def test_rejects_period_starting_the_day_the_previous_ends(self):
+        text = edited("| ada-l | 2026-01-12 |  | developer |",
+                      "| ada-l | 2026-01-12 | 2026-11-23 | developer |\n| ada-l | 2026-11-23 |  | tech lead |")
+        self.assertError(text, 19, "overlaps")
 
     def test_rejects_bad_source(self):
         self.assertError(edited("jira:ACME", "jira:acme"), 4, "source")
