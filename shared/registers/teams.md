@@ -51,6 +51,7 @@ Headings and column names are schema keys: they stay in English whatever the lan
 | `Organization` | the company the person works for (own, supplier, client) | free text |
 | `GitHub` | GitHub login | empty, or a login without `@` |
 | `Jira` | Jira account ID (stable, unlike display names) | empty, or one token with no spaces and no `@` |
+| `Git` | optional column, after `Jira`: the emails the person signs commits with, so that tools can attribute git history; author identities, not contacts | comma-separated `name@domain`, may be empty |
 | `Roles` | the person's roles on the project | comma-separated, at least one |
 | `Areas` | what the person knows and can review: repositories, modules, kinds of work | comma-separated, may be empty |
 | `From`, `To` | a period on the project; `To` empty while it is open | `YYYY-MM-DD`; `From` not after `To` |
@@ -61,20 +62,21 @@ Headings and column names are schema keys: they stay in English whatever the lan
 1. Allowed lines: the title `# Team`, blank lines, `Last reconciled:`, `Sources:`, the section `## Active team`
    followed by its table, then the section `## History` followed by its table. Anything else is an error: there are
    no free notes in the register.
-2. Table headers are exactly the ones in the example, in that order.
+2. Table headers are exactly the ones in the example, in that order. Active team may add the `Git` column right
+   after `Jira`.
 3. Every member of Active team has exactly one open period in History.
 4. An open period belongs to a member of Active team; former members have only closed periods.
 5. The periods of one person never overlap. A person who leaves and comes back has two periods.
 6. A role change closes the current period on the day before the change and opens a new one on the day it takes
    effect.
-7. No cell holds an email address; no free-text cell holds a phone number (dates and year ranges such as
+7. No cell other than `Git` holds an email address; no free-text cell holds a phone number (dates and year ranges such as
    `2024-2025` do not count).
-8. One account belongs to one person: no two members of Active team share a GitHub login (in any case) or a Jira
-   account ID.
+8. One account belongs to one person: no two members of Active team share a GitHub login or a Git identity (in any
+   case), or a Jira account ID.
 
 ## What does not belong here
 
-Contacts (email, phone), allocation percentages, availability and leave, reporting lines, appraisals, notes on
+Contacts (email addresses other than commit identities in `Git`, phone numbers), allocation percentages, availability and leave, reporting lines, appraisals, notes on
 motivation or performance, and anything else of human resources management. If someone asks to record such data,
 explain that the register holds project data only and leave it out.
 

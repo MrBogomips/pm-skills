@@ -153,6 +153,40 @@ class Rejections(unittest.TestCase):
         self.assertError(edited("Last reconciled: 2026-11-20", "Last reconciled: yesterday"), 3, "date")
 
 
+GIT_FIXTURE = FIXTURE.replace(
+    "| Slug | Name | Organization | GitHub | Jira | Roles | Areas |\n|---|---|---|---|---|---|---|",
+    "| Slug | Name | Organization | GitHub | Jira | Git | Roles | Areas |\n|---|---|---|---|---|---|---|---|",
+).replace("| 5b10ac8d82e05b22cc7d4ef5 |", "| 5b10ac8d82e05b22cc7d4ef5 | ada@acme.example, ada.l@users.noreply.github.com |"
+).replace("| 712020:1f2e3d4c-aaaa-bbbb-cccc-0123456789ab |", "| 712020:1f2e3d4c-aaaa-bbbb-cccc-0123456789ab |  |"
+).replace("| cyt |  |", "| cyt |  | cy@initech.example |")
+
+
+class GitColumn(unittest.TestCase):
+    def test_accepts_git_column_with_commit_emails(self):
+        self.assertEqual(tr.validate(GIT_FIXTURE), [])
+
+    def test_parse_git_identities(self):
+        register, _ = tr.parse(GIT_FIXTURE)
+        self.assertEqual(register.active[0].git, ("ada@acme.example", "ada.l@users.noreply.github.com"))
+        self.assertEqual(register.active[1].git, ())
+
+    def test_git_is_empty_without_the_column(self):
+        register, _ = tr.parse(FIXTURE)
+        self.assertEqual(register.active[0].git, ())
+
+    def test_rejects_non_email_in_git(self):
+        errors = tr.validate(GIT_FIXTURE.replace("| cy@initech.example |", "| Cy T. |"))
+        self.assertTrue(any(e.startswith("line 12:") and "Git" in e for e in errors), errors)
+
+    def test_still_rejects_email_outside_git(self):
+        errors = tr.validate(GIT_FIXTURE.replace("| api, data model |", "| api, ada@acme.example |"))
+        self.assertTrue(any(e.startswith("line 10:") and "email" in e for e in errors), errors)
+
+    def test_rejects_duplicate_git_identity(self):
+        errors = tr.validate(GIT_FIXTURE.replace("| cy@initech.example |", "| ADA@acme.example |"))
+        self.assertTrue(any(e.startswith("line 12:") and "is also on line 10" in e for e in errors), errors)
+
+
 class Cli(unittest.TestCase):
     def run_cli(self, *args):
         return subprocess.run([sys.executable, str(SCRIPTS / "teams_register.py"), *args],

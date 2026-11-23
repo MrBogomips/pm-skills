@@ -20,6 +20,7 @@ TITLE = "# Team"
 ACTIVE_HEADING = "## Active team"
 HISTORY_HEADING = "## History"
 ACTIVE_COLUMNS = ("Slug", "Name", "Organization", "GitHub", "Jira", "Roles", "Areas")
+ACTIVE_COLUMNS_WITH_GIT = ("Slug", "Name", "Organization", "GitHub", "Jira", "Git", "Roles", "Areas")
 HISTORY_COLUMNS = ("Slug", "From", "To", "Role")
 LAST_RECONCILED = "Last reconciled:"
 SOURCES = "Sources:"
@@ -29,13 +30,14 @@ GITHUB_RE = re.compile(r"^[A-Za-z0-9](?:[A-Za-z0-9-]{0,38})$")
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 SOURCE_RE = re.compile(r"^(github:[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+|jira:[A-Z][A-Z0-9_]+)$")
 EMAIL_RE = re.compile(r"\S+@\S+\.\S+")
+GIT_IDENTITY_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 PHONE_RE = re.compile(r"\+?\d[\d\s().-]{7,}\d")
 DECLARATION_RE = re.compile(r"^\s*-\s*Team register:\s*`([^`]+)`")
 INSTRUCTION_FILES = ("AGENTS.md", "CLAUDE.md")
 STALE_AFTER_DAYS = 42
 SKILL = "/pm-skills:team-register"
 SEPARATOR_CELL_RE = re.compile(r"^:?-+:?$")
-NO_PHONE_CHECK = {"Slug", "GitHub", "Jira", "From", "To"}
+NO_PHONE_CHECK = {"Slug", "GitHub", "Jira", "Git", "From", "To"}
 DATES_AND_RANGES_RE = re.compile(r"\b\d{4}-\d{2}-\d{2}\b|\b\d{4}\s*[-–]\s*\d{4}\b")
 FENCE_RE = re.compile(r"^\s*(```|~~~)")
 
@@ -50,6 +52,7 @@ class Member:
     roles: tuple[str, ...]
     areas: tuple[str, ...]
     line: int
+    git: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -106,6 +109,7 @@ class _Scanner:
         self.section: Optional[str] = None  # None, "active", "history"
         self.table_state = "none"  # none, header, separator, rows, closed
         self.rows: dict[str, list[_Row]] = {"active": [], "history": []}
+        self.active_columns = ACTIVE_COLUMNS
         self.last_line = 0
 
     def scan(self, text: str) -> None:
@@ -148,11 +152,14 @@ class _Scanner:
         self.sources = items
 
     def _table_line(self, number: int, line: str) -> None:
-        columns = ACTIVE_COLUMNS if self.section == "active" else HISTORY_COLUMNS
+        columns = self.active_columns if self.section == "active" else HISTORY_COLUMNS
         cells = _cells(line)
         if self.table_state == "header":
-            if tuple(cells) != columns:
-                self.errors.append(f"line {number}: columns must be exactly: {' | '.join(columns)}")
+            if self.section == "active" and tuple(cells) == ACTIVE_COLUMNS_WITH_GIT:
+                self.active_columns = ACTIVE_COLUMNS_WITH_GIT
+            elif tuple(cells) != columns:
+                optional = " (optionally with Git after Jira)" if self.section == "active" else ""
+                self.errors.append(f"line {number}: columns must be exactly: {' | '.join(columns)}{optional}")
             self.table_state = "separator"
         elif self.table_state == "separator":
             if len(cells) != len(columns) or not all(SEPARATOR_CELL_RE.match(c) for c in cells):
@@ -166,6 +173,8 @@ class _Scanner:
 
 def _check_personal_data(row: _Row, errors: list[str]) -> None:
     for column, value in row.cells.items():
+        if column == "Git":
+            continue
         if EMAIL_RE.search(value):
             errors.append(f"line {row.line}: {column} contains an email address: contacts do not belong here")
         elif column not in NO_PHONE_CHECK and PHONE_RE.search(DATES_AND_RANGES_RE.sub(" ", value)):
@@ -187,9 +196,13 @@ def _member(row: _Row, errors: list[str]) -> Member:
         errors.append(f"line {row.line}: Roles must be a non-empty comma-separated list")
     if any(not a for a in areas):
         errors.append(f"line {row.line}: Areas has an empty item")
+    git = _split_list(c["Git"]) if c.get("Git") else ()
+    for identity in git:
+        if not GIT_IDENTITY_RE.match(identity):
+            errors.append(f"line {row.line}: Git '{identity}' must be a commit email (name@domain)")
     _check_personal_data(row, errors)
     return Member(c["Slug"], c["Name"], c["Organization"], c["GitHub"], c["Jira"],
-                  roles if c["Roles"] else (), areas, row.line)
+                  roles if c["Roles"] else (), areas, row.line, git)
 
 
 def _period(row: _Row, errors: list[str]) -> Optional[Period]:
@@ -212,17 +225,18 @@ def _cross_checks(active: tuple[Member, ...], history: tuple[Period, ...], error
         if member.slug in seen:
             errors.append(f"line {member.line}: duplicate slug '{member.slug}' (first on line {seen[member.slug]})")
         seen.setdefault(member.slug, member.line)
-    for column, key in (("GitHub", lambda m: m.github.lower()), ("Jira", lambda m: m.jira)):
+    accounts = (("GitHub", lambda m: (m.github,)), ("Jira", lambda m: (m.jira,)), ("Git", lambda m: m.git))
+    for column, values in accounts:
         first: dict[str, Member] = {}
         for member in active:
-            value = key(member)
-            if not value:
-                continue
-            if value in first:
-                shown = member.github if column == "GitHub" else member.jira
-                errors.append(f"line {member.line}: {column} '{shown}' is also on line {first[value].line}: "
-                              "one account belongs to one person")
-            first.setdefault(value, member)
+            for value in values(member):
+                key = value.lower() if column != "Jira" else value
+                if not key:
+                    continue
+                if key in first and first[key] is not member:
+                    errors.append(f"line {member.line}: {column} '{value}' is also on line {first[key].line}: "
+                                  "one account belongs to one person")
+                first.setdefault(key, member)
     for member in active:
         open_periods = [p for p in history if p.slug == member.slug and p.end is None]
         if len(open_periods) != 1:

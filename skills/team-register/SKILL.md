@@ -38,6 +38,8 @@ The project declares it with a line `- Team register: \`<path>\`` in its `AGENTS
      use the main one as the period's Role;
    - former members get only closed periods;
    - dates you cannot read from the source: ask the user once, for all of them together;
+   - commit emails that the existing list uses to attribute git history go in the optional `Git` column; any other
+     email stays out;
    - leave out everything outside the schema (contacts, leave, allocation, notes) and tell the user what you left
      out and why.
 4. **Propose the sources**: the GitHub repositories of the project (its git remotes, and those of repositories
