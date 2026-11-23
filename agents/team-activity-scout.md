@@ -48,7 +48,8 @@ as unavailable. For each project and each covered member with a Jira account ID,
 - active in window: `project = <KEY> AND (assignee = "<accountId>" OR reporter = "<accountId>") AND updated >= "<start>"`;
   its latest `updated` is the person's latest Jira date.
 
-For unmapped accounts: `project = <KEY> AND updated >= "<start>" AND assignee is not EMPTY`, asking for the
+For unmapped accounts: `project = <KEY> AND updated >= "<start>" AND assignee is not EMPTY AND statusCategory != Done`
+(open work only: an issue someone else closed in the window says nothing about its assignee), asking for the
 `assignee` field with its account ID and account type (with the Atlassian MCP server, name the fields explicitly and
 use the full view: the compact view returns only display names), and reading every page. Keep the assignees whose
 account ID the register does not map, leaving out app and automation accounts (account type `app`). Compare account
