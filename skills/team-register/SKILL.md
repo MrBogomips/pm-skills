@@ -21,13 +21,14 @@ Talk to the user in their language; the register's headings and column names sta
 
 ## Find the register
 
-The project declares it with a line `- Team register: \`<path>\`` in its `AGENTS.md`, or in `CLAUDE.md` when there is
-no `AGENTS.md`. With no such line, start with **Set up**, whatever the request.
+The project declares it with a line `- Team register: \`<path>\`` in its `AGENTS.md`, or in its `CLAUDE.md` when
+`AGENTS.md` has no such line. With no such line, start with **Set up**, whatever the request.
 
 ## Set up
 
 1. **Look for an existing team list**: a `TEAMS.md` or `TEAM.md` at the root, a team section in the README or the
-   instruction files. If you find one, import it rather than starting from an empty register.
+   instruction files. If you find one, import it rather than starting from an empty register. If there is none,
+   ask the user who is on the team and since when.
 2. **Choose the location**: `TEAMS.md` at the root, unless the project's Working documents section places such
    documents elsewhere.
 3. **Build the register** from what you found:

@@ -12,7 +12,8 @@ team's recent activity. It suggests only: the user, or a session with that permi
 
 - **The work**: a Jira key (`ACME-123`), a pull request (URL or `<owner>/<repo>#<n>`), or a document path; or a short
   description of a task.
-- **The register**: declared by a line `- Team register: \`<path>\`` in the project's `AGENTS.md` (or `CLAUDE.md`).
+- **The register**: declared by a line `- Team register: \`<path>\`` in the project's `AGENTS.md`, or in its
+  `CLAUDE.md` when `AGENTS.md` has no such line.
   Its format is in `${CLAUDE_PLUGIN_ROOT}/shared/registers/teams.md`. With no register, say so and point to
   `/pm-skills:team-register`; do not guess a team from GitHub or Jira.
 
@@ -54,4 +55,6 @@ team's recent activity. It suggests only: the user, or a session with that permi
   `gh pr edit <n> --repo <owner>/<repo> --add-reviewer <login>`, and leave it to them or to a session that has that
   permission.
 - Never write files: the answer lives in the conversation.
-- Never invent activity: when a source is unavailable, say so and rank on the register alone.
+- Never invent activity: when a source is unavailable, say so and rank on the register alone. When the work
+  itself cannot be read (a pull request without `gh`, a Jira key without Jira access), ask the user for what you
+  need (author, title, files or areas) before ranking.
