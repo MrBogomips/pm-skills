@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "pm-skills",
+  "version": "0.1.0",
+  "description": "Project management skills for Claude Code: team register reconciled with GitHub and Jira, assignment and reviewer suggestions.",
+  "author": {
+    "name": "Mr Bogomips",
+    "url": "https://github.com/MrBogomips"
+  },
+  "homepage": "https://github.com/MrBogomips/pm-skills",
+  "repository": "https://github.com/MrBogomips/pm-skills",
+  "license": "MIT",
+  "keywords": [
+    "project-management",
+    "pmbok",
+    "resources",
+    "team",
+    "stakeholders",
+    "jira",
+    "github"
+  ]
+}

@@ -1,0 +1,25 @@
+name: Validate
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validator self-test
+        run: bash tests/selftest.sh
+
+      - name: Plugin structure
+        run: bash tests/validate.sh
+
+      - name: Script and hook tests
+        run: python3 -m unittest discover -s tests -p 'test_*.py'
