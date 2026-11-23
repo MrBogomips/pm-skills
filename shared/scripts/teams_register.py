@@ -30,6 +30,10 @@ DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 SOURCE_RE = re.compile(r"^(github:[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+|jira:[A-Z][A-Z0-9_]+)$")
 EMAIL_RE = re.compile(r"\S+@\S+\.\S+")
 PHONE_RE = re.compile(r"\+?\d[\d\s().-]{7,}\d")
+DECLARATION_RE = re.compile(r"^\s*-\s*Team register:\s*`([^`]+)`\s*$")
+INSTRUCTION_FILES = ("AGENTS.md", "CLAUDE.md")
+STALE_AFTER_DAYS = 42
+SKILL = "/pm-skills:team-register"
 SEPARATOR_CELL_RE = re.compile(r"^:?-+:?$")
 NO_PHONE_CHECK = {"Jira", "From", "To"}
 
@@ -242,6 +246,39 @@ def parse(text: str) -> tuple[Optional[Register], list[str]]:
 
 def validate(text: str) -> list[str]:
     return parse(text)[1]
+
+
+def find_register(project_dir: Path) -> Optional[Path]:
+    """The register declared by a "- Team register: `<path>`" line in AGENTS.md, else CLAUDE.md."""
+    for name in INSTRUCTION_FILES:
+        try:
+            lines = (project_dir / name).read_text(encoding="utf-8").splitlines()
+        except OSError:
+            continue
+        for line in lines:
+            match = DECLARATION_RE.match(line)
+            if match:
+                return project_dir / match.group(1)
+    return None
+
+
+def summary_line(path: Path, today: date, label: Optional[str] = None) -> str:
+    """One line of session context about the register at path."""
+    name = f"`{label or path.name}`"
+    try:
+        text = path.read_text(encoding="utf-8")
+    except FileNotFoundError:
+        return f"Team register {name} is declared but missing: run {SKILL} to create it."
+    register, errors = parse(text)
+    if errors or register is None:
+        return f"Team register {name} has {len(errors)} validation errors: run {SKILL} to fix them."
+    head = f"Team register {name}: {len(register.active)} active"
+    if register.last_reconciled is None:
+        return f"{head}, never reconciled."
+    days = (today - register.last_reconciled).days
+    if days > STALE_AFTER_DAYS:
+        return f"{head}, last reconciled {register.last_reconciled} ({days} days ago: run {SKILL} to reconcile)."
+    return f"{head}, last reconciled {register.last_reconciled}."
 
 
 def _cli(argv: list[str]) -> int:
