@@ -59,7 +59,7 @@ class Register:
 
 
 def _int_in_scale(value: str, scale: tuple[int, int], what: str, line: int, errors: list[str]) -> Optional[int]:
-    if not value.isdigit() or not scale[0] <= int(value) <= scale[1]:
+    if not md.is_number(value) or not scale[0] <= int(value) <= scale[1]:
         errors.append(f"line {line}: {what} '{value}' must be a whole number from {scale[0]} to {scale[1]}")
         return None
     return int(value)
@@ -75,7 +75,7 @@ def _risk(row: md.Row, scale: tuple[int, int], errors: list[str]) -> Risk:
         errors.append(f"line {n}: Risk is empty")
     probability = _int_in_scale(c["Probability"], scale, "Probability", n, errors)
     impact = _int_in_scale(c["Impact"], scale, "Impact", n, errors)
-    score = int(c["Score"]) if c["Score"].isdigit() else None
+    score = int(c["Score"]) if md.is_number(c["Score"]) else None
     if probability is not None and impact is not None and score != probability * impact:
         errors.append(f"line {n}: Score '{c['Score']}' must be Probability × Impact = {probability * impact}")
     if c["Status"] not in STATUSES:

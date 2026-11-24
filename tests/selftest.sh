@@ -99,6 +99,10 @@ d="$(new_repo emptypoints)"; write_skill "$d" alpha
 printf -- '---\nname: alpha\ndescription: Does a thing.\n---\n\n## Extension points\n\nSome text.\n' > "$d/skills/alpha/SKILL.md"; write_plugin "$d"
 expect_fail "Extension points with no point and no None" "$d" "lists no point"
 
+d="$(new_repo nocolon)"; write_skill "$d" alpha
+printf -- '---\nname: alpha\ndescription: Does a thing.\n---\n\n## Extension points\n\n- `terms` the words\n' > "$d/skills/alpha/SKILL.md"; write_plugin "$d"
+expect_fail "extension point without a colon" "$d" "lists no point"
+
 d="$(new_repo nodesc)"; mkdir -p "$d/skills/alpha"
 printf -- '---\nname: alpha\n---\n' > "$d/skills/alpha/SKILL.md"; write_plugin "$d"
 expect_fail "missing description" "$d" "description missing"

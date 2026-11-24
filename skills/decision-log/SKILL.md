@@ -1,6 +1,6 @@
 ---
 name: decision-log
-description: Keeps the project's decision log (DECISIONS.md) - records decisions with their context, options and who took them, supersedes or revokes them without rewriting history, and answers what was decided and why. Use to record or look up a decision ("record a decision", "what did we decide about", "registra una decisione", "cosa avevamo deciso", "log delle decisioni").
+description: Keeps the project decision log (DECISIONS.md): records a decision with context, options and who took it, supersedes or revokes it without rewriting history, and answers what was decided and why. Use to record or look up a single decision ("record a decision", "what did we decide about", "registra una decisione", "cosa avevamo deciso", "log delle decisioni"); not for whole-meeting minutes.
 ---
 
 # Decision log

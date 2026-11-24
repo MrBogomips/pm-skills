@@ -37,7 +37,7 @@ def declared_points(plugin_root: Path = PLUGIN_ROOT) -> dict[str, tuple[str, ...
             if raw.startswith("## "):
                 in_section = raw.strip() == POINTS_HEADING
                 continue
-            match = POINT_LINE_RE.match(raw.strip()) if in_section else None
+            match = POINT_LINE_RE.match(raw) if in_section else None
             if match:
                 points.append(match.group(1))
         result[skill_file.parent.name] = tuple(points)

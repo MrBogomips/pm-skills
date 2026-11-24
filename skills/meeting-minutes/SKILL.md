@@ -1,6 +1,6 @@
 ---
 name: meeting-minutes
-description: Writes meeting minutes with decisions, owned actions and risks raised, from notes, a transcript or a meeting tool, and proposes the decisions and risks for the decision log and the risk register. Use when the user asks for minutes or a summary of decisions and actions of a meeting ("write the minutes", "verbale", "scrivi il verbale della riunione", "verbalizza").
+description: Writes meeting minutes with decisions, owned actions and risks raised, from notes, a transcript or a meeting tool, and proposes the decisions and risks for the decision log and the risk register. Use when the user asks for minutes of a meeting or its action items ("write the minutes", "minutes of the steering", "verbale", "scrivi il verbale della riunione", "verbalizza").
 ---
 
 # Meeting minutes

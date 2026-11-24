@@ -31,3 +31,4 @@ are invented; never commit real names.
 
 | Date | Version | Cases run | Outcome | Notes |
 |---|---|---|---|---|
+| 2026-11-24 | 1.0.0 | find-follows-chain, proposes-risk | pass | headless, sonnet: answered with D-002 in force, followed the supersession to D-001, quoted the log, suggested a risk without writing |
