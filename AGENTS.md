@@ -15,8 +15,8 @@ plugin ships agents and hooks. It is not distributed through the `skills` CLI.
 
 **Read `DESIGN.md` before adding or changing a skill, agent or hook.** It holds the design goals, principles and
 patterns: what a skill is, what it leaves to the model, registers and documents, the project and tools registers,
-hooks, agents and their models, the PMBOK coverage map and the planned skills. This file holds the operational rules
-only.
+hooks, agents and their models, the PMBOK, Scrum and Kanban coverage maps and the planned skills. This file holds
+the operational rules only.
 
 ## Confidentiality
 
