@@ -11,11 +11,17 @@ version.
 
 ## Goals
 
-1. **Generic project management.** Skills support everyday work on any project, whatever its industry, size or
-   delivery approach: predictive, agile (Scrum, Kanban) or hybrid. Nothing assumes a methodology, a tool or a client.
-2. **PMBOK coverage.** Together, the skills cover the seven performance domains of the PMBOK Guide, Eighth Edition
-   (Governance, Scope, Schedule, Finance, Stakeholders, Resources, Risk) and the tools and techniques they use. The
-   [coverage map](#coverage-map) shows what exists, what is planned and where the gaps are.
+1. **Generic project management, optimized for software.** Skills support everyday work on any project, whatever
+   its industry, size or delivery approach: predictive, agile (Scrum, Kanban) or hybrid. Nothing assumes a
+   methodology, a tool or a client. They are optimized for building software and managing software products: the
+   capability vocabulary includes code, CI, releases and incidents, flow metrics include the DORA metrics when the
+   tools allow, risks and estimates weigh technical debt, dependencies and releases, and examples describe a software
+   product. No skill requires a code tool, so a project with no software still works.
+2. **PMBOK, Scrum and Kanban coverage.** Together, the skills cover the seven performance domains of the PMBOK
+   Guide, Eighth Edition (Governance, Scope, Schedule, Finance, Stakeholders, Resources, Risk) and the tools and
+   techniques they use. Agile skills follow the Scrum Guide (2020 edition) and the Kanban Guide (ProKanban, v2025.5);
+   the Scrum Guide Expansion Pack is not a reference. The [coverage maps](#coverage-map) show what exists, what is
+   planned and where the gaps are.
 3. **Simple and minimal.** A skill states only what the model would not do by itself and leaves project management
    knowledge to the model in use.
 4. **Support agents on the right model.** Work that pays off in its own context goes to an agent whose model fits
@@ -31,6 +37,10 @@ triggers, far from how people talk) and no skill per domain (seven oversized ski
 
 Agile practices are jobs too (`sprint-planning`, `retrospective`, `flow-metrics`), tailored through the
 [project register](#project-register); there is no family of skills per framework and no separate agile plugin.
+Skills serve whoever does the project management work, whatever their Scrum accountability (Product Owner, Scrum
+Master, or a project manager in a hybrid project), and never give the project manager a Scrum accountability.
+Scrum skills use the Scrum Guide's terms (accountabilities, events, artifacts and their commitments) without
+restating the guide.
 
 Domains classify skills in the README and the manifest keywords only, never in skill names. Names are specific enough
 to stay clear next to other plugins (`team-register`, not `register`). A skill name is a public contract: renaming
@@ -115,9 +125,10 @@ A skill may suggest one, never depend on it.
 - **Frontmatter**: `name` equal to the directory; `description` under about 400 characters, saying what the skill
   does and when to use it, with specific trigger phrases in English and Italian.
 - **User-invocable only**: a skill the user starts on purpose, and that would only crowd the context otherwise, sets
-  `disable-model-invocation: true`: `pm-coach`, `project-setup` and `project-skill-advisor`.
+  `disable-model-invocation: true`: `pm-coach`, `project-setup` and `pm-tailoring`.
 - **Body**: the purpose in two lines, then **Inputs** (including the registers, project register keys and tool
-  capabilities it uses), **Steps**, and **Always** / **Never**.
+  capabilities it uses), **Steps**, **Always** / **Never**, and **Extension points** (see
+  [Tailoring](#tailoring)).
 - **Language**: `SKILL.md` is written in English; the skill talks to the user and writes documents in the user's
   language, or in the project's `Deliverable language`.
 - **README.md** next to `SKILL.md`, as `DoD.md` requires.
@@ -146,6 +157,13 @@ only that register:
 | `Reporting cadence` | `weekly`, `biweekly`, `monthly` or free text | `status-report` |
 | `Agile framework` | `scrum`, `kanban` or free text | agile skills (planned) |
 | `Sprint length` | a number of weeks | Scrum skills (planned) |
+| `Definition of Done` | the path of the project's Definition of Done | `sprint-planning`, `sprint-review`, `release-plan` (planned) |
+| `Definition of Workflow` | the path of the Kanban Definition of Workflow | `flow-metrics`, `delivery-forecast` (planned) |
+
+The Definition of Done and the Definition of Workflow are short, stable texts of the project, kept by
+`project-setup`, with no validator. A skill that uses the Definition of Workflow names the elements it needs (work
+items, start and finish points, states, WIP limits, pull policies, the Service Level Expectation) instead of
+presuming them, and falls back to the board's configuration when the file is missing.
 
 `project-setup` owns `PROJECT.md` and `TOOLS.md`: it builds them over one or more sessions, section by section, and
 reviews them when the project changes. Another skill that needs a missing key asks once for the session and suggests
@@ -163,8 +181,8 @@ reviews them when the project changes. Another skill that needs a missing key as
 | Plan | schedule | `file:plan/acme-schedule.xlsx` | baseline and actuals | read |
 | Word | publish | `skill:acme-docx` | status-report → docx | write |
 
-- **Purpose** is a capability from a fixed vocabulary in the register's format (such as `issues`, `code`,
-  `schedule`, `costs`, `publish`); skills ask for capabilities, never for a tool by name.
+- **Purpose** is a capability from a fixed vocabulary in the register's format (such as `issues`, `code`, `ci`,
+  `releases`, `incidents`, `schedule`, `costs`, `publish`); skills ask for capabilities, never for a tool by name.
 - **Access** says how the tool is reached: `mcp:`, `cli:`, `file:`, `skill:`, `script:` or `artifact:`.
 - **Scope** says what the tool covers: a Jira project, a repository, a file's content, or, for `publish`, the
   document type and the format it produces.
@@ -173,7 +191,7 @@ reviews them when the project changes. Another skill that needs a missing key as
 ### Registers and documents
 
 A **register** keeps state that persists and that another skill or a later session reads again: project, tools,
-team, capacity, risks, stakeholders, decisions, changes. There is one register per type, each with its own schema;
+tailoring, team, capacity, risks, stakeholders, decisions, changes. There is one register per type, each with its own schema;
 a mixed register (a single RAID log) is not used. Every register has:
 
 - its format in `shared/registers/<register>.md`, the single source: skills and agents point to it as
@@ -217,18 +235,45 @@ distribution format keeps the base name of its Markdown source.
 A deliverable becomes Word, PDF, an email or an artifact only when the user asks to share or publish it. The
 renderers are tools in `TOOLS.md` with `Purpose: publish`: a skill, a script, a CLI or an artifact, whose scope maps
 a document type to a format. `publish-deliverable` picks the renderer for the type and format; when none is declared,
-it proposes one to reuse (see [Project skills](#project-skills)) and offers to add it to the register. Its output
+it proposes one to reuse (see [Tailoring](#tailoring)) and offers to add it to the register. Its output
 goes where the project's Working documents section says.
 
 No artifact code lives in this repository. Artifacts are built in `pm-artifacts`, which holds their backlog, their
 models and the skills that turn the plugin's Markdown and registers into those models. Here an artifact is only a
 renderer, `artifact:<type>`.
 
-### Project skills
+### Tailoring
 
-A project sometimes needs a skill of its own: a Word document in the organization's format, an email, a ticketing
-system with its quirks. `project-skill-advisor` helps build one only when there is a real need, after climbing the
-reuse ladder:
+A project adapts the plugin to its own way of working: a risk scale from 1 to 5, a sponsor's approval above a
+threshold for change requests, a section its client wants in every status report, "SAL" instead of "status report".
+`pm-tailoring` guides the user to the lightest change that does it, along a ladder:
+
+1. a key in the Profile of `PROJECT.md`;
+2. a rule on an extension point of a skill, in `TAILORING.md`;
+3. a project format for a document type;
+4. a tool or a renderer in `TOOLS.md`;
+5. a project skill (below).
+
+**Extension points.** Each skill lists, in its **Extension points** section, where a project may change its behavior,
+using a fixed vocabulary:
+
+| Point | What a project may change |
+|---|---|
+| `format` | the headings or the template of the document the skill writes |
+| `scale` | scoring scales and thresholds |
+| `rules` | extra checks or approvals |
+| `steps` | extra steps at the named points the skill offers (for example before drafting, before writing) |
+| `terms` | the project's vocabulary |
+
+**`TAILORING.md`** is a register, declared in the Registers section of `PROJECT.md`, with one section per skill and
+one entry per extension point the skill declares. Its validator rejects a skill or an extension point that does not
+exist, and the two hooks cover it like every register. A skill reads its own section at the start. No rule may
+loosen a guardrail: the people rule, writes through declared tools with confirmation, showing before writing and
+naming the sources not read always apply. Rules can be written by hand before `pm-tailoring` exists.
+
+**Project skills.** A project sometimes needs a skill of its own: a Word document in the organization's format, an
+email, a ticketing system with its quirks. `pm-tailoring` helps build one only for a real need, after the reuse
+ladder:
 
 1. a skill of this plugin;
 2. a skill already available in the session, from the user or the organization (including existing templates);
@@ -284,18 +329,36 @@ Every pull request that adds, renames or removes a skill updates this map.
 
 | Domain | Initiating | Planning | Executing | Monitoring and Controlling | Closing |
 |---|---|---|---|---|---|
-| Governance | *`project-setup`*, *`project-charter`* | | *`decision-log`* | *`status-report`*, *`change-request`*, *`decision-log`*, *`retrospective`*, *`phase-gate-review`* | *`phase-gate-review`*, *`lessons-learned`* |
-| Scope | *`project-charter`* | *`wbs-builder`*, *`backlog-refinement`*, *`sprint-planning`* | | *`change-request`*, *`sprint-review`* | |
-| Schedule | | *`estimate`*, *`sprint-planning`* | | *`schedule-check`*, *`flow-metrics`*, *`delivery-forecast`* | |
+| Governance | *`project-setup`*, *`project-charter`* | *`product-roadmap`* | *`decision-log`* | *`status-report`*, *`change-request`*, *`decision-log`*, *`retrospective`*, *`phase-gate-review`* | *`phase-gate-review`*, *`lessons-learned`* |
+| Scope | *`project-charter`* | *`product-roadmap`*, *`wbs-builder`*, *`backlog-refinement`*, *`sprint-planning`*, *`release-plan`* | | *`change-request`*, *`sprint-review`* | |
+| Schedule | | *`estimate`*, *`sprint-planning`*, *`release-plan`* | | *`schedule-check`*, *`flow-metrics`*, *`delivery-forecast`* | |
 | Finance | | *`estimate`* | | *`budget-tracker`*, *`change-request`* | |
 | Stakeholders | *`stakeholder-register`* | *`communication-plan`* | *`meeting-minutes`*, *`publish-deliverable`* | *`stakeholder-register`*, *`status-report`*, *`sprint-review`* | |
 | Resources | | `team-register`, *`capacity-register`*, *`raci-matrix`* | `assignment-advisor` | `team-register`, *`capacity-register`* | |
 | Risk | | *`risk-register`* | | *`risk-register`*, *`change-request`* | |
 
-Across all domains: *`pm-coach`* and *`project-skill-advisor`*.
+Across all domains: *`pm-coach`* and *`pm-tailoring`*.
 
 The focus areas come from secondary sources: the text of the guide was not available. The guide's process names and
 count (forty, by the same sources) stay out of this file until someone checks them against the guide.
+
+Scrum (Scrum Guide 2020) and Kanban (Kanban Guide v2025.5), by event, artifact and practice:
+
+| Scrum | Skills |
+|---|---|
+| Sprint Planning; Sprint Backlog and Sprint Goal | *`sprint-planning`* |
+| Daily Scrum | excluded on purpose: the Developers' event, not project management work |
+| Sprint Review | *`sprint-review`* |
+| Sprint Retrospective | *`retrospective`* |
+| Product Backlog and Product Goal | *`backlog-refinement`*, *`product-roadmap`* |
+| Increment and Definition of Done | the `Definition of Done` file in the Profile, read by *`sprint-planning`*, *`sprint-review`*, *`release-plan`* |
+
+| Kanban | Skills |
+|---|---|
+| Defining and visualizing the workflow | the `Definition of Workflow` file in the Profile, kept by *`project-setup`* |
+| Actively managing items in the workflow | *`flow-metrics`* (work item age against the Service Level Expectation) |
+| Improving the workflow | *`flow-metrics`*, *`retrospective`* |
+| Flow measures: WIP, throughput, work item age, cycle time | *`flow-metrics`*, *`delivery-forecast`* |
 
 ## Planned skills
 
@@ -311,6 +374,8 @@ opened for an item only when work on it starts.
   tool use, the people rule and writes through declared tools; `team-activity-scout` becomes
   `project-activity-scout`, with a per-person and a per-project mode; the `Sources:` line of `TEAMS.md` goes away.
 - `shared/documents/` with the common frontmatter and the first document formats.
+- The **Extension points** section in the skill anatomy and the format and validator of `TAILORING.md`, so that every
+  skill from wave 1 on ships with its extension points.
 - The two hooks read the registers from `PROJECT.md`.
 
 **Wave 1: everyday work.**
@@ -337,14 +402,16 @@ Agent: `pm-critical-reviewer` (critical reviewer, `opus`, with the Fable escalat
 | `sprint-review` | document | what was delivered against the goal, and the stakeholders' feedback | |
 | `retrospective` | document | what to keep, change and try, with owned actions | |
 | `backlog-refinement` | analysis | readiness, splitting and ordering of backlog items | |
-| `project-skill-advisor` | guidance | the reuse ladder and, for a real need, a project skill that follows the integration contract; user-invocable only | |
+| `product-roadmap` | document | the Product Goal, themes and horizons of a software product | |
+| `pm-tailoring` | guidance | adapts the plugin to the project along the tailoring ladder: rules on extension points, project formats, tools and, for a real need, a project skill that follows the integration contract; user-invocable only | |
 
 **Wave 3: numbers.**
 
 | Skill | Kind | Job | Agents |
 |---|---|---|---|
-| `flow-metrics` | analysis | cycle time, throughput, work in progress and aging from the transition history | `flow-data-scout` |
+| `flow-metrics` | analysis | cycle time, throughput, work in progress and work item age from the transition history; DORA metrics when the tools allow | `flow-data-scout` |
 | `delivery-forecast` | analysis | Monte Carlo forecast of dates or scope from throughput | `flow-data-scout` |
+| `release-plan` | document | the scope and dates of a release, from the forecast and the Definition of Done | `flow-data-scout` |
 | `estimate` | analysis | three-point and analogous estimates of effort and cost | `pm-critical-reviewer` |
 | `schedule-check` | analysis | critical path, float and dates over the working calendar against the baseline | |
 | `budget-tracker` | analysis | spend against budget and earned value, with rates per role | |
@@ -362,8 +429,14 @@ Agent: `flow-data-scout` (collector, `haiku`): the transition history as a datas
 | `raci-matrix` | document | responsibilities by deliverable or activity | |
 | `phase-gate-review` | document | readiness to pass a gate or close, against its criteria | `pm-critical-reviewer` |
 
-## PMBOK knowledge check
+## Knowledge check
 
 On 2026-11-24, closed-book tests of Opus and Sonnet named all six PMBOK 8 principles and explained them consistently
-with four agreeing secondary sources, so skills do not restate them. Sonnet did not know the focus areas. Repeat the
-test when the model of reference changes or PMI revises the guide.
+with four agreeing secondary sources, so skills do not restate them. Sonnet did not know the focus areas.
+
+The same day, a closed-book test of Sonnet got the Scrum Guide 2020 right (accountabilities, events and timeboxes,
+artifacts and commitments, values, pillars, changes from 2017) and the core of the Kanban Guide (practices, flow
+measures, most of the Definition of Workflow). It did not know the Scrum Guide Expansion Pack or the 2025 version of
+the Kanban Guide: hence the editions named in the goals and the elements named in the profile.
+
+Repeat the tests when the model of reference changes or a guide is revised.
