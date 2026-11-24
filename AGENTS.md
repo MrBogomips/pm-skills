@@ -14,8 +14,9 @@ The plugin is Claude Code-only on purpose: skills share formats and scripts thro
 plugin ships agents and hooks. It is not distributed through the `skills` CLI.
 
 **Read `DESIGN.md` before adding or changing a skill, agent or hook.** It holds the design goals, principles and
-patterns: what a skill is, what it leaves to the model, registers and documents, the project profile, hooks, agents
-and their models, and the PMBOK coverage map. This file holds the operational rules only.
+patterns: what a skill is, what it leaves to the model, registers and documents, the project and tools registers,
+hooks, agents and their models, the PMBOK coverage map and the planned skills. This file holds the operational rules
+only.
 
 ## Confidentiality
 
