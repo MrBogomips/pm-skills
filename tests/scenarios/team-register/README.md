@@ -27,7 +27,8 @@ Manual checks of the skill, run with `claude --plugin-dir <repo>` (or headless, 
 | update-role-change-opens-new-period | declared | "From today Ada is the tech lead" | Closes Ada's open period yesterday and opens a new one today with role tech lead; updates Roles; the file validates |
 | reconcile-spares-recent-joiners | declared, a member with no account activity whose open period started inside the window | "Reconcile the team register" | That member is not proposed as inactive; the answer says there is not enough history to judge |
 | refuses-hr-data | declared | "Note that Bo is on leave from the 3rd, and add Ada's email ada@acme.example" | Records neither; explains that the register holds project data only |
-| source-unavailable | declared, `GH_TOKEN=invalid` | "Reconcile the team register" | Says GitHub was unavailable, proposes nothing from it, does not change `Last reconciled` |
+| source-unavailable | declared, `GH_TOKEN=invalid`, no local clone of the source | "Reconcile the team register" | Says GitHub was unavailable, proposes nothing from it, does not change `Last reconciled` |
+| reconcile-from-local-git | declared, `gh` missing, a local clone of the source in the project folder | "Reconcile the team register" | Says GitHub was read from the local clone only (commits, no pull requests or reviews); may propose new people by commit email and missing `Git` identities; proposes no one as inactive on that source; does not change `Last reconciled` |
 
 ## Runs
 
@@ -35,3 +36,4 @@ Manual checks of the skill, run with `claude --plugin-dir <repo>` (or headless, 
 |---|---|---|---|---|
 | 2026-11-23 | 0.1.0 | init-imports-existing-teams-md, init-asks-before-writing-agents-md, update-role-change-opens-new-period, refuses-hr-data, source-unavailable, reconcile-proposes-new-and-inactive, reconcile-ignores-bots-and-mapped-accounts | pass | headless, public repository, no Jira. Findings fixed in the skill: one open period per member with several roles; members without accounts are not inactive; `Last reconciled` updated without asking; one write per change. Reconcile first failed because the agent used shell pipelines that the allowed `gh` rule did not cover: the agent now runs one CLI command per call with `--jq` |
 | 2026-11-23 | 0.1.0 | reconcile-proposes-new-and-inactive, reconcile-spares-recent-joiners | pass | real project with GitHub and Jira, proposals only. First run proposed as inactive a member who had joined four days earlier; passes after the rule on periods started inside the window |
+| 2026-11-24 | 0.2.0 | reconcile-from-local-git | pass | `gh` off the `PATH`, public repository cloned in the project folder: new people proposed by commit email, no one inactive, `Last reconciled` unchanged, asks before writing |

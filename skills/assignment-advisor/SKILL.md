@@ -34,7 +34,8 @@ team's recent activity. It suggests only: the user, or a session with that permi
    its report before ranking.
 4. **Rank** the candidates, in this order of weight:
    1. Areas matching the areas of the work;
-   2. recent activity in the repositories involved: pull requests authored and reviewed there;
+   2. recent activity in the repositories involved: pull requests authored and reviewed there, or commits when the
+      scout could read only a local clone;
    3. lighter open Jira load, as a tie-breaker.
 
    A member with no data in the scout's report keeps their place by Areas, with a note that there is no activity

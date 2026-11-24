@@ -54,14 +54,16 @@ The project declares it with a line `- Team register: \`<path>\`` in its `AGENTS
 
 1. Dispatch the `team-activity-scout` agent with the register's path, a 42-day window and `all` members.
 2. From its report, prepare proposals in three numbered groups:
-   - **New people**: its `Unmapped accounts`. A GitHub login and a Jira account may belong to the same person: ask.
+   - **New people**: its `Unmapped accounts`. A GitHub login, a commit email and a Jira account may belong to the same
+     person: ask. A commit email goes in the `Git` column; a GitHub no-reply address also gives the login.
      For each person the user accepts, ask for the fields you cannot infer (name, organization, roles, areas).
    - **Inactive**: active members whose `Last activity` is `none` when every source in which they have an account
      was `ok`. Members with no account in any checked source, with an account in a source that could not be read,
-     or whose open period started inside the window are not inactive: there is not enough to judge them by.
+     or whose open period started inside the window are not inactive: there is not enough to judge them by. A source
+     read from a local clone (`local git`) is not `ok`: commits leave out reviews, and the clone may be stale.
      Accepting one closes their open period today and removes them from Active team.
-   - **Missing accounts**: active members without a GitHub or Jira account when an unmapped account plausibly
-     belongs to them.
+   - **Missing accounts**: active members without a GitHub or Jira account, or without the commit email an unmapped
+     account shows, when that account plausibly belongs to them.
 3. Present the proposals and apply only the ones the user accepts.
 4. `Last reconciled` is not a proposal: set it to today when you apply the accepted proposals (even if the user
    accepted none), but only when every source in the report was `ok`. When a source was unavailable, say which one,
