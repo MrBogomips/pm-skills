@@ -13,9 +13,9 @@ as `/pm-skills:<name>`.
 The plugin is Claude Code-only on purpose: skills share formats and scripts through `${CLAUDE_PLUGIN_ROOT}`, and the
 plugin ships agents and hooks. It is not distributed through the `skills` CLI.
 
-Skills are grouped by the seven PMBOK 8 performance domains (Governance, Scope, Schedule, Finance, Stakeholders,
-Resources, Risk) in the README and the keywords only, never in skill names. Visual pages for project managers belong
-to the sibling `pm-artifacts` plugin: a skill may suggest it when it is installed, never depend on it.
+**Read `DESIGN.md` before adding or changing a skill, agent or hook.** It holds the design goals, principles and
+patterns: what a skill is, what it leaves to the model, registers and documents, the project profile, hooks, agents
+and their models, and the PMBOK coverage map. This file holds the operational rules only.
 
 ## Confidentiality
 
@@ -38,33 +38,15 @@ shared/scripts/                     Python stdlib scripts shared by skills and h
 tests/                              validate.sh, selftest.sh, Python unit tests, fixtures/, scenarios/
 ```
 
-## Registers
-
-Skills keep project state in Markdown registers inside the user's project. Each register's format is written once in
-`shared/registers/` and implemented once in `shared/scripts/`; skills and agents point to them as
-`${CLAUDE_PLUGIN_ROOT}/shared/...` and never restate them. A project declares a register in its `AGENTS.md` (or
-`CLAUDE.md`) with one line, for example:
-
-```markdown
-- Team register: `TEAMS.md`
-```
-
-Registers hold project data only. Nothing of human resources management goes into them: no contacts, allocation,
-availability, appraisals or personal notes. Validators reject anything outside the schema.
-
 ## Writing rules
 
 - `SKILL.md` files and agents are written in English; skills talk to the user and write documents in the user's
-  language. Register headings and column names are schema keys and stay in English.
-- Names are specific enough to stay clear next to other plugins (`team-register`, not `register`); the frontmatter
-  `name` equals the directory (skills) or the file name (agents).
-- No integration is required: GitHub (`gh`), Jira (Atlassian MCP server or `acli`) and the like are detected at
-  runtime, and a skill says which source was unavailable instead of guessing.
-- Skills and agents read GitHub and Jira; they never write to them.
-- Hooks stay cheap and silent: no `UserPromptSubmit` hook, nothing printed in projects that declare no register, and
-  an internal error never interrupts the session.
+  language.
+- The frontmatter `name` equals the directory (skills) or the file name (agents).
 - Scripts are Python 3 standard library, macOS and Linux compatible; shell scripts are bash 3.2, with no `grep -P`
   and no `sed -i`.
+
+Naming, registers, integrations, hooks and agents follow `DESIGN.md`.
 
 ## Version
 
@@ -88,7 +70,7 @@ installing it: `claude --plugin-dir .`.
 
 ## Working documents
 
-- **Authoritative**: `skills/`, `agents/`, `hooks/`, `shared/` and `.claude-plugin/plugin.json`.
+- **Authoritative**: `DESIGN.md`, `skills/`, `agents/`, `hooks/`, `shared/` and `.claude-plugin/plugin.json`.
 - **AI working material** (brainstorms, plans, decision logs) stays in the session scratchpad; nothing is written to
   the repository for it. Tool defaults such as `docs/superpowers/...` follow this rule too.
 
