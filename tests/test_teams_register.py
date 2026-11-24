@@ -28,10 +28,9 @@ class ValidRegister(unittest.TestCase):
         ada = register.active[0]
         self.assertEqual(ada.roles, ("developer", "reviewer"))
         self.assertEqual(ada.areas, ("api", "data model"))
-        self.assertEqual(ada.line, 10)
+        self.assertEqual(ada.line, 9)
         self.assertEqual(register.active[2].jira, "")
         self.assertEqual(register.last_reconciled, date(2026, 11, 20))
-        self.assertEqual(register.sources, ("github:acme/web", "github:acme/api", "jira:ACME"))
         self.assertEqual(len(register.history), 5)
         self.assertIsNone(register.history[0].end)
         self.assertEqual(register.history[2].end, date(2026, 5, 31))
@@ -47,11 +46,10 @@ class ValidRegister(unittest.TestCase):
         self.assertEqual(tr.validate(text), [])
 
     def test_optional_preamble_lines(self):
-        text = edited("Last reconciled: 2026-11-20\nSources: github:acme/web, github:acme/api, jira:ACME\n", "")
+        text = edited("Last reconciled: 2026-11-20\n", "")
         register, errors = tr.parse(text)
         self.assertEqual(errors, [])
         self.assertIsNone(register.last_reconciled)
-        self.assertEqual(register.sources, ())
 
     def test_accepts_dates_and_jira_ids_not_as_phone(self):
         self.assertEqual(tr.validate(FIXTURE), [])
@@ -64,7 +62,7 @@ class Rejections(unittest.TestCase):
         self.assertTrue(matching, f"no 'line {line}: …{keyword}…' in {errors}")
 
     def test_rejects_free_text_line(self):
-        self.assertError(edited("## History\n", "Ada is on leave next week.\n\n## History\n"), 14, "unexpected content")
+        self.assertError(edited("## History\n", "Ada is on leave next week.\n\n## History\n"), 13, "unexpected content")
 
     def test_rejects_missing_section(self):
         errors = tr.validate(FIXTURE.split("## History")[0])
@@ -73,67 +71,67 @@ class Rejections(unittest.TestCase):
     def test_rejects_extra_column(self):
         text = edited("| Slug | Name | Organization | GitHub | Jira | Roles | Areas |",
                       "| Slug | Name | Organization | GitHub | Jira | Roles | Areas | Phone |")
-        self.assertError(text, 8, "columns")
+        self.assertError(text, 7, "columns")
 
     def test_rejects_extra_cell_in_row(self):
-        self.assertError(edited("| web, ux |", "| web, ux | extra |"), 11, "cells")
+        self.assertError(edited("| web, ux |", "| web, ux | extra |"), 10, "cells")
 
     def test_rejects_duplicate_slug(self):
-        self.assertError(edited("| bo-k | Bo K.", "| ada-l | Bo K."), 11, "duplicate")
+        self.assertError(edited("| bo-k | Bo K.", "| ada-l | Bo K."), 10, "duplicate")
 
     def test_rejects_bad_slug(self):
-        self.assertError(edited("| bo-k | Bo K.", "| Bo_K | Bo K."), 11, "slug")
+        self.assertError(edited("| bo-k | Bo K.", "| Bo_K | Bo K."), 10, "slug")
 
     def test_rejects_empty_name(self):
-        self.assertError(edited("| Bo K. |", "|  |"), 11, "name")
+        self.assertError(edited("| Bo K. |", "|  |"), 10, "name")
 
     def test_rejects_github_with_at(self):
-        self.assertError(edited("| bok |", "| @bok |"), 11, "GitHub")
+        self.assertError(edited("| bok |", "| @bok |"), 10, "GitHub")
 
     def test_rejects_jira_with_space(self):
-        self.assertError(edited("| 5b10ac8d82e05b22cc7d4ef5 |", "| Ada L |"), 10, "Jira")
+        self.assertError(edited("| 5b10ac8d82e05b22cc7d4ef5 |", "| Ada L |"), 9, "Jira")
 
     def test_rejects_email_in_any_cell(self):
-        self.assertError(edited("| api, data model |", "| api, ada@example.com |"), 10, "email")
+        self.assertError(edited("| api, data model |", "| api, ada@example.com |"), 9, "email")
 
     def test_rejects_phone_in_areas(self):
-        self.assertError(edited("| api, data model |", "| api, +39 333 123 4567 |"), 10, "phone")
+        self.assertError(edited("| api, data model |", "| api, +39 333 123 4567 |"), 9, "phone")
 
     def test_rejects_empty_roles(self):
-        self.assertError(edited("| designer |", "|  |"), 11, "Roles")
+        self.assertError(edited("| designer |", "|  |"), 10, "Roles")
 
     def test_rejects_empty_list_item(self):
-        self.assertError(edited("| web, ux |", "| web, , ux |"), 11, "Areas")
+        self.assertError(edited("| web, ux |", "| web, , ux |"), 10, "Areas")
 
     def test_rejects_bad_date(self):
-        self.assertError(edited("| ada-l | 2026-01-12 |", "| ada-l | 12/01/2026 |"), 18, "date")
+        self.assertError(edited("| ada-l | 2026-01-12 |", "| ada-l | 12/01/2026 |"), 17, "date")
 
     def test_rejects_from_after_to(self):
-        self.assertError(edited("| cy-t | 2026-03-01 | 2026-05-31 |", "| cy-t | 2026-06-01 | 2026-05-31 |"), 20, "after")
+        self.assertError(edited("| cy-t | 2026-03-01 | 2026-05-31 |", "| cy-t | 2026-06-01 | 2026-05-31 |"), 19, "after")
 
     def test_rejects_active_without_open_period(self):
-        self.assertError(edited("| bo-k | 2026-02-01 |  |", "| bo-k | 2026-02-01 | 2026-03-01 |"), 11, "open period")
+        self.assertError(edited("| bo-k | 2026-02-01 |  |", "| bo-k | 2026-02-01 | 2026-03-01 |"), 10, "open period")
 
     def test_rejects_two_open_periods(self):
-        self.assertError(edited("| cy-t | 2026-03-01 | 2026-05-31 |", "| cy-t | 2026-03-01 |  |"), 12, "open period")
+        self.assertError(edited("| cy-t | 2026-03-01 | 2026-05-31 |", "| cy-t | 2026-03-01 |  |"), 11, "open period")
 
     def test_rejects_open_period_for_former_member(self):
-        self.assertError(edited("| di-r | 2026-01-12 | 2026-06-30 |", "| di-r | 2026-01-12 |  |"), 22, "not in Active team")
+        self.assertError(edited("| di-r | 2026-01-12 | 2026-06-30 |", "| di-r | 2026-01-12 |  |"), 21, "not in Active team")
 
     def test_rejects_overlapping_periods(self):
-        self.assertError(edited("| cy-t | 2026-09-01 |", "| cy-t | 2026-05-01 |"), 21, "overlaps")
+        self.assertError(edited("| cy-t | 2026-09-01 |", "| cy-t | 2026-05-01 |"), 20, "overlaps")
 
     def test_rejects_period_starting_the_day_the_previous_ends(self):
         text = edited("| ada-l | 2026-01-12 |  | developer |",
                       "| ada-l | 2026-01-12 | 2026-11-23 | developer |\n| ada-l | 2026-11-23 |  | tech lead |")
-        self.assertError(text, 19, "overlaps")
+        self.assertError(text, 18, "overlaps")
 
     def test_rejects_duplicate_github_login(self):
-        self.assertError(edited("| bok |", "| ADAL |"), 11, "GitHub 'ADAL' is also on line 10")
+        self.assertError(edited("| bok |", "| ADAL |"), 10, "GitHub 'ADAL' is also on line 9")
 
     def test_rejects_duplicate_jira_account(self):
         self.assertError(edited("| 712020:1f2e3d4c-aaaa-bbbb-cccc-0123456789ab |", "| 5b10ac8d82e05b22cc7d4ef5 |"),
-                         11, "Jira '5b10ac8d82e05b22cc7d4ef5' is also on line 10")
+                         10, "Jira '5b10ac8d82e05b22cc7d4ef5' is also on line 9")
 
     def test_accepts_dates_and_year_ranges_in_text(self):
         text = edited("| api, data model |", "| api, release 2026-11-20 |").replace(
@@ -144,10 +142,11 @@ class Rejections(unittest.TestCase):
         self.assertEqual(tr.validate(edited("| bok |", "| u1234567890 |")), [])
 
     def test_rejects_phone_next_to_a_date(self):
-        self.assertError(edited("| api, data model |", "| api 2026-11-20, call 333 123 4567 |"), 10, "phone")
+        self.assertError(edited("| api, data model |", "| api 2026-11-20, call 333 123 4567 |"), 9, "phone")
 
-    def test_rejects_bad_source(self):
-        self.assertError(edited("jira:ACME", "jira:acme"), 4, "source")
+    def test_rejects_sources_line_removed_in_1_0(self):
+        self.assertError(edited("Last reconciled: 2026-11-20\n", "Last reconciled: 2026-11-20\nSources: jira:ACME\n"),
+                         4, "TOOLS.md")
 
     def test_rejects_bad_last_reconciled(self):
         self.assertError(edited("Last reconciled: 2026-11-20", "Last reconciled: yesterday"), 3, "date")
@@ -176,15 +175,15 @@ class GitColumn(unittest.TestCase):
 
     def test_rejects_non_email_in_git(self):
         errors = tr.validate(GIT_FIXTURE.replace("| cy@initech.example |", "| Cy T. |"))
-        self.assertTrue(any(e.startswith("line 12:") and "Git" in e for e in errors), errors)
+        self.assertTrue(any(e.startswith("line 11:") and "Git" in e for e in errors), errors)
 
     def test_still_rejects_email_outside_git(self):
         errors = tr.validate(GIT_FIXTURE.replace("| api, data model |", "| api, ada@acme.example |"))
-        self.assertTrue(any(e.startswith("line 10:") and "email" in e for e in errors), errors)
+        self.assertTrue(any(e.startswith("line 9:") and "email" in e for e in errors), errors)
 
     def test_rejects_duplicate_git_identity(self):
         errors = tr.validate(GIT_FIXTURE.replace("| cy@initech.example |", "| ADA@acme.example |"))
-        self.assertTrue(any(e.startswith("line 12:") and "is also on line 10" in e for e in errors), errors)
+        self.assertTrue(any(e.startswith("line 11:") and "is also on line 9" in e for e in errors), errors)
 
 
 class Cli(unittest.TestCase):
@@ -201,7 +200,7 @@ class Cli(unittest.TestCase):
             self.assertEqual(self.run_cli("validate", str(good)).returncode, 0)
             result = self.run_cli("validate", str(bad))
             self.assertEqual(result.returncode, 1)
-            self.assertIn("line 11:", result.stdout)
+            self.assertIn("line 10:", result.stdout)
             self.assertEqual(self.run_cli("validate", str(Path(tmp) / "none.md")).returncode, 2)
             self.assertEqual(self.run_cli("frobnicate").returncode, 2)
 

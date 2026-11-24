@@ -1,7 +1,6 @@
 # Team
 
 Last reconciled: 2026-11-20
-Sources: github:acme/web, github:acme/api, jira:ACME
 
 ## Active team
 
