@@ -55,7 +55,8 @@ One `## D-NNN <title>` section per decision, with `- Key: value` entries, each o
    notes.
 2. IDs are `D-` and at least three digits, unique, in increasing order; an ID is never reused.
 3. A decision is never deleted or rewritten after it is accepted: a change of mind is a new decision that
-   supersedes it. `Supersedes` and `Superseded by` always point to each other.
+   supersedes it. Only its `Status` and `Superseded by` change, and corrections of form (a typo, a moved `Source`
+   path) that leave the meaning intact. `Supersedes` and `Superseded by` always point to each other.
 4. No entry holds an email address or a phone number, and no entry judges a person.
 
 ## Validation

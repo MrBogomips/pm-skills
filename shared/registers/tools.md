@@ -67,8 +67,10 @@ name a tool. `project-setup` builds and reviews the register; it is declared in 
 ## How skills use it
 
 - A skill names the capability and the data it needs, picks the tools with that `Purpose`, and reaches each through
-  its `Access` with the model's and the tool's own abilities. Known pitfalls of a specific tool go in the skill's
-  `references/`.
+  its `Access` with the model's and the tool's own abilities. Known pitfalls of a specific tool are in
+  `${CLAUDE_PLUGIN_ROOT}/shared/tools/<tool>.md` when the plugin has them.
+- `Mode` governs writes to the tool's own system (an issue, a comment, a sent email, an upload). A renderer that only
+  produces a file in the project works in either mode, after the user agrees to the output path.
 - A skill writes to a tool only when its `Mode` is `write`, shows each write first and makes it only after the user
   agrees; a bulk operation is confirmed on the itemized list. Collector agents never write.
 - A tool that cannot be reached is reported as unavailable, with the reason; nothing is guessed in its place.

@@ -1,40 +1,53 @@
 ---
-summary: Claude Code plugin for project managers that keeps a project's team register and suggests who should take a task or review a change.
+summary: Claude Code plugin for project managers, optimized for software projects - project configuration, team, risks, decisions, minutes, status reports, publishing and a coach, grounded in small validated registers under git.
 ---
 
 # pm-skills
 
-Project management skills for Claude Code. Keep a register of who is on the project, checked against GitHub and
-Jira, and get suggestions, with reasons, for who should take a Jira task or review a pull request or a document.
+Project management skills for Claude Code. Your project keeps a few small Markdown registers under git (its
+configuration, tools, team, risks and decisions); the skills read them together with your issue tracker and code
+host, draft the recurring documents (minutes, status reports), and suggest who should take or review work. They work
+on any project and are optimized for building software and managing software products.
 
 ## Why
 
-Who is on a project, and who knows what, usually lives in someone's head or in a list nobody updates. This plugin
-keeps that list in a small `TEAMS.md` in your project, checks it against the team's GitHub and Jira activity, and
-uses it to suggest assignees and reviewers by area and recent work, leaving out authors and existing approvers.
-The register holds project data only, and nothing is ever written to GitHub or Jira.
+Project management work is spread across heads, tickets and documents nobody updates. This plugin keeps the state
+that matters in validated registers next to the project, reads facts from the tools you already use, says which
+sources it could not read, and keeps you in charge: every write is shown first, nothing goes to an external system
+unless you declared that tool writable and confirmed the change, and no register holds sensitive personal data or
+evaluations of people.
 
 ## Included components
 
-| Skill | What it does |
-|---|---|
-| [`team-register`](skills/team-register/README.md) | Sets up, imports, updates and reconciles the team register. |
-| [`assignment-advisor`](skills/assignment-advisor/README.md) | Suggests up to three people for a task or a review, with the reasons. |
+| Skill | Domain | What it does |
+|---|---|---|
+| [`project-setup`](skills/project-setup/README.md) | Governance | Sets up and reviews `PROJECT.md` and `TOOLS.md`; migrates projects from 0.x. User-invocable only. |
+| [`team-register`](skills/team-register/README.md) | Resources | Keeps `TEAMS.md` and reconciles it with recent activity. |
+| [`assignment-advisor`](skills/assignment-advisor/README.md) | Resources | Suggests up to three people for a task or a review, with the reasons. |
+| [`risk-register`](skills/risk-register/README.md) | Risk | Identifies, assesses, plans responses to and reviews risks in `RISKS.md`. |
+| [`decision-log`](skills/decision-log/README.md) | Governance | Records decisions in `DECISIONS.md` and answers what was decided and why. |
+| [`meeting-minutes`](skills/meeting-minutes/README.md) | Stakeholders | Minutes with decisions, actions and risks, proposed for the registers. |
+| [`status-report`](skills/status-report/README.md) | Governance, Stakeholders | The status report for the reporting period, outcomes first. |
+| [`publish-deliverable`](skills/publish-deliverable/README.md) | Stakeholders | Renders a Markdown deliverable into Word, PDF, slides, email or an artifact. |
+| [`pm-coach`](skills/pm-coach/README.md) | All | Reasoned advice grounded in your registers. User-invocable only. |
 
-Skills are grouped by PMBOK 8 performance domain; both belong to **Resources**.
+Domains are the performance domains of the PMBOK Guide, Eighth Edition. Agile skills follow the Scrum Guide 2020
+and the Kanban Guide; more are planned (see `DESIGN.md`).
 
 ## Agents
 
-- `team-activity-scout`: collects each member's recent GitHub (or local git) and Jira activity for the two skills, read only.
+- `project-activity-scout` (`haiku`): collects recent activity from the project's tools, per person or per project,
+  read only.
+- `pm-critical-reviewer` (`opus`): challenges risk responses and deliverables before they go out, read only.
 
 ## Hooks
 
-- **SessionStart**: adds one line to the session's context with the register's size and last reconciliation, or a
-  reminder when it is missing, invalid or not reconciled for over six weeks.
-- **PostToolUse** (Write, Edit): when Claude edits the register, reports its validation errors back to Claude.
+- **SessionStart**: adds one line to the session's context summing up every register the project declares (size,
+  last review, risks past their review date), or a reminder when one is missing or invalid.
+- **PostToolUse** (Write, Edit): when Claude edits a declared register, reports its validation errors back.
 
-Both stay silent in projects that declare no register. They cannot be switched off one by one: disable the plugin to
-stop them.
+Both stay silent in projects that declare no project register. They cannot be switched off one by one: disable the
+plugin to stop them.
 
 ## Installation
 
@@ -43,25 +56,33 @@ stop them.
 /plugin install pm-skills@mrbogomips
 ```
 
-**Standalone skills: no, plugin only.** The skills share the register format and validator inside the plugin, and
-dispatch its agent.
+**Standalone skills: no, plugin only.** The skills share register formats, validators and scripts inside the
+plugin, and dispatch its agents.
 
 ## Quick start
 
-In your project, ask Claude to "set up the team register" (or run `/pm-skills:team-register`). It imports an
-existing team list if it finds one, or asks you who is on the team, confirms the GitHub repositories and Jira
-projects to read, and shows you `TEAMS.md` and the line for `AGENTS.md` before writing them.
+1. In your project, run `/pm-skills:project-setup`. It proposes `PROJECT.md` (identity, profile, naming conventions)
+   and `TOOLS.md` (for example Jira and GitHub, read only) from what it finds, and writes them after you agree.
+2. Ask to "set up the team register", then use the skills in your own words: "add a risk", "scrivi il verbale della
+   riunione", "status report", "who should review acme/web#42?".
+
+### Upgrading from 0.x
+
+Version 1.0 declares registers in `PROJECT.md` instead of `AGENTS.md`, moves the team register's `Sources:` line to
+`TOOLS.md`, and renames the `team-activity-scout` agent to `project-activity-scout`. At the first session the hook
+reminds you; run `/pm-skills:project-setup` and it proposes the migration in one step.
 
 ## Requirements
 
-- Python 3, on macOS or Linux, for the validator and the hooks.
-- For activity data: the `gh` CLI logged in and, for Jira, an Atlassian MCP server or the `acli` CLI. Without `gh`,
-  commits are read from local clones of the repositories, with no pull requests or reviews. Each skill's README says
+- Python 3, on macOS or Linux, for the validators, the scripts and the hooks; git for the project.
+- For facts from your tools: the ones you declare in `TOOLS.md`, for example the `gh` CLI logged in for GitHub and an
+  Atlassian MCP server for Jira. Without a code host CLI, commits are read from local clones. Each skill's README says
   what it can still do without them.
 
 ## Limitations
 
 - Activity read from local clones is only as recent as their last fetch: the plugin never fetches.
+- Numbers come from registers, tools and scripts; skills do not estimate figures while writing.
 
 ## License
 

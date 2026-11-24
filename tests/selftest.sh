@@ -26,8 +26,9 @@ write_plugin() {
 write_skill() {
     local dir="$1" folder="$2" name="${3:-$2}" description="${4:-Does a thing. Use when testing.}"
     mkdir -p "$dir/skills/$folder"
-    printf -- '---\nname: %s\ndescription: %s\n---\n\n# %s\n' "$name" "$description" "$name" \
+    printf -- '---\nname: %s\ndescription: %s\n---\n\n# %s\n\n## Extension points\n\nNone.\n' "$name" "$description" "$name" \
         > "$dir/skills/$folder/SKILL.md"
+    printf '# %s\n' "$name" > "$dir/skills/$folder/README.md"
 }
 
 # --- assertions -------------------------------------------------------------
@@ -64,7 +65,8 @@ d="$(new_repo valid)"; write_skill "$d" alpha; write_skill "$d" beta-two; write_
 expect_pass "two valid skills" "$d"
 
 d="$(new_repo folded)"; mkdir -p "$d/skills/folded"
-printf -- '---\nname: folded\ndescription: >\n  Spans two lines.\n  Use when testing.\n---\n' > "$d/skills/folded/SKILL.md"
+printf -- '---\nname: folded\ndescription: >\n  Spans two lines.\n  Use when testing.\n---\n\n## Extension points\n\n- `terms`: words.\n' > "$d/skills/folded/SKILL.md"
+printf '# folded\n' > "$d/skills/folded/README.md"
 write_plugin "$d"
 expect_pass "folded multi-line description" "$d"
 
@@ -77,8 +79,25 @@ expect_fail "frontmatter name differs from directory" "$d" "NAME MISMATCH"
 d="$(new_repo badname)"; write_skill "$d" Bad_Name; write_plugin "$d"
 expect_fail "skill name not lowercase-hyphen" "$d" "lowercase letters"
 
-d="$(new_repo longdesc)"; write_skill "$d" alpha alpha "$(printf 'x%.0s' $(seq 1 1025))"; write_plugin "$d"
-expect_fail "description over 1024 characters" "$d" "description is 1025 characters"
+
+
+d="$(new_repo longdesc)"; write_skill "$d" alpha alpha "$(printf 'x%.0s' $(seq 1 401))"; write_plugin "$d"
+expect_fail "description over 400 characters" "$d" "description is 401 characters"
+
+d="$(new_repo noreadme)"; write_skill "$d" alpha; rm "$d/skills/alpha/README.md"; write_plugin "$d"
+expect_fail "skill without README.md" "$d" "MISSING skills/alpha/README.md"
+
+d="$(new_repo nopoints)"; mkdir -p "$d/skills/alpha"; printf '# alpha\n' > "$d/skills/alpha/README.md"
+printf -- '---\nname: alpha\ndescription: Does a thing.\n---\n\n# alpha\n' > "$d/skills/alpha/SKILL.md"; write_plugin "$d"
+expect_fail "skill without Extension points" "$d" "no '## Extension points' section"
+
+d="$(new_repo badpoint)"; write_skill "$d" alpha
+printf -- '---\nname: alpha\ndescription: Does a thing.\n---\n\n## Extension points\n\n- `colors`: x\n\n## After\n\n- `fine`: not a point\n' > "$d/skills/alpha/SKILL.md"; write_plugin "$d"
+expect_fail "unknown extension point" "$d" "unknown extension point 'colors'"
+
+d="$(new_repo emptypoints)"; write_skill "$d" alpha
+printf -- '---\nname: alpha\ndescription: Does a thing.\n---\n\n## Extension points\n\nSome text.\n' > "$d/skills/alpha/SKILL.md"; write_plugin "$d"
+expect_fail "Extension points with no point and no None" "$d" "lists no point"
 
 d="$(new_repo nodesc)"; mkdir -p "$d/skills/alpha"
 printf -- '---\nname: alpha\n---\n' > "$d/skills/alpha/SKILL.md"; write_plugin "$d"

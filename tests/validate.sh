@@ -2,7 +2,8 @@
 # Structural validation of the pm-skills plugin. Catches what `claude plugin validate --strict`
 # does not: a skill directory without a SKILL.md, skill or agent names that differ from their
 # directory or file, a `skills` field that would stop Claude Code from loading every skill, a
-# stray marketplace.json, an invalid hooks.json or a UserPromptSubmit hook, and (when
+# stray marketplace.json, an invalid hooks.json or a UserPromptSubmit hook, a skill without its README.md or its
+# Extension points section, a description over the design limit, and (when
 # PM_SKILLS_FORBIDDEN_TERMS names a local file of terms) client names in the public repository.
 #
 # Usage: bash tests/validate.sh [repo-root]    (requires jq; bash 3.2 compatible)
@@ -14,7 +15,8 @@ RESERVED_PREFIX_RE='^(claude|anthropic|anthropics|cc-plugin)-'
 NAME_RE='^[a-z0-9]+(-[a-z0-9]+)*$'
 SEMVER_RE='^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?(\+[0-9A-Za-z.-]+)?$'
 MAX_NAME=64
-MAX_DESCRIPTION=1024
+MAX_DESCRIPTION=400
+EXTENSION_POINTS_RE='^(format|scale|rules|steps|terms)$'
 ERRORS=0
 
 error() { echo "ERROR: $*"; ERRORS=$((ERRORS + 1)); }
@@ -80,6 +82,25 @@ check_plugin() {
     fi
 }
 
+# Every skill ends with an "## Extension points" section: lines "- `<point>`: ..." from the fixed vocabulary, or "None.".
+check_extension_points() {
+    local file="$1" rel="$2" points point
+    if ! grep -q '^## Extension points[[:space:]]*$' "$file"; then
+        error "$rel: no '## Extension points' section"; return
+    fi
+    points="$(awk '/^## /{ on = ($0 ~ /^## Extension points[ \t]*$/); next } on' "$file")"
+    if printf '%s\n' "$points" | grep -q '^None\.'; then return; fi
+    if ! printf '%s\n' "$points" | grep -q '^- `'; then
+        error "$rel: Extension points lists no point and does not say 'None.'"; return
+    fi
+    while IFS= read -r point; do
+        [[ -n "$point" ]] || continue
+        if ! [[ "$point" =~ $EXTENSION_POINTS_RE ]]; then
+            error "$rel: unknown extension point '$point' (format, scale, rules, steps, terms)"
+        fi
+    done <<< "$(printf '%s\n' "$points" | sed -n 's/^- `\([^`]*\)`.*/\1/p')"
+}
+
 check_skills() {
     local d
     SKILLS=0
@@ -89,6 +110,8 @@ check_skills() {
         SKILLS=$((SKILLS + 1))
         if [[ ! -f "$d/SKILL.md" ]]; then error "MISSING skills/$(basename "$d")/SKILL.md"; continue; fi
         check_component "$d/SKILL.md" "skills/$(basename "$d")/SKILL.md" "$(basename "$d")"
+        check_extension_points "$d/SKILL.md" "skills/$(basename "$d")/SKILL.md"
+        if [[ ! -f "$d/README.md" ]]; then error "MISSING skills/$(basename "$d")/README.md"; fi
     done
 }
 

@@ -183,7 +183,7 @@ class PostToolUseHook(unittest.TestCase):
     def test_silent_when_valid(self):
         with tempfile.TemporaryDirectory() as tmp:
             project = make_project(tmp)
-            for name in ("PROJECT.md", "TOOLS.md", "TEAMS.md", "RISKS.md", "DECISIONS.md"):
+            for name in REGISTER_FILES:
                 result = run_hook("check_register.py", project, self.payload(project / name))
                 self.assertEqual((name, result.returncode, result.stdout), (name, 0, ""))
 
