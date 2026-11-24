@@ -23,23 +23,19 @@ ACTIVE_COLUMNS = ("Slug", "Name", "Organization", "GitHub", "Jira", "Roles", "Ar
 ACTIVE_COLUMNS_WITH_GIT = ("Slug", "Name", "Organization", "GitHub", "Jira", "Git", "Roles", "Areas")
 HISTORY_COLUMNS = ("Slug", "From", "To", "Role")
 LAST_RECONCILED = "Last reconciled:"
-SOURCES = "Sources:"
+SOURCES = "Sources:"  # removed in 1.0: the tools live in TOOLS.md
 
 SLUG_RE = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
 GITHUB_RE = re.compile(r"^[A-Za-z0-9](?:[A-Za-z0-9-]{0,38})$")
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
-SOURCE_RE = re.compile(r"^(github:[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+|jira:[A-Z][A-Z0-9_]+)$")
 EMAIL_RE = re.compile(r"\S+@\S+\.\S+")
 GIT_IDENTITY_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 PHONE_RE = re.compile(r"\+?\d[\d\s().-]{7,}\d")
-DECLARATION_RE = re.compile(r"^\s*-\s*Team register:\s*`([^`]+)`")
-INSTRUCTION_FILES = ("AGENTS.md", "CLAUDE.md")
 STALE_AFTER_DAYS = 42
 SKILL = "/pm-skills:team-register"
 SEPARATOR_CELL_RE = re.compile(r"^:?-+:?$")
 NO_PHONE_CHECK = {"Slug", "GitHub", "Jira", "Git", "From", "To"}
 DATES_AND_RANGES_RE = re.compile(r"\b\d{4}-\d{2}-\d{2}\b|\b\d{4}\s*[-–]\s*\d{4}\b")
-FENCE_RE = re.compile(r"^\s*(```|~~~)")
 
 
 @dataclass(frozen=True)
@@ -67,7 +63,6 @@ class Period:
 @dataclass(frozen=True)
 class Register:
     last_reconciled: Optional[date]
-    sources: tuple[str, ...]
     active: tuple[Member, ...]
     history: tuple[Period, ...]
 
@@ -105,7 +100,6 @@ class _Scanner:
         self.errors: list[str] = []
         self.title_seen = False
         self.last_reconciled: Optional[date] = None
-        self.sources: tuple[str, ...] = ()
         self.section: Optional[str] = None  # None, "active", "history"
         self.table_state = "none"  # none, header, separator, rows, closed
         self.rows: dict[str, list[_Row]] = {"active": [], "history": []}
@@ -137,19 +131,13 @@ class _Scanner:
             value = line[len(LAST_RECONCILED):].strip()
             self.last_reconciled = _parse_date(value, number, "Last reconciled", self.errors)
         elif line.startswith(SOURCES) and self.section is None:
-            self._sources(number, line[len(SOURCES):].strip())
+            self.errors.append(f"line {number}: the '{SOURCES}' line is no longer used: the project's tools are "
+                               "declared in its tools register (TOOLS.md); remove the line")
         elif line.startswith("|") and self.section and self.table_state != "closed":
             self._table_line(number, line)
         else:
             self.errors.append(f"line {number}: unexpected content: only the title, '{LAST_RECONCILED}', "
-                               f"'{SOURCES}', the two sections and their tables are allowed")
-
-    def _sources(self, number: int, value: str) -> None:
-        items = _split_list(value)
-        for item in items:
-            if not SOURCE_RE.match(item):
-                self.errors.append(f"line {number}: source '{item}' must be github:<owner>/<repo> or jira:<KEY>")
-        self.sources = items
+                               "the two sections and their tables are allowed")
 
     def _table_line(self, number: int, line: str) -> None:
         columns = self.active_columns if self.section == "active" else HISTORY_COLUMNS
@@ -268,29 +256,11 @@ def parse(text: str) -> tuple[Optional[Register], list[str]]:
     history = tuple(p for p in (_period(row, errors) for row in scanner.rows["history"]) if p is not None)
     _cross_checks(active, history, errors)
     errors.sort(key=lambda e: int(e.split(":", 1)[0].split()[1]))
-    return Register(scanner.last_reconciled, scanner.sources, active, history), errors
+    return Register(scanner.last_reconciled, active, history), errors
 
 
 def validate(text: str) -> list[str]:
     return parse(text)[1]
-
-
-def find_register(project_dir: Path) -> Optional[Path]:
-    """The register declared by a "- Team register: `<path>`" line in AGENTS.md, else CLAUDE.md."""
-    for name in INSTRUCTION_FILES:
-        try:
-            lines = (project_dir / name).read_text(encoding="utf-8").splitlines()
-        except OSError:
-            continue
-        in_fence = False
-        for line in lines:
-            if FENCE_RE.match(line):
-                in_fence = not in_fence
-                continue
-            match = None if in_fence else DECLARATION_RE.match(line)
-            if match:
-                return project_dir / match.group(1)
-    return None
 
 
 def summary_line(path: Path, today: date, label: Optional[str] = None) -> str:

@@ -3,15 +3,14 @@
 The team register records who works on the project now and who worked on it before, with the accounts and areas
 needed to assign work and pick reviewers. It is project data, not a personnel file.
 
-A project declares where its register lives with one line in its `AGENTS.md` (or `CLAUDE.md`):
+It is declared in the Registers section of the project register (`shared/registers/project.md`):
 
 ```markdown
 - Team register: `TEAMS.md`
 ```
 
-The path is relative to the project root; text after the closing backtick is ignored, and so is a line inside a
-fenced code block, which is an example. The default location is
-`TEAMS.md` at the root.
+The path is relative to the project root; the default location is `TEAMS.md` at the root. The systems the team's
+activity is read from are the project's tools (`shared/registers/tools.md`), not part of this register.
 
 ## Example
 
@@ -19,7 +18,6 @@ fenced code block, which is an example. The default location is
 # Team
 
 Last reconciled: 2026-11-20
-Sources: github:acme/web, github:acme/api, jira:ACME
 
 ## Active team
 
@@ -44,8 +42,7 @@ Headings and column names are schema keys: they stay in English whatever the lan
 
 | Field | Meaning | Rule |
 |---|---|---|
-| `Last reconciled` | the last date the register was checked against its sources | optional; `YYYY-MM-DD` |
-| `Sources` | where the team's activity is read from | optional; comma-separated `github:<owner>/<repo>` or `jira:<PROJECT KEY>` |
+| `Last reconciled` | the last date the register was checked against the project's tools | optional; `YYYY-MM-DD` |
 | `Slug` | a stable identifier for the person, used across both tables | lowercase letters, digits, single hyphens; unique in Active team |
 | `Name` | the name the team uses | not empty |
 | `Organization` | the company the person works for (own, supplier, client) | free text |
@@ -59,7 +56,7 @@ Headings and column names are schema keys: they stay in English whatever the lan
 
 ## Rules
 
-1. Allowed lines: the title `# Team`, blank lines, `Last reconciled:`, `Sources:`, the section `## Active team`
+1. Allowed lines: the title `# Team`, blank lines, `Last reconciled:`, the section `## Active team`
    followed by its table, then the section `## History` followed by its table. Anything else is an error: there are
    no free notes in the register.
 2. Table headers are exactly the ones in the example, in that order. Active team may add the `Git` column right
@@ -76,9 +73,18 @@ Headings and column names are schema keys: they stay in English whatever the lan
 
 ## What does not belong here
 
-Contacts (email addresses other than commit identities in `Git`, phone numbers), allocation percentages, availability and leave, reporting lines, appraisals, notes on
-motivation or performance, and anything else of human resources management. If someone asks to record such data,
-explain that the register holds project data only and leave it out.
+The register follows the plugin's people rule: delivery facts, never sensitive personal data or evaluations.
+
+- **Never**: contacts (email addresses other than commit identities in `Git`, phone numbers), health or the reasons
+  for an absence, individual cost, reporting lines, appraisals, judgments, notes on motivation or performance.
+- **Elsewhere**: availability by period belongs to a capacity register, not here; delivery performance is computed
+  from the project's tools when needed, never stored.
+
+If someone asks to record such data, explain where it belongs, or that it does not belong in the project, and leave
+it out.
+
+A register with the `Sources:` line of versions before 1.0 is invalid: the validator asks to remove it, and
+`project-setup` moves its repositories and Jira projects to the tools register.
 
 ## Validation
 

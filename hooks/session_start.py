@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""SessionStart: one line of context about the project's team register; silent when none is declared."""
+"""SessionStart: one line of context about the project's declared registers; silent when none is declared."""
 from __future__ import annotations
 
 import os
@@ -12,17 +12,13 @@ import _common  # noqa: E402
 
 def main() -> int:
     try:
-        import teams_register
+        import registers
 
         project = _common.project_dir(_common.read_payload())
-        register = teams_register.find_register(project) if project else None
-        if register is None:
+        line = registers.summary(project, date.today()) if project else None
+        if line is None:
             return 0
-        label = os.path.relpath(register, project)
-        _common.emit({"hookSpecificOutput": {
-            "hookEventName": "SessionStart",
-            "additionalContext": teams_register.summary_line(register, date.today(), label=label),
-        }})
+        _common.emit({"hookSpecificOutput": {"hookEventName": "SessionStart", "additionalContext": line}})
         return 0
     except Exception as exc:  # a hook must never break the session
         return _common.fail_quietly("session_start", exc)
