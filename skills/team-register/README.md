@@ -49,9 +49,10 @@ Without a declared register the skill starts by setting one up.
 
 ## Requirements
 
-For reconciliation, the `gh` CLI logged in and, for Jira, an Atlassian MCP server or the `acli` CLI. When a source
-cannot be read, the skill says which one, proposes nothing that depends on it, and leaves `Last reconciled` as it
-was. Setup and updates need neither.
+For reconciliation, the `gh` CLI logged in and, for Jira, an Atlassian MCP server or the `acli` CLI. Without `gh`,
+commits are read from local clones of the repositories: enough to find new people and missing commit emails, not to
+call anyone inactive. When a source cannot be read, the skill says which one, proposes nothing that depends on it, and
+leaves `Last reconciled` as it was. Setup and updates need neither.
 
 ## Limitations
 

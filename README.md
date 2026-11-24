@@ -25,7 +25,7 @@ Skills are grouped by PMBOK 8 performance domain; both belong to **Resources**.
 
 ## Agents
 
-- `team-activity-scout`: collects each member's recent GitHub and Jira activity for the two skills, read only.
+- `team-activity-scout`: collects each member's recent GitHub (or local git) and Jira activity for the two skills, read only.
 
 ## Hooks
 
@@ -55,12 +55,13 @@ projects to read, and shows you `TEAMS.md` and the line for `AGENTS.md` before w
 ## Requirements
 
 - Python 3, on macOS or Linux, for the validator and the hooks.
-- For activity data: the `gh` CLI logged in and, for Jira, an Atlassian MCP server or the `acli` CLI. Each skill's
-  README says what it can still do without them.
+- For activity data: the `gh` CLI logged in and, for Jira, an Atlassian MCP server or the `acli` CLI. Without `gh`,
+  commits are read from local clones of the repositories, with no pull requests or reviews. Each skill's README says
+  what it can still do without them.
 
 ## Limitations
 
-- Version 0.1.0: the Jira paths have not yet been exercised on a real project; the GitHub paths have.
+- Activity read from local clones is only as recent as their last fetch: the plugin never fetches.
 
 ## License
 
