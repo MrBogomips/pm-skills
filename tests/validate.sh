@@ -84,21 +84,22 @@ check_plugin() {
 
 # Every skill ends with an "## Extension points" section: lines "- `<point>`: ..." from the fixed vocabulary, or "None.".
 check_extension_points() {
-    local file="$1" rel="$2" points point
+    local file="$1" rel="$2" points point names
     if ! grep -q '^## Extension points[[:space:]]*$' "$file"; then
         error "$rel: no '## Extension points' section"; return
     fi
     points="$(awk '/^## /{ on = ($0 ~ /^## Extension points[ \t]*$/); next } on' "$file")"
     if printf '%s\n' "$points" | grep -q '^None\.'; then return; fi
-    if ! printf '%s\n' "$points" | grep -q '^- `'; then
-        error "$rel: Extension points lists no point and does not say 'None.'"; return
+    names="$(printf '%s\n' "$points" | sed -n 's/^- `\([^`]*\)`[[:space:]]*:.*/\1/p')"
+    if [[ -z "$names" ]]; then
+        error "$rel: Extension points lists no point as '- \`<point>\`: ...' and does not say 'None.'"; return
     fi
     while IFS= read -r point; do
         [[ -n "$point" ]] || continue
         if ! [[ "$point" =~ $EXTENSION_POINTS_RE ]]; then
             error "$rel: unknown extension point '$point' (format, scale, rules, steps, terms)"
         fi
-    done <<< "$(printf '%s\n' "$points" | sed -n 's/^- `\([^`]*\)`.*/\1/p')"
+    done <<< "$names"
 }
 
 check_skills() {

@@ -19,7 +19,7 @@ real names.
 | Case | Setup | Prompt | Expected |
 |---|---|---|---|
 | default-asks-then-advises | configured | `/pm-skills:pm-coach` "The payment integration may slip; how should I handle it?" | Asks two or three questions first; after the answers, a recommendation with options and trade-offs; cites `R-001` and its score; suggests `/pm-skills:risk-register` and, if a decision is taken, `/pm-skills:decision-log` |
-| just-tell-me | configured | `/pm-skills:pm-coach` "Just tell me: should I raise R-001 at the steering committee?" | No questions; a direct recommendation in a few lines with its main assumption |
+| just-tell-me, names-sources, missing-register-named | configured | `/pm-skills:pm-coach` "Just tell me: should I raise R-001 at the steering committee?" | No questions; a direct recommendation in a few lines with its main assumption |
 | think-it-through | configured | `/pm-skills:pm-coach` "Fammi ragionare: il team manca lo Sprint Goal da tre sprint" | Answers in Italian; one or two questions at a time; no recommendation until the user asks; does not give the project manager a Scrum accountability |
 | tailoring-applied | configured | `/pm-skills:pm-coach` "We want to release on Friday; what should I prepare?" | Mentions the PMO gate review and uses "SAL"; says which tailoring rules it applied |
 | no-project-register | bare | `/pm-skills:pm-coach` "How should I plan the next release?" | Says there is no project register, suggests `/pm-skills:project-setup`, coaches on what the user says; invents no configuration |
@@ -32,3 +32,4 @@ real names.
 
 | Date | Version | Cases run | Outcome | Notes |
 |---|---|---|---|---|
+| 2026-11-24 | 1.0.0 | just-tell-me, names-sources, missing-register-named | pass | headless, sonnet: direct recommendation grounded in PROJECT.md, RISKS.md, DECISIONS.md; named Scrum Guide 2020 and PMBOK 8 without restating them; gave no Scrum accountability to the PM; suggested skills without invoking them; listed what it did not read |

@@ -29,3 +29,4 @@ Manual checks of the skill, run with `claude --plugin-dir <repo>` (or headless, 
 
 | Date | Version | Cases run | Outcome | Notes |
 |---|---|---|---|---|
+| 2026-11-24 | 1.0.0 | applies-tailoring, all-headings-kept, colors-with-reasons, no-review-for-team | pass | headless, sonnet: `ACME-SAL-001.md` with the SAL term and the Client actions section from TAILORING.md; amber justified by R-001; empty sections say why; Sources lists what could not be read; no review for a team audience; nothing written |

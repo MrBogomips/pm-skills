@@ -83,6 +83,12 @@ class ProjectRegister(ErrorAssertions):
     def test_rejects_shared_file(self):
         self.assertError(pr.validate(replaced(PROJECT, "`DECISIONS.md`", "`RISKS.md`")), 34, "same file")
 
+    def test_rejects_shared_file_through_normalized_paths(self):
+        self.assertError(pr.validate(replaced(PROJECT, "`DECISIONS.md`", "`./RISKS.md`")), 34, "same file")
+
+    def test_rejects_unicode_digits_without_crashing(self):
+        self.assertError(pr.validate(replaced(PROJECT, "- Sprint length: 2", "- Sprint length: ²")), 19, "Sprint length")
+
     def test_rejects_duplicate_and_empty(self):
         errors = pr.validate(replaced(PROJECT, "- Client: Acme Corp\n", "- Client: Acme Corp\n- Client:\n"))
         self.assertError(errors, 6, "already on line 5")
@@ -214,6 +220,10 @@ class DecisionLog(ErrorAssertions):
                                       "- Consequences:", "- Notes:"))
         self.assertError(errors, 3, "heading")
         self.assertError(errors, 20, "unknown key")
+
+    def test_accepts_versioned_coded_source_not_as_phone(self):
+        text = replaced(DECISIONS, "`meeting-minutes/2026-09-18-meeting-minutes-steering.md`", "`ACME-MM-012-1.0.0.md`")
+        self.assertEqual(dr.validate(text), [])
 
     def test_rejects_one_sided_supersession(self):
         self.assertError(dr.validate(replaced(DECISIONS, "- Supersedes: D-001\n", "")), 11, "Supersedes: D-001")

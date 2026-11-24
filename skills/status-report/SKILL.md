@@ -1,6 +1,6 @@
 ---
 name: status-report
-description: Drafts the project's status report for the reporting period from the registers and the project's tools, outcomes before activities, with status colors backed by facts and a critical review when it goes to a steering committee or the client. Use when the user asks for a status or progress report ("status report", "SAL", "report di avanzamento", "stato avanzamento lavori").
+description: Drafts the project status report for the reporting period from the registers and the project tools, outcomes before activities, with status colors backed by facts and a critical review when it goes to a steering committee or the client. Use for a status, progress, weekly or monthly report ("status report", "SAL", "report di avanzamento", "stato avanzamento lavori").
 ---
 
 # Status report

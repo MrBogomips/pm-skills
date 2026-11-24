@@ -127,6 +127,15 @@ class SummaryLines(unittest.TestCase):
         self.assertIn("Risk register `RISKS.md`: 3 open, 1 past their review date", line)
         self.assertIn("Decision log `DECISIONS.md`: 2 decisions, 1 in force, latest D-002 on 2026-09-18", line)
 
+    def test_unreadable_register_does_not_hide_the_others(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            project = make_project(tmp)
+            (project / "RISKS.md").unlink()
+            (project / "RISKS.md").mkdir()
+            line = registers.summary(project, TODAY)
+        self.assertIn("Risk register `RISKS.md` cannot be read", line)
+        self.assertIn("Team register `TEAMS.md`: 3 active", line)
+
     def test_legacy_declaration_suggests_migration(self):
         with tempfile.TemporaryDirectory() as tmp:
             line = registers.summary(make_project(tmp, "- Team register: `TEAMS.md`", files=("TEAMS.md",)), TODAY)

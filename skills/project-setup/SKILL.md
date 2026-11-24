@@ -28,7 +28,8 @@ as many sessions as the user needs; reviews them when the project changes. Every
    project register: propose `PROJECT.md` with that register in its Registers section, the instruction-file line
    replaced by `- Project register: \`PROJECT.md\``, and the team register's `Sources:` line moved to `TOOLS.md` as
    rows (`github:<owner>/<repo>` → a GitHub tool with Purpose `code`, `jira:<KEY>` → a Jira tool with Purpose
-   `issues`, both `read` unless the user says otherwise). Show all three changes together, then write them.
+   `issues`, both `read` unless the user says otherwise), and the `Sources:` line removed from the team register (the
+   1.0 validator rejects it). Show all the changes together, then write them.
 3. **Identity.** Propose the values you can read (project name from the README, client and codes from the documents),
    ask once for the rest, all together. `Internal code` is needed for coded document names. Leave out what the user
    does not know yet.

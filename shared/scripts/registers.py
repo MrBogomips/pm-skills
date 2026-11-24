@@ -54,7 +54,7 @@ def declared(project_dir: Path) -> list[Declared]:
     result = [Declared(PROJECT, project_file)]
     try:
         others = project_register.declared_registers(project_dir, project_file)
-    except OSError:
+    except (OSError, ValueError):
         return result
     result += [Declared(name, path) for name, path in others.items() if name in MODULES]
     return result
@@ -67,7 +67,11 @@ def summary(project_dir: Path, today: date) -> Optional[str]:
         parts = []
         for register in registers:
             label = _label(register.path, project_dir)
-            parts.append(register.module.summary_line(register.path, today, label=label).rstrip("."))
+            try:
+                line = register.module.summary_line(register.path, today, label=label)
+            except (OSError, ValueError) as exc:
+                line = f"{register.name} `{label}` cannot be read ({type(exc).__name__})"
+            parts.append(line.rstrip("."))
         return "pm-skills: " + "; ".join(parts) + "."
     legacy = project_register.find_legacy_team_register(project_dir)
     if legacy is not None:

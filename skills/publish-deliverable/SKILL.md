@@ -1,6 +1,6 @@
 ---
 name: publish-deliverable
-description: Renders a Markdown deliverable of the project into a distribution format (Word, PDF, slides, email, an artifact) through the renderer the project declares, and sends or uploads it only through a declared write tool. Use when the user asks to share, export or publish a document ("export to Word", "make a PDF", "esporta in Word", "pubblica il documento", "genera il PDF").
+description: Renders a Markdown project document (status report, minutes, any deliverable) into Word, PDF, slides, email or an artifact through the renderer the project declares, and sends or uploads it only through a declared write tool. Use to export or distribute it ("export to Word", "make a PDF of the report", "esporta in Word", "genera il PDF", "pubblica il documento"); not to write the document.
 ---
 
 # Publish deliverable

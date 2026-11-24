@@ -31,3 +31,4 @@ real names.
 
 | Date | Version | Cases run | Outcome | Notes |
 |---|---|---|---|---|
+| 2026-11-24 | 1.0.0 | migrates-0x, checklist-first | pass | headless, sonnet, writes not allowed: one proposal with PROJECT.md, TOOLS.md rows from `Sources:` (read) and the AGENTS.md line; asked for Identity and Profile in one round. It asked whether to remove `Sources:` from TEAMS.md: step 2 now says to remove it |

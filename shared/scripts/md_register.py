@@ -15,6 +15,7 @@ SEPARATOR_CELL_RE = re.compile(r"^:?-+:?$")
 EMAIL_RE = re.compile(r"\S+@\S+\.\S+")
 PHONE_RE = re.compile(r"\+?\d[\d\s().-]{7,}\d")
 DATES_AND_RANGES_RE = re.compile(r"\b\d{4}-\d{2}-\d{2}\b|\b\d{4}\s*[-–]\s*\d{4}\b")
+NOT_PHONE_RE = re.compile(r"`[^`]*`|\b\d+\.\d+\.\d+\b|\b[A-Z]+-\d{3,}\b")
 FENCE_RE = re.compile(r"^\s*(```|~~~)")
 ENTRY_RE = re.compile(r"^-\s+([A-Za-z][A-Za-z ]*?):\s*(.*)$")
 PATH_RE = re.compile(r"^`([^`]+)`")
@@ -54,6 +55,11 @@ def parse_date(value: str, line: int, what: str, errors: list[str]) -> Optional[
         return None
 
 
+def is_number(value: str) -> bool:
+    """ASCII digits only: str.isdigit() also accepts superscripts, which int() rejects."""
+    return value.isascii() and value.isdigit()
+
+
 def split_list(value: str) -> tuple[str, ...]:
     return tuple(item.strip() for item in value.split(","))
 
@@ -74,7 +80,7 @@ def check_contacts(line: int, column: str, value: str, errors: list[str], phone:
     """Reject email addresses and phone numbers: contacts do not belong in project registers."""
     if EMAIL_RE.search(value):
         errors.append(f"line {line}: {column} contains an email address: contacts do not belong here")
-    elif phone and PHONE_RE.search(DATES_AND_RANGES_RE.sub(" ", value)):
+    elif phone and PHONE_RE.search(DATES_AND_RANGES_RE.sub(" ", NOT_PHONE_RE.sub(" ", value))):
         errors.append(f"line {line}: {column} contains a phone number: contacts do not belong here")
 
 

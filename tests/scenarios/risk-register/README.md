@@ -35,3 +35,4 @@ are invented; never commit real names.
 
 | Date | Version | Cases run | Outcome | Notes |
 |---|---|---|---|---|
+| 2026-11-24 | 1.0.0 | add-risk-computes-score-and-id, tailoring-scale-applied | pass | headless, sonnet: R-005 proposed as cause, event and effect, score computed, high threshold from TAILORING.md, owner not guessed, nothing written; flagged R-002 past its review date |

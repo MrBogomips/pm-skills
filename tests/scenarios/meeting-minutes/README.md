@@ -35,3 +35,4 @@ Manual checks of the skill, run with `claude --plugin-dir <repo>` (or headless, 
 
 | Date | Version | Cases run | Outcome | Notes |
 |---|---|---|---|---|
+| 2026-11-24 | 1.0.0 | drafts-in-format, proposes-register-entries | pass | headless, sonnet: name `ACME-MM-001-steering.md` from doc_naming.py, D-003/D-004 and R-005 proposed with missing risk fields asked, not invented; left out a health reason given in the notes; offered the action as a Jira item only after confirmation. Minor: the shown draft already said `status: issued` before approval |

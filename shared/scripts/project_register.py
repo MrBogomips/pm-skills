@@ -8,6 +8,7 @@ Usage:
 """
 from __future__ import annotations
 
+import os
 import re
 import sys
 from dataclasses import dataclass, field
@@ -62,7 +63,7 @@ def _code(value: str) -> Optional[str]:
 
 
 def _weeks(value: str) -> Optional[str]:
-    return None if value.isdigit() and 1 <= int(value) <= 8 else "must be a number of weeks from 1 to 8"
+    return None if md.is_number(value) and 1 <= int(value) <= 8 else "must be a number of weeks from 1 to 8"
 
 
 def _path(value: str) -> Optional[str]:
@@ -184,7 +185,8 @@ def _cross_checks(project: Project, errors: list[str]) -> None:
         errors.append(f"line {project.lines[('Conventions', 'Naming')]}: the coded naming preset needs "
                       "Internal code in Identity")
     seen: dict[str, str] = {}
-    for name, path in project.registers().items():
+    for name, raw in project.registers().items():
+        path = os.path.normpath(raw) if raw else raw
         if path in seen:
             errors.append(f"line {project.lines[('Registers', name)]}: {name} uses the same file as {seen[path]}")
         seen.setdefault(path, name)
