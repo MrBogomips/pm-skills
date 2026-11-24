@@ -1,12 +1,12 @@
 ---
-summary: For project managers and tech leads - suggests who should take a Jira task or review a pull request or document, with reasons, from the team register.
+summary: For project managers and tech leads - suggests who should take a task or review a pull request or document, with reasons, from the team register, and assigns only on your agreement.
 ---
 
 # assignment-advisor
 
-Suggests up to three people from your team register for a Jira task, a pull request review or a document review,
-each with the reasons: matching areas, recent activity in the repositories involved, open Jira load. It never
-assigns or requests anything itself.
+Suggests up to three people from your team register for a task, a pull request review or a document review, each
+with the reasons: matching areas, recent activity in the repositories involved, open load. It assigns or requests a
+review only when you agree, and only through a tool your project declares for writing.
 
 ## Why
 
@@ -14,21 +14,44 @@ Picking a reviewer or an assignee often defaults to whoever comes to mind, and m
 This skill grounds the choice in the register's areas and in recent activity, leaves out the author, anyone who
 already approved and the current assignee, and tells you where its data was missing.
 
+## Use cases
+
+### Pick a reviewer for a pull request
+
+**Context:** A pull request in `acme/web` is waiting for review.
+
+**Action:** Ask "who should review acme/web#42?".
+
+**Result:** Up to three candidates with their areas, recent reviews in `acme/web` and open load; the author and
+existing approvers are left out, with a line saying so.
+
+### Assign a task
+
+**Context:** A new issue, `ACME-123`, touches the payment API.
+
+**Action:** Ask "a chi assegno ACME-123?", then "assign it to Ada".
+
+**Result:** A ranked list; after you pick, the skill shows the assignment and makes it through the issue tracker if
+`TOOLS.md` declares it `write`, otherwise it gives you the step to do it yourself.
+
 ## Usage
 
-Ask "who should review acme/web#42?", "chi prende ACME-123?", "who should review docs/design.md?" or describe the task
-in a sentence, or run `/pm-skills:assignment-advisor` with the work. The answer is a short ranked list with the
-reasons; if you ask it to go ahead, it gives you the command to run, such as
-`gh pr edit 42 --repo acme/web --add-reviewer <login>`.
+Ask in your own words or run `/pm-skills:assignment-advisor` with the work (an issue key, a pull request, a document
+path or a sentence).
+
+## Inputs and outputs
+
+- Reads `PROJECT.md`, the team register and the tools register; reads the work through the project's `issues` and
+  `code` tools; dispatches the `project-activity-scout` agent for recent activity.
+- Writes no files. Writes to a tool only through one declared with `Mode: write`, after you confirm the exact change.
 
 ## Requirements
 
-- A team register, created with [`team-register`](../team-register/README.md).
-- To read a pull request, the `gh` CLI logged in; to read a Jira task, an Atlassian MCP server or the `acli` CLI.
-  Without them the skill asks you for the details of the work and ranks on the register alone.
+- A project register (`/pm-skills:project-setup`) and a team register (`/pm-skills:team-register`).
+- A tools register with `issues` and `code` tools for activity data; without them the skill asks for the details of
+  the work and ranks on the register alone.
 
 ## Limitations
 
-- Suggests only: never assigns, requests reviews or comments on GitHub or Jira.
 - Considers only the active members of the register.
-- Ranks by areas and recent activity; open Jira load only breaks ties, and open review load is not counted.
+- Ranks by areas and recent activity; open load only breaks ties, and open review load is not counted.

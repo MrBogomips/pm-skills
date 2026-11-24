@@ -1,8 +1,8 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "pm-skills",
-  "version": "0.2.0",
-  "description": "Project management skills for Claude Code: team register reconciled with GitHub and Jira, assignment and reviewer suggestions.",
+  "version": "1.0.0",
+  "description": "Project management skills for Claude Code, optimized for software: project and tools configuration, team register, assignments, risk register, decision log, meeting minutes, status reports, publishing and a PM coach.",
   "author": {
     "name": "Mr Bogomips",
     "url": "https://github.com/MrBogomips"
@@ -13,9 +13,13 @@
   "keywords": [
     "project-management",
     "pmbok",
-    "resources",
-    "team",
+    "scrum",
+    "kanban",
+    "governance",
+    "risk",
     "stakeholders",
+    "resources",
+    "status-report",
     "jira",
     "github"
   ]

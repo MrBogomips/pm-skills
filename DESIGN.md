@@ -4,11 +4,6 @@ The goals, principles and patterns behind every skill, agent and hook of `pm-ski
 or changing one. `AGENTS.md` holds the operational rules (layout, confidentiality, version, verification); this file
 says what to build and why. A rule lives in one of the two files, never in both.
 
-The components published today (`team-register`, `assignment-advisor`, `team-activity-scout` and the two hooks)
-predate some of these rules: they still read the team register from the project's `AGENTS.md`, list their sources in
-`TEAMS.md` and stay read-only towards GitHub and Jira. [Wave 0](#planned-skills) brings them in line, with a major
-version.
-
 ## Goals
 
 1. **Generic project management, optimized for software.** Skills support everyday work on any project, whatever
@@ -79,7 +74,8 @@ a spreadsheet, a document template) are declared in its [tools register](#tools-
 server, a CLI, a file, a skill or a script, and the model picks the right one and uses it with its own abilities and
 the tool's.
 
-Only the known pitfalls of a specific tool go in a skill's `references/`, one file per tool. Spreadsheets and other
+Only the known pitfalls of a specific tool are written down, one file per tool, in `shared/tools/<tool>.md` when
+several skills or agents reach it, else in the skill's `references/`. Spreadsheets and other
 office files are `file:` tools, read with the session's document conversion. With no tools register, a skill
 suggests `/pm-skills:project-setup` and names the sources it could not read.
 
@@ -122,7 +118,7 @@ A skill may suggest one, never depend on it.
 
 ### Skill anatomy
 
-- **Frontmatter**: `name` equal to the directory; `description` under about 400 characters, saying what the skill
+- **Frontmatter**: `name` equal to the directory; `description` of at most 400 characters (the validator checks it), saying what the skill
   does and when to use it, with specific trigger phrases in English and Italian.
 - **User-invocable only**: a skill the user starts on purpose, and that would only crowd the context otherwise, sets
   `disable-model-invocation: true`: `pm-coach`, `project-setup` and `pm-tailoring`.
@@ -142,7 +138,7 @@ only that register:
 - Project register: `PROJECT.md`
 ```
 
-`PROJECT.md` has four sections; the exact format will live in `shared/registers/project.md`.
+`PROJECT.md` has four sections; the exact format lives in `shared/registers/project.md`.
 
 | Section | What it holds |
 |---|---|
@@ -171,7 +167,7 @@ reviews them when the project changes. Another skill that needs a missing key as
 
 ### Tools register
 
-`TOOLS.md` lists the tools the project uses and what each may do. Its format will live in
+`TOOLS.md` lists the tools the project uses and what each may do. Its format lives in
 `shared/registers/tools.md`, with a validator like every register.
 
 | Tool | Purpose | Access | Scope | Mode |
@@ -290,8 +286,8 @@ Whatever the ladder picks is recorded in `TOOLS.md`.
 Hooks stay cheap and silent: no `UserPromptSubmit` hook, nothing printed in a project that declares no register, and
 an internal error never interrupts the session. There are two: one `SessionStart` hook that sums up every declared
 register in one line, and one `PostToolUse` hook (`Write`, `Edit`) that validates whichever declared register was
-edited. A new register extends these two hooks; it never adds its own. Today they cover the team register only; wave
-0 makes them read the registers listed in `PROJECT.md`.
+edited. A new register extends these two hooks (its validator joins `shared/scripts/registers.py`); it never adds its
+own. They read the project register from the instruction file and every register it lists.
 
 ### Agents
 
@@ -303,9 +299,9 @@ Each agent pins its model in the frontmatter by class, and says why in its body:
 
 | Class | Model | What it does | Agents |
 |---|---|---|---|
-| Collector | `haiku` | gathers facts from the project's tools, read only, in a fixed output shape; no advice, no proposals | `team-activity-scout` (to become *`project-activity-scout`*), *`flow-data-scout`* |
+| Collector | `haiku` | gathers facts from the project's tools, read only, in a fixed output shape; no advice, no proposals | `project-activity-scout`, *`flow-data-scout`* |
 | Analyst | `sonnet` | turns facts from several sources into an analysis or a draft | none planned |
-| Critical reviewer | `opus` | challenges plans, estimates, risk responses and deliverables; finds what is missing | *`pm-critical-reviewer`* |
+| Critical reviewer | `opus` | challenges plans, estimates, risk responses and deliverables; finds what is missing | `pm-critical-reviewer` |
 
 Names in italics are planned. Collectors feed analysts and reviewers: an agent that reasons receives the facts, it
 does not gather them. A collector that reaches its tools adaptively is checked on `haiku` with its scenarios, and
@@ -329,15 +325,15 @@ Every pull request that adds, renames or removes a skill updates this map.
 
 | Domain | Initiating | Planning | Executing | Monitoring and Controlling | Closing |
 |---|---|---|---|---|---|
-| Governance | *`project-setup`*, *`project-charter`* | *`product-roadmap`* | *`decision-log`* | *`status-report`*, *`change-request`*, *`decision-log`*, *`retrospective`*, *`phase-gate-review`* | *`phase-gate-review`*, *`lessons-learned`* |
+| Governance | `project-setup`, *`project-charter`* | *`product-roadmap`* | `decision-log` | `status-report`, *`change-request`*, `decision-log`, *`retrospective`*, *`phase-gate-review`* | *`phase-gate-review`*, *`lessons-learned`* |
 | Scope | *`project-charter`* | *`product-roadmap`*, *`wbs-builder`*, *`backlog-refinement`*, *`sprint-planning`*, *`release-plan`* | | *`change-request`*, *`sprint-review`* | |
 | Schedule | | *`estimate`*, *`sprint-planning`*, *`release-plan`* | | *`schedule-check`*, *`flow-metrics`*, *`delivery-forecast`* | |
 | Finance | | *`estimate`* | | *`budget-tracker`*, *`change-request`* | |
-| Stakeholders | *`stakeholder-register`* | *`communication-plan`* | *`meeting-minutes`*, *`publish-deliverable`* | *`stakeholder-register`*, *`status-report`*, *`sprint-review`* | |
+| Stakeholders | *`stakeholder-register`* | *`communication-plan`* | `meeting-minutes`, `publish-deliverable` | *`stakeholder-register`*, `status-report`, *`sprint-review`* | |
 | Resources | | `team-register`, *`capacity-register`*, *`raci-matrix`* | `assignment-advisor` | `team-register`, *`capacity-register`* | |
-| Risk | | *`risk-register`* | | *`risk-register`*, *`change-request`* | |
+| Risk | | `risk-register` | | `risk-register`, *`change-request`* | |
 
-Across all domains: *`pm-coach`* and *`pm-tailoring`*.
+Across all domains: `pm-coach` and *`pm-tailoring`*.
 
 The focus areas come from secondary sources: the text of the guide was not available. The guide's process names and
 count (forty, by the same sources) stay out of this file until someone checks them against the guide.
@@ -355,7 +351,7 @@ Scrum (Scrum Guide 2020) and Kanban (Kanban Guide v2025.5), by event, artifact a
 
 | Kanban | Skills |
 |---|---|
-| Defining and visualizing the workflow | the `Definition of Workflow` file in the Profile, kept by *`project-setup`* |
+| Defining and visualizing the workflow | the `Definition of Workflow` file in the Profile, kept by `project-setup` |
 | Actively managing items in the workflow | *`flow-metrics`* (work item age against the Service Level Expectation) |
 | Improving the workflow | *`flow-metrics`*, *`retrospective`* |
 | Flow measures: WIP, throughput, work item age, cycle time | *`flow-metrics`*, *`delivery-forecast`* |
@@ -366,30 +362,12 @@ The backlog, in waves. A wave comes before the next one because its registers ar
 within a wave, skills used most often come first. Names stay provisional until a skill is published. A GitHub issue is
 opened for an item only when work on it starts.
 
-**Wave 0: foundations.** One major version.
-
-- `project-setup` (register): builds and reviews `PROJECT.md` and `TOOLS.md` over one or more sessions; checks for
-  git; shows the state of the team and suggests `team-register`. User-invocable only.
-- Migration of `team-register`, `assignment-advisor` and `team-activity-scout` to `PROJECT.md`, `TOOLS.md`, adaptive
-  tool use, the people rule and writes through declared tools; `team-activity-scout` becomes
-  `project-activity-scout`, with a per-person and a per-project mode; the `Sources:` line of `TEAMS.md` goes away.
-- `shared/documents/` with the common frontmatter and the first document formats.
-- The **Extension points** section in the skill anatomy and the format and validator of `TAILORING.md`, so that every
-  skill from wave 1 on ships with its extension points.
-- The two hooks read the registers from `PROJECT.md`.
-
-**Wave 1: everyday work.**
-
-| Skill | Kind | Job | Agents |
-|---|---|---|---|
-| `risk-register` | register | identify, assess and plan responses to risks, and review them | `pm-critical-reviewer` |
-| `decision-log` | register | record decisions with their context, options and who took them | |
-| `meeting-minutes` | document | minutes with decisions and actions, proposed for the decision log and the risk register | |
-| `status-report` | document | the status report at the reporting cadence, from registers and tools, outcomes before activities | `project-activity-scout`, `pm-critical-reviewer` |
-| `publish-deliverable` | publishing | render a Markdown deliverable in a distribution format, only on request | |
-| `pm-coach` | guidance | help the project manager do the right thing with the right tools and mindset; adaptive (a few questions, then reasoned advice; "just tell me" or "let me think it through"); reads, never writes, dispatches no agent, suggests skills; user-invocable only | |
-
-Agent: `pm-critical-reviewer` (critical reviewer, `opus`, with the Fable escalation).
+**Waves 0 and 1: shipped in 1.0.0.** The foundations: `project-setup` with the project and tools registers, the
+tailoring register and the **Extension points** section of every skill, `shared/documents/` with the common
+frontmatter, naming and versioning, hooks over every register `PROJECT.md` lists, and the migration of
+`team-register`, `assignment-advisor` and the activity collector, now `project-activity-scout`. And everyday work:
+`risk-register`, `decision-log`, `meeting-minutes`, `status-report`, `publish-deliverable`, `pm-coach` and the
+`pm-critical-reviewer` agent.
 
 **Wave 2: governance and agile.**
 

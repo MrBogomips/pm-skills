@@ -1,6 +1,6 @@
 ---
 name: team-register
-description: Creates and maintains a project's team register (TEAMS.md) - who is on the team now and who was before, with GitHub and Jira accounts, roles and areas - and reconciles it with recent GitHub and Jira activity. Use when the user asks to set up, import, update or reconcile the team register or TEAMS.md, to record that someone joined, left or changed role, or asks who is on the team ("aggiorna il team", "riconcilia il team", "chi c'è nel team", "registro del team").
+description: Keeps a project's team register (TEAMS.md) - current and former members with accounts, roles and areas - and reconciles it with recent activity in the project's tools. Use to set up, update or reconcile the team, record a join, departure or role change, or ask who is on the team ("aggiorna il team", "riconcilia il team", "chi c'è nel team").
 ---
 
 # Team register
@@ -17,12 +17,17 @@ python3 "${CLAUDE_PLUGIN_ROOT}/shared/scripts/teams_register.py" validate <path>
 
 and fix it until the command exits 0.
 
-Talk to the user in their language; the register's headings and column names stay in English.
+Talk to the user in their language; the register's headings and column names stay in English. Read the
+`team-register` section of the tailoring register, if the project declares one, and say which rules you applied.
 
 ## Find the register
 
-The project declares it with a line `- Team register: \`<path>\`` in its `AGENTS.md`, or in its `CLAUDE.md` when
-`AGENTS.md` has no such line. With no such line, start with **Set up**, whatever the request.
+The project register is declared by a line `- Project register: \`<path>\`` in the project's `AGENTS.md` (or
+`CLAUDE.md`); the team register is the `Team register` line of its Registers section. With no team register, start
+with **Set up**, whatever the request. With no project register, suggest `/pm-skills:project-setup` first; if the
+user wants to go on now, set up `TEAMS.md` and say that it stays undeclared, with no hook checking it, until
+`PROJECT.md` lists it. If the instruction file still declares `- Team register:` (before 1.0), suggest
+`/pm-skills:project-setup` to migrate.
 
 ## Set up
 
@@ -42,22 +47,20 @@ The project declares it with a line `- Team register: \`<path>\`` in its `AGENTS
      email stays out;
    - leave out everything outside the schema (contacts, leave, allocation, notes) and tell the user what you left
      out and why.
-4. **Propose the sources**: the GitHub repositories of the project (its git remotes, and those of repositories
-   nested in it or listed in its instruction files) and the Jira project keys its instruction files mention. The user
-   confirms or corrects them.
-5. **Show the whole proposed register and the declaration line**, exactly `- Team register: \`<path>\``, with where
-   it goes: in the Working documents section of the instruction file if there is one, otherwise at its end. Add no
-   text after the path. Write both only after the user agrees.
-6. Validate, then offer to reconcile.
+4. **Show the whole proposed register and the declaration line** for the Registers section of `PROJECT.md`,
+   exactly `- Team register: \`<path>\``. Write both only after the user agrees.
+5. Validate, then offer to reconcile. Reconciling reads the project's `code` and `issues` tools from its tools
+   register; without one, suggest `/pm-skills:project-setup` to declare them.
 
 ## Reconcile
 
-1. Dispatch the `team-activity-scout` agent with the register's path, a 42-day window and `all` members.
+1. Dispatch the `project-activity-scout` agent with the path of `PROJECT.md`, mode `per person`, a 42-day window
+   (or the one a tailoring rule sets) and `all` members.
 2. From its report, prepare proposals in three numbered groups:
    - **New people**: its `Unmapped accounts`. A GitHub login, a commit email and a Jira account may belong to the same
      person: ask. A commit email goes in the `Git` column; a GitHub no-reply address also gives the login.
      For each person the user accepts, ask for the fields you cannot infer (name, organization, roles, areas).
-   - **Inactive**: active members whose `Last activity` is `none` when every source in which they have an account
+   - **Inactive**: active members whose `Last activity` is `none` when every tool in which they have an account
      was `ok`. Members with no account in any checked source, with an account in a source that could not be read,
      or whose open period started inside the window are not inactive: there is not enough to judge them by. A source
      read from a local clone (`local git`) is not `ok`: commits leave out reviews, and the clone may be stale.
@@ -82,10 +85,16 @@ Then validate.
 
 ## Always
 
-- **No human resources data**: if the user asks to record contacts, leave, availability, allocation, appraisals or
-  personal notes, do not record them, and explain that the register holds project data only.
-- **Read-only towards GitHub and Jira**: never comment, assign, transition or edit anything there.
+- **People rule**: no contacts, health or reasons for absences, individual cost, appraisals or personal notes. If the
+  user asks to record them, leave them out and explain why; availability by period belongs to a capacity register,
+  not here.
+- **Nothing written outside the project**: this skill writes only the register and the declaration line.
 - **One write per change**: write the whole change to the register in a single edit, so that the validation after
   the edit never sees a half-done state.
 - **Show before writing**: show the change to the register or the instruction file before you write it, and write
   only after the user agrees.
+
+## Extension points
+
+- `rules`: the reconciliation window and when a member counts as inactive.
+- `terms`: the project's names for roles and areas.

@@ -4,8 +4,8 @@ The rules for every coding agent working in this repository.
 
 ## What this repository is
 
-`pm-skills` is one Claude Code plugin: skills, agents and hooks that support everyday project management work,
-with no particular specialization. It is listed in the `mrbogomips` marketplace, which lives in its own repository
+`pm-skills` is one Claude Code plugin: skills, agents and hooks that support everyday project management work on
+any project, optimized for software. It is listed in the `mrbogomips` marketplace, which lives in its own repository
 (`MrBogomips/claude-plugins`) and reads the version from `.claude-plugin/plugin.json`:
 `/plugin marketplace add MrBogomips/claude-plugins`, then `/plugin install pm-skills@mrbogomips`. Skills are invoked
 as `/pm-skills:<name>`.
@@ -35,6 +35,8 @@ skills/<name>/SKILL.md              one directory per skill, with its README.md 
 agents/<name>.md                    subagents of the plugin
 hooks/hooks.json, hooks/*.py        hooks and their scripts
 shared/registers/<register>.md      the format of each project register: the single source, read by skills
+shared/documents/<type>.md          the format of each document type, and common.md for what they share
+shared/tools/<tool>.md              known pitfalls of a tool reached by several skills or agents
 shared/scripts/                     Python stdlib scripts shared by skills and hooks
 tests/                              validate.sh, selftest.sh, Python unit tests, fixtures/, scenarios/
 ```
