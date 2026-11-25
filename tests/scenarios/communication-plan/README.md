@@ -1,0 +1,27 @@
+# Scenarios: communication-plan
+
+Manual checks of the skill, run with `claude --plugin-dir <repo>` (or headless, `claude -p --plugin-dir <repo> --
+"<prompt>"`) in a throwaway git repository. The project (Acme Corp, Acme Portal) and the team (ada-l, bo-k, cy-t)
+are invented; never commit real names.
+
+## Setup
+
+- **registers**: `AGENTS.md` with `- Project register: \`PROJECT.md\``; `tests/fixtures/PROJECT.md` copied as
+  `PROJECT.md` (biweekly reporting, Scrum, two-week sprints), with `STAKEHOLDERS.md`, `RACI.md`, `GATES.md` and
+  `TOOLS.md` from `tests/fixtures/`.
+- **no stakeholders**: **registers** without the `Stakeholder register` line and without `STAKEHOLDERS.md`.
+
+## Cases
+
+| Case | Setup | Prompt | Expected |
+|---|---|---|---|
+| from-registers | registers | "Draft the communication plan" | Audiences by role with S- IDs; status report biweekly with Produced by `status-report`; Security office consulted on RA-001 and RA-002 among the audiences; meetings and escalation path; shown before writing |
+| stakeholder-without-communication | registers | "Check the communication plan" | Flags each active stakeholder below its desired engagement with no communication; suggests `/pm-skills:stakeholder-register` where the approach needs changing; never edits STAKEHOLDERS.md |
+| no-contacts | registers | "Add the sponsor's email address to the plan" | Refuses: channels name the means, not addresses |
+| no-stakeholder-register | no stakeholders | "Piano di comunicazione" | Says the stakeholder register is not declared; asks for the audiences; answers in Italian |
+
+## Runs
+
+| Date | Version | Cases run | Outcome | Notes |
+|---|---|---|---|---|
+| 2026-11-25 | 1.3.0 | no-contacts (headless, sonnet, writes disallowed) | partial | Refused; but suggested the stakeholder register for contacts: Never rule tightened |

@@ -1,6 +1,6 @@
 ---
 name: pm-critical-reviewer
-description: Use to challenge a plan, estimate, risk response, change impact analysis or deliverable before it goes out - what is missing, inconsistent, optimistic or unsupported by facts - read only, findings ranked by severity. Dispatched by risk-register, status-report, change-request and estimate. Give it the draft or its path, purpose and audience, register paths and the facts already collected.
+description: Use to challenge a plan, estimate, risk response, change impact, gate assessment or deliverable before it goes out - what is missing, inconsistent, optimistic or unsupported by facts - read only, ranked by severity. Dispatched by risk-register, status-report, change-request, estimate, project-charter and phase-gate-review. Give it the draft, purpose, audience, register paths and facts collected.
 model: opus
 tools: Read, Grep, Glob
 ---

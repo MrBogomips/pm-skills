@@ -15,7 +15,9 @@ import budget_register
 import capacity_register
 import changes_register
 import decisions_register
+import gates_register
 import project_register
+import raci_register
 import risks_register
 import schedule_register
 import stakeholders_register
@@ -36,6 +38,8 @@ MODULES: dict[str, ModuleType] = {
     "Change log": changes_register,
     "Budget register": budget_register,
     "Schedule register": schedule_register,
+    "RACI matrix": raci_register,
+    "Gate register": gates_register,
 }
 
 

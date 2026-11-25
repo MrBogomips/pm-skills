@@ -1,8 +1,8 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "pm-skills",
-  "version": "1.2.1",
-  "description": "Project management skills for Claude Code, optimized for software: project and tools configuration, team register, assignments, risk register, decision log, meeting minutes, status reports, change requests, stakeholders, capacity, Scrum events, backlog refinement, product roadmap, flow metrics, forecasts, release plans, estimates, schedule and budget, publishing, tailoring and a PM coach.",
+  "version": "1.3.0",
+  "description": "Project management skills for Claude Code, optimized for software: project and tools configuration, team register, assignments, risk register, decision log, meeting minutes, status reports, change requests, stakeholders, capacity, Scrum events, backlog refinement, product roadmap, flow metrics, forecasts, release plans, estimates, schedule and budget, project charter, WBS, RACI, communication plan, phase gates, lessons learned, team charter, publishing, tailoring and a PM coach.",
   "author": {
     "name": "Mr Bogomips",
     "url": "https://github.com/MrBogomips"
@@ -21,6 +21,9 @@
     "resources",
     "status-report",
     "jira",
-    "github"
+    "github",
+    "raci",
+    "wbs",
+    "phase-gate"
   ]
 }

@@ -1,13 +1,14 @@
 ---
-summary: Claude Code plugin for project managers, optimized for software projects - configuration, team, capacity, stakeholders, risks, decisions, change requests, Scrum events, roadmap, flow metrics, forecasts, estimates, schedule, budget, status reports, publishing, tailoring and a coach, grounded in small validated registers under git.
+summary: Claude Code plugin for project managers, optimized for software projects - configuration, team, capacity, stakeholders, risks, decisions, change requests, Scrum events, roadmap, flow metrics, forecasts, estimates, schedule, budget, charter, WBS, RACI, phase gates, lessons learned, status reports, publishing, tailoring and a coach, grounded in small validated registers under git.
 ---
 
 # pm-skills
 
 Project management skills for Claude Code. Your project keeps a few small Markdown registers under git (its
-configuration, tools, team, capacity, stakeholders, risks, decisions, change requests, schedule and budget); the skills read them
+configuration, tools, team, capacity, stakeholders, risks, decisions, change requests, schedule, budget, RACI matrix and gates); the skills read them
 together with your issue tracker and code host, draft the recurring documents (minutes, status reports, sprint
-plans, reviews, retrospectives, the roadmap, release plans), compute flow metrics, forecasts, critical path and
+plans, reviews, retrospectives, the roadmap, release plans, the charter, the WBS, communication plans, gate reviews,
+lessons learned and the team charter), compute flow metrics, forecasts, critical path and
 earned value with tested scripts, and suggest who should take or review work. They work
 on any project and are optimized for building software and managing software products.
 
@@ -45,6 +46,13 @@ evaluations of people.
 | [`estimate`](skills/estimate/README.md) | Finance, Schedule | Three-point and analogous estimates of effort and cost, from the rates per role in `BUDGET.md`. |
 | [`schedule-check`](skills/schedule-check/README.md) | Schedule | Critical path, float and slip against the baseline; keeps `SCHEDULE.md` and its baselines. |
 | [`budget-tracker`](skills/budget-tracker/README.md) | Finance | Keeps `BUDGET.md`; earned value, reserves apart, forecasts at completion. |
+| [`project-charter`](skills/project-charter/README.md) | Governance, Scope | The project charter from the registers, critically reviewed; seeds the risk, stakeholder and gate registers. |
+| [`wbs-builder`](skills/wbs-builder/README.md) | Scope | The work breakdown structure and its dictionary, checked against the 100% rule; work packages as work items on request. |
+| [`raci-matrix`](skills/raci-matrix/README.md) | Resources | Keeps `RACI.md`: responsibilities by role, exactly one accountable per deliverable. |
+| [`communication-plan`](skills/communication-plan/README.md) | Stakeholders | Who receives what, when and through which channel, from the stakeholder register and the RACI matrix. |
+| [`phase-gate-review`](skills/phase-gate-review/README.md) | Governance | Keeps `GATES.md`; assesses a gate's criteria against evidence and records the outcome once decided. |
+| [`lessons-learned`](skills/lessons-learned/README.md) | Governance | What a project or phase learned, from its retrospectives, gates, decisions and changes, never about people. |
+| [`team-charter`](skills/team-charter/README.md) | Resources | Prepares the team charter workshop and records the agreements the team made. |
 | [`pm-tailoring`](skills/pm-tailoring/README.md) | All | Adapts the plugin to the project with the lightest change that works. User-invocable only. |
 | [`pm-coach`](skills/pm-coach/README.md) | All | Reasoned advice grounded in your registers. User-invocable only. |
 
@@ -55,8 +63,8 @@ and the Kanban Guide; more are planned (see `DESIGN.md`).
 
 - `project-activity-scout` (`haiku`): collects recent activity from the project's tools, per person or per project,
   read only.
-- `pm-critical-reviewer` (`opus`): challenges risk responses, change impact analyses, estimates and deliverables
-  before they go out, read only.
+- `pm-critical-reviewer` (`opus`): challenges risk responses, change impact analyses, estimates, charters, gate
+  assessments and deliverables before they go out, read only.
 - `flow-data-scout` (`haiku`): collects the transition history of work items from the issues tool as a flow snapshot,
   with no assignees, read only.
 

@@ -188,7 +188,7 @@ reviews them when the project changes. Another skill that needs a missing key as
 ### Registers and documents
 
 A **register** keeps state that persists and that another skill or a later session reads again: project, tools,
-tailoring, team, capacity, risks, stakeholders, decisions, changes, schedule, budget. There is one register per type, each with its own schema;
+tailoring, team, capacity, risks, stakeholders, decisions, changes, schedule, budget, RACI, gates. There is one register per type, each with its own schema;
 a mixed register (a single RAID log) is not used. Every register has:
 
 - its format in `shared/registers/<register>.md`, the single source: skills and agents point to it as
@@ -302,7 +302,7 @@ Each agent pins its model in the frontmatter by class, and says why in its body:
 |---|---|---|---|
 | Collector | `haiku` | gathers facts from the project's tools, read only, in a fixed output shape; no advice, no proposals | `project-activity-scout`, `flow-data-scout` |
 | Analyst | `sonnet` | turns facts from several sources into an analysis or a draft | none planned |
-| Critical reviewer | `opus` | challenges plans, estimates, risk responses and deliverables; finds what is missing | `pm-critical-reviewer` |
+| Critical reviewer | `opus` | challenges plans, estimates, risk responses, gate assessments and deliverables; finds what is missing | `pm-critical-reviewer` |
 
 Names in italics are planned. Collectors feed analysts and reviewers: an agent that reasons receives the facts, it
 does not gather them. A collector that reaches its tools adaptively is checked on `haiku` with its scenarios, and
@@ -321,17 +321,18 @@ already prepared, and only reasons.
 
 ## Coverage map
 
-Skills by performance domain and focus area. A skill appears in every cell it serves; planned skills are in italics.
+Skills by performance domain and focus area. A skill appears in every cell it serves; planned skills, when
+any, are in italics.
 Every pull request that adds, renames or removes a skill updates this map.
 
 | Domain | Initiating | Planning | Executing | Monitoring and Controlling | Closing |
 |---|---|---|---|---|---|
-| Governance | `project-setup`, *`project-charter`* | `product-roadmap` | `decision-log` | `status-report`, `change-request`, `decision-log`, `retrospective`, *`phase-gate-review`* | *`phase-gate-review`*, *`lessons-learned`* |
-| Scope | *`project-charter`* | `product-roadmap`, *`wbs-builder`*, `backlog-refinement`, `sprint-planning`, `release-plan` | | `change-request`, `sprint-review` | |
+| Governance | `project-setup`, `project-charter` | `product-roadmap` | `decision-log` | `status-report`, `change-request`, `decision-log`, `retrospective`, `phase-gate-review` | `phase-gate-review`, `lessons-learned` |
+| Scope | `project-charter` | `product-roadmap`, `wbs-builder`, `backlog-refinement`, `sprint-planning`, `release-plan` | | `change-request`, `sprint-review` | |
 | Schedule | | `estimate`, `sprint-planning`, `release-plan` | | `schedule-check`, `flow-metrics`, `delivery-forecast` | |
 | Finance | | `estimate` | | `budget-tracker`, `change-request` | |
-| Stakeholders | `stakeholder-register` | *`communication-plan`* | `meeting-minutes`, `publish-deliverable` | `stakeholder-register`, `status-report`, `sprint-review` | |
-| Resources | | `team-register`, `capacity-register`, *`raci-matrix`* | `assignment-advisor` | `team-register`, `capacity-register` | |
+| Stakeholders | `stakeholder-register` | `communication-plan` | `meeting-minutes`, `publish-deliverable` | `stakeholder-register`, `status-report`, `sprint-review` | |
+| Resources | | `team-register`, `capacity-register`, `raci-matrix`, `team-charter` | `assignment-advisor` | `team-register`, `capacity-register` | |
 | Risk | | `risk-register` | | `risk-register`, `change-request` | |
 
 Across all domains: `pm-coach` and `pm-tailoring`.
@@ -378,16 +379,13 @@ and `pm-tailoring`, with `shared/integration-contract.md` for project skills.
 `flow-data-scout` collector and flow snapshots, `estimate`, `schedule-check` with the schedule register and its
 baselines, and `budget-tracker` with the budget register.
 
-**Wave 4: life cycle.**
+**Wave 4: shipped in 1.3.0.** Life cycle: `project-charter`, `wbs-builder`, `raci-matrix` with the RACI matrix,
+`communication-plan`, `phase-gate-review` with the gate register, `lessons-learned` and `team-charter`. The RACI matrix
+and the gates are registers rather than documents: other skills read them as state, and their validators keep one
+accountable role per deliverable and the history of every gate outcome.
 
-| Skill | Kind | Job | Agents |
-|---|---|---|---|
-| `project-charter` | document | purpose, objectives, scope, constraints and authority of the project | `pm-critical-reviewer` |
-| `lessons-learned` | document | what the project learned, for the next one | |
-| `wbs-builder` | document | the work breakdown structure and its dictionary | |
-| `communication-plan` | document | who receives what, when and through which channel | |
-| `raci-matrix` | document | responsibilities by deliverable or activity | |
-| `phase-gate-review` | document | readiness to pass a gate or close, against its criteria | `pm-critical-reviewer` |
+**Next.** The open items are GitHub issues: the second wave of team skills (#3), a register reviewer agent (#7) and
+persona agents for simulated conversations (#8).
 
 ## Knowledge check
 

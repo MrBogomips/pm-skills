@@ -44,6 +44,8 @@ REGISTERS = {
     "Change log": "changes.md",
     "Budget register": "budget.md",
     "Schedule register": "schedule.md",
+    "RACI matrix": "raci.md",
+    "Gate register": "gates.md",
 }
 
 
