@@ -24,7 +24,7 @@ declares in the **Extension points** section of its `SKILL.md`. The register is 
 
 ### terms
 
-- The status report is called "SAL" in titles.
+- The status report is called "highlight report" in titles.
 ```
 
 ## Extension points

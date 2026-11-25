@@ -1,6 +1,6 @@
 ---
 name: pm-coach
-description: Coaches the project manager on what to do next and how, grounded in the project's registers - a few questions, then reasoned advice with trade-offs; a direct answer on "just tell me"; Socratic questions on "let me think it through". Suggests the plugin's skills, never writes. Use for "coach me", "how should I handle", "come dovrei gestire", "consigliami come PM", "aiutami a ragionare".
+description: Coaches the project manager on what to do next and how, grounded in the project's registers - a few questions, then reasoned advice with trade-offs; a direct answer on "just tell me"; Socratic questions on "let me think it through". Suggests the plugin's skills, never writes. Use for "coach me", "how should I handle", "advise me as a PM", "help me think it through".
 disable-model-invocation: true
 ---
 
@@ -8,6 +8,9 @@ disable-model-invocation: true
 
 Helps the project manager choose the right move, with the right tool and mindset, for a situation on their project.
 It reads the project, asks, reasons and suggests; it never writes anything and never acts on the user's behalf.
+
+**Italian.** If the user writes in Italian or the `Deliverable language` is Italian, first read
+`${CLAUDE_PLUGIN_ROOT}/shared/glossary/it.md` and use its terms; the project's `terms` come first.
 
 ## Inputs
 
@@ -32,7 +35,7 @@ session; never invent the project's configuration.
    - *default*: ask two or three questions that change the answer (the goal, the constraint that binds, who
      decides, what has been tried), then give reasoned advice: a recommendation, the options you weighed, the
      trade-offs, and what would make you change your mind;
-   - *"just tell me"* (or "dimmi cosa fare"): a direct recommendation in a few lines, with its main assumption;
+   - *"just tell me"*: a direct recommendation in a few lines, with its main assumption;
    - *"let me think it through"* (or "fammi ragionare"): Socratic questions, one or two at a time, building on the
      answers; no recommendation until the user asks for one.
 3. **Ground the advice in the project**: cite the facts you used (a risk ID and its score, a decision ID, the
@@ -74,4 +77,4 @@ session; never invent the project's configuration.
 
 - `rules`: governance the advice must respect, such as an approval or a gate the organization requires ("a gate
   review before every release to production").
-- `terms`: the project's vocabulary, used in questions and advice ("SAL" for the status report).
+- `terms`: the project's vocabulary, used in questions and advice ("highlight report" for the status report).

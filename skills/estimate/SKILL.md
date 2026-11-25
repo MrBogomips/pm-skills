@@ -1,12 +1,15 @@
 ---
 name: estimate
-description: Estimates effort and cost - three-point (PERT) ranges per item and in total, analogous estimates from past work, cost from the rates per role in BUDGET.md - with every number from a script and the assumptions stated. Use for "estimate this", "how much effort", "how much will it cost to build", "stima", "quanto costa", "stima a tre punti"; not spend to date (budget-tracker).
+description: Estimates effort and cost - three-point (PERT) ranges per item and in total, analogous estimates from past work, cost from the rates per role in BUDGET.md - with every number from a script and the assumptions stated. Use for "estimate this", "how much effort", "how much will it cost to build", "three-point estimate"; not spend to date (budget-tracker).
 ---
 
 # Estimate
 
 Turns ranges and past work into effort and cost estimates the user can defend: each number computed by a script,
 each assumption written down. The estimate is shown, not stored, unless the user asks to write it somewhere.
+
+**Italian.** If the user writes in Italian or the `Deliverable language` is Italian, first read
+`${CLAUDE_PLUGIN_ROOT}/shared/glossary/it.md` and use its terms; the project's `terms` come first.
 
 ## Inputs
 

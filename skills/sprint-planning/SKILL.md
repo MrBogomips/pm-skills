@@ -1,12 +1,15 @@
 ---
 name: sprint-planning
-description: Drafts the sprint plan - a Sprint Goal proposed from the Product Goal and the ordered backlog, a selection checked against the team's capacity and recent throughput or velocity, items not ready and over-commitment flagged - and writes the sprint to the issues tool on confirmation. Use to plan a sprint ("sprint planning", "plan the next sprint", "pianifica lo sprint", "obiettivo dello sprint").
+description: Drafts the sprint plan - a Sprint Goal proposed from the Product Goal and the ordered backlog, a selection checked against the team's capacity and recent throughput or velocity, items not ready and over-commitment flagged - and writes the sprint to the issues tool on confirmation. Use to plan a sprint ("sprint planning", "plan the next sprint", "Sprint Goal").
 ---
 
 # Sprint planning
 
 Prepares Sprint Planning and records its outcome: a Sprint Goal, the items selected for it, and the capacity and
 readiness checks that show whether the selection holds. The team decides; the skill proposes and checks.
+
+**Italian.** If the user writes in Italian or the `Deliverable language` is Italian, first read
+`${CLAUDE_PLUGIN_ROOT}/shared/glossary/it.md` and use its terms; the project's `terms` come first.
 
 ## Inputs
 

@@ -1,12 +1,15 @@
 ---
 name: actionable-message
-description: Writes or rewrites an email or chat message so that every request names its owner, the ask and when it is done, the deadline, the references and whom to contact; sends it only on confirmation through a declared tool. Use for "write an email asking", "follow-up message", "make this message actionable", "scrivi una mail a", "sollecito", "rendi actionable il messaggio"; not to send a document.
+description: Writes or rewrites an email or chat message so that every request names its owner, the ask and when it is done, the deadline, the references and whom to contact; sends it only on confirmation through a declared tool. Use for "write an email asking", "follow-up message", "send a reminder", "make this message actionable"; not to send a document.
 ---
 
 # Actionable message
 
 Turns what the user wants from people into a message they can act on without asking back: who does what, by when,
 with which references and whom to ask. The message lives in the conversation; it is sent only when the user says so.
+
+**Italian.** If the user writes in Italian or the `Deliverable language` is Italian, first read
+`${CLAUDE_PLUGIN_ROOT}/shared/glossary/it.md` and use its terms; the project's `terms` come first.
 
 ## Inputs
 

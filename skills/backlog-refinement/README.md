@@ -39,7 +39,7 @@ reason; once you confirm the itemized list, the parts are created through the is
 
 **Context:** The backlog has grown past two hundred items.
 
-**Action:** Ask "raffiniamo il backlog: cosa è vecchio o duplicato?".
+**Action:** Ask "refine the backlog: what is stale or duplicated?".
 
 **Result:** Items untouched for long, made obsolete by a decision or a release, or overlapping another, each with a
 proposal to keep, merge or close and its reason; nothing is closed on its own.

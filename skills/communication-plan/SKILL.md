@@ -1,12 +1,15 @@
 ---
 name: communication-plan
-description: Drafts and revises the communication plan - audiences, what each receives, when, through which channel and produced by which report or meeting, the meetings and the escalation path - from the stakeholder register, the RACI matrix and the reporting cadence; flags stakeholders left without communication. Use for "communication plan", "piano di comunicazione", "piano delle comunicazioni".
+description: Drafts and revises the communication plan - audiences, what each receives, when, through which channel and produced by which report or meeting, the meetings and the escalation path - from the stakeholder register, the RACI matrix and the reporting cadence; flags stakeholders left without communication. Use for "communication plan", "communications management plan", "who gets which report".
 ---
 
 # Communication plan
 
 Says who receives what, when, through which channel and from whom, so that every stakeholder the project depends on
 is reached at the right level. It builds on the stakeholder register and the RACI matrix and never changes them.
+
+**Italian.** If the user writes in Italian or the `Deliverable language` is Italian, first read
+`${CLAUDE_PLUGIN_ROOT}/shared/glossary/it.md` and use its terms; the project's `terms` come first.
 
 ## Inputs
 

@@ -32,14 +32,14 @@ Feedback left for after the meeting.
 **Context:** After the review you paste your notes: the sponsor wants the export in CSV, end users found the search
 slow.
 
-**Action:** Ask "aggiungi il feedback alla revisione dello sprint".
+**Action:** Ask "add the feedback to the sprint review".
 
 **Result:** Feedback by role, two proposed backlog items tied to it, and, on a fixed-price contract, a suggestion to
 run `/pm-skills:change-request` for the new export.
 
 ## Usage
 
-Ask in your own words ("sprint review", "esito dello sprint") or run `/pm-skills:sprint-review`. Give the notes or
+Ask in your own words ("sprint review", "what did the sprint deliver") or run `/pm-skills:sprint-review`. Give the notes or
 minutes of the meeting when you have them.
 
 ## Inputs and outputs

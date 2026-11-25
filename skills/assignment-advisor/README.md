@@ -29,7 +29,7 @@ existing approvers are left out, with a line saying so.
 
 **Context:** A new issue, `ACME-123`, touches the payment API.
 
-**Action:** Ask "a chi assegno ACME-123?", then "assign it to Ada".
+**Action:** Ask "who should take ACME-123?", then "assign it to Ada".
 
 **Result:** A ranked list; after you pick, the skill shows the assignment and makes it through the issue tracker if
 `TOOLS.md` declares it `write`, otherwise it gives you the step to do it yourself.

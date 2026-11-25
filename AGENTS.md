@@ -37,6 +37,7 @@ hooks/hooks.json, hooks/*.py        hooks and their scripts
 shared/registers/<register>.md      the format of each project register: the single source, read by skills
 shared/documents/<type>.md          the format of each document type, and common.md for what they share
 shared/tools/<tool>.md              known pitfalls of a tool reached by several skills or agents
+shared/glossary/<language>.md       the plugin's terms in another language and back (it.md for Italian)
 shared/integration-contract.md      what a project skill must respect to work with the plugin
 shared/scripts/                     Python stdlib scripts shared by skills and hooks
 tests/                              validate.sh, selftest.sh, Python unit tests, fixtures/, scenarios/
@@ -44,8 +45,9 @@ tests/                              validate.sh, selftest.sh, Python unit tests,
 
 ## Writing rules
 
-- `SKILL.md` files and agents are written in English; skills talk to the user and write documents in the user's
-  language.
+- Skills and agents are general purpose: frontmatter, `SKILL.md`, agents, READMEs and examples are in English, with
+  terms English-speaking practitioners use; skills talk to the user and write documents in the user's language,
+  with the terms of `shared/glossary/` (see `DESIGN.md`, Skill anatomy).
 - The frontmatter `name` equals the directory (skills) or the file name (agents).
 - Scripts are Python 3 standard library, macOS and Linux compatible; shell scripts are bash 3.2, with no `grep -P`
   and no `sed -i`.

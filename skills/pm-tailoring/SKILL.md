@@ -1,13 +1,16 @@
 ---
 name: pm-tailoring
-description: Adapts pm-skills to the project's way of working along the tailoring ladder to the lightest change - a Profile key, a rule on a skill's extension point in TAILORING.md, a project format, a tool or renderer in TOOLS.md, and, for a real need, a project skill under the integration contract. Refuses rules loosening a guardrail. Use for "tailor pm-skills", "adatta il plugin", "personalizza pm-skills".
+description: Adapts pm-skills to the project's way of working along the tailoring ladder to the lightest change - a Profile key, a rule on a skill's extension point in TAILORING.md, a project format, a tool or renderer in TOOLS.md, and, for a real need, a project skill under the integration contract. Refuses rules loosening a guardrail. Use for "tailor pm-skills", "adapt the plugin", "customize pm-skills".
 disable-model-invocation: true
 ---
 
 # PM tailoring
 
-Turns a need of the project ("approval from the sponsor above 10 days of impact", "call status reports SAL") into
-the lightest change that meets it, shows the change, and writes it only after the user agrees.
+Turns a need of the project ("approval from the sponsor above 10 days of impact", "call the status report a
+highlight report") into the lightest change that meets it, shows the change, and writes it only after the user agrees.
+
+**Italian.** If the user writes in Italian or the `Deliverable language` is Italian, first read
+`${CLAUDE_PLUGIN_ROOT}/shared/glossary/it.md` and use its terms; the project's `terms` come first.
 
 ## Inputs
 

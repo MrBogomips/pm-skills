@@ -38,7 +38,7 @@ next review of the gate the condition comes back with its state.
 
 ## Usage
 
-Ask in your own words ("phase gate", "go/no-go", "revisione di fase") or run `/pm-skills:phase-gate-review`. Say
+Ask in your own words ("phase gate", "go/no-go", "ready to close?") or run `/pm-skills:phase-gate-review`. Say
 whether you are defining gates, reviewing one or recording a decision; the skill asks if it cannot tell.
 
 ## Inputs and outputs

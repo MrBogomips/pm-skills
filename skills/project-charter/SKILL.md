@@ -1,6 +1,6 @@
 ---
 name: project-charter
-description: Drafts and revises the project charter - purpose, objectives and success criteria, scope in and out, milestones, phases and gates, constraints, budget, risks, stakeholders and authority - from the registers, critically reviewed; proposes initial risks, stakeholders and gates for the registers. Use for "project charter", "revise the charter", "carta del progetto", "atto costitutivo del progetto".
+description: Drafts and revises the project charter - purpose, objectives and success criteria, scope in and out, milestones, phases and gates, constraints, budget, risks, stakeholders and authority - from the registers, critically reviewed; proposes initial risks, stakeholders and gates for the registers. Use for "project charter", "write the charter", "revise the charter".
 ---
 
 # Project charter
@@ -8,6 +8,9 @@ description: Drafts and revises the project charter - purpose, objectives and su
 Drafts the document that authorizes the project and that the project is then held to: why it exists, what it must
 achieve, what it covers, within which constraints, and who has the authority to decide. The charter summarizes the
 registers and seeds the empty ones.
+
+**Italian.** If the user writes in Italian or the `Deliverable language` is Italian, first read
+`${CLAUDE_PLUGIN_ROOT}/shared/glossary/it.md` and use its terms; the project's `terms` come first.
 
 ## Inputs
 

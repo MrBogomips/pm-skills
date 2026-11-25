@@ -1,12 +1,15 @@
 ---
 name: assignment-advisor
-description: Suggests who on the team should take a task or review a pull request or a document, with the reasons for each candidate - matching areas in the team register, recent activity, open load - and assigns only when the user agrees, through a tool declared for writing. Use when the user asks who should take or review something ("suggest a reviewer", "a chi assegno", "chi revisiona questa PR").
+description: Suggests who on the team should take a task or review a pull request or a document, with the reasons for each candidate - matching areas in the team register, recent activity, open load - and assigns only when the user agrees, through a tool declared for writing. Use when the user asks who should take or review something ("suggest a reviewer", "who should take this", "who should review this PR").
 ---
 
 # Assignment advisor
 
 Suggests up to three people for a piece of work, each with the reasons, from the project's team register and the
 team's recent activity. The user decides; the skill assigns or requests a review only on their agreement.
+
+**Italian.** If the user writes in Italian or the `Deliverable language` is Italian, first read
+`${CLAUDE_PLUGIN_ROOT}/shared/glossary/it.md` and use its terms; the project's `terms` come first.
 
 ## Inputs
 

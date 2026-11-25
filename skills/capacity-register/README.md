@@ -30,7 +30,7 @@ confirm are added to the Calendar section.
 
 **Context:** bo-k will be away from 7 to 18 December for health reasons.
 
-**Action:** Ask "registra l'assenza di bo-k dal 7 al 18 dicembre, è malato".
+**Action:** Ask "record that bo-k is away from 7 to 18 December, off sick".
 
 **Result:** A period row for bo-k at 0% from 2026-12-07 to 2026-12-18, checked against bo-k's other periods; the skill
 says the reason was left out and why.
@@ -46,7 +46,7 @@ segment shown, so you can check the number.
 
 ## Usage
 
-Ask in your own words ("add a holiday", "giorni disponibili di ada-l a dicembre") or run
+Ask in your own words ("add a holiday", "how many days does ada-l have in December") or run
 `/pm-skills:capacity-register`. Without a register the skill starts by setting one up from the team register.
 
 ## Inputs and outputs

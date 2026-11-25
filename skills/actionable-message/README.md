@@ -32,7 +32,7 @@ you to confirm, and a note that Ada is away from the next day.
 
 **Context:** You wrote "we need to sort out the runbook soon, can someone look at it?".
 
-**Action:** Ask "rendi actionable il messaggio in drafts/runbook-mail.md".
+**Action:** Ask "make the message in drafts/runbook-mail.md actionable".
 
 **Result:** The same message in your voice, one block per owner proposed from the RACI matrix, and questions for the
 dates, the names and the contact.
@@ -47,7 +47,7 @@ dates, the names and the contact.
 
 ## Usage
 
-Ask in your own words ("write an email asking", "follow-up message", "sollecito", "scrivi una mail a") or run the
+Ask in your own words ("write an email asking", "follow-up message", "send a reminder") or run the
 skill with what you want, or with a draft pasted or given as a file:
 
 ```text

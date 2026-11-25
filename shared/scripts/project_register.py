@@ -81,7 +81,7 @@ def _type_codes(value: str) -> Optional[str]:
     items = md.split_list(value)
     bad = [i for i in items if not TYPE_CODE_RE.match(i)]
     if bad:
-        return f"items must be <document type>=<CODE> (for example status-report=SAL), not: {', '.join(bad)}"
+        return f"items must be <document type>=<CODE> (for example status-report=HR), not: {', '.join(bad)}"
     types = [TYPE_CODE_RE.match(i).group(1) for i in items]
     return "a document type appears twice" if len(set(types)) != len(types) else None
 

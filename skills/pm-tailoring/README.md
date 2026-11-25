@@ -11,7 +11,7 @@ or renderer, or, only when nothing else does, a project skill. It shows the chan
 ## Why
 
 Every project bends the standard a little: a client wants a section in every report, a steering committee wants to
-see risks above a score, a team says "SAL". Doing this by editing skills breaks on the next update; doing it in
+see risks above a score, a team says "highlight report". Doing this by editing skills breaks on the next update; doing it in
 scattered notes means skills ignore it. This skill puts each need where the plugin's skills read it, validates it,
 and refuses any rule that would loosen a guardrail, such as skipping the confirmation of a write.
 
@@ -28,9 +28,9 @@ validated.
 
 ### Use the project's name for a document
 
-**Context:** The team calls status reports "SAL".
+**Context:** The team calls the status report a "highlight report".
 
-**Action:** Say "call status reports SAL".
+**Action:** Say "call the status report a highlight report".
 
 **Result:** A `terms` rule under `status-report`; the skill also points out that the document code can be set in the
 Conventions of `PROJECT.md` through `/pm-skills:project-setup`.

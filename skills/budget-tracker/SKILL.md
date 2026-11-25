@@ -1,12 +1,15 @@
 ---
 name: budget-tracker
-description: Keeps the project's budget register (BUDGET.md) - budget lines, reserves, rates per role, approved changes - and tracks spend against it with earned value (CPI, SPI, EAC, VAC) computed by a script, from the costs tool or hours times rates per role. Use for "budget", "earned value", "how much have we spent", "budget del progetto", "consuntivo", "EVM"; not estimating future work (estimate).
+description: Keeps the project's budget register (BUDGET.md) - budget lines, reserves, rates per role, approved changes - and tracks spend against it with earned value (CPI, SPI, EAC, VAC) computed by a script, from the costs tool or hours times rates per role. Use for "budget", "earned value", "how much have we spent", "actual costs", "EVM"; not estimating future work (estimate).
 ---
 
 # Budget tracker
 
 Keeps `BUDGET.md` and answers where the money stands: spent against planned, earned value and the forecast at
 completion, reserves kept apart, every figure from a script. Costs are by role and by line, never by person.
+
+**Italian.** If the user writes in Italian or the `Deliverable language` is Italian, first read
+`${CLAUDE_PLUGIN_ROOT}/shared/glossary/it.md` and use its terms; the project's `terms` come first.
 
 ## Inputs
 

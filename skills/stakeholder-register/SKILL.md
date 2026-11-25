@@ -1,6 +1,6 @@
 ---
 name: stakeholder-register
-description: Keeps the project's stakeholder register (STAKEHOLDERS.md) - identifies stakeholders as roles or groups from documents, minutes and decisions, proposes interest, influence and engagement levels with reasons for the user to decide, plans the approach and reviews entries when due. Use for "stakeholder register", "who are the stakeholders", "registro degli stakeholder", "mappa degli stakeholder".
+description: Keeps the project's stakeholder register (STAKEHOLDERS.md) - identifies stakeholders as roles or groups from documents, minutes and decisions, proposes interest, influence and engagement levels with reasons for the user to decide, plans the approach and reviews entries when due. Use for "stakeholder register", "who are the stakeholders", "stakeholder map".
 ---
 
 # Stakeholder register
@@ -8,6 +8,9 @@ description: Keeps the project's stakeholder register (STAKEHOLDERS.md) - identi
 Keeps `STAKEHOLDERS.md`: who has a stake in the project, as roles and groups, how much they care and can sway it,
 how engaged they are against what the project needs, and what the project does about it. The user decides every
 level; the skill proposes with reasons drawn from facts.
+
+**Italian.** If the user writes in Italian or the `Deliverable language` is Italian, first read
+`${CLAUDE_PLUGIN_ROOT}/shared/glossary/it.md` and use its terms; the project's `terms` come first.
 
 ## Inputs
 

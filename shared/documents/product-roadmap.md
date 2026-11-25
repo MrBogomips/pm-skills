@@ -21,9 +21,10 @@ The common keys, plus:
 
 ## Headings
 
-The headings below, in this order, translated into the document's language. With `horizons: dated`, the three
-horizon headings become one heading per dated horizon (`## Q1 2027`, `## Release 2.0, March 2027`), in date order.
-A heading with nothing to say keeps a one-line "nothing planned" rather than disappearing.
+The headings below, in this order, translated into the document's language (in Italian, as
+`${CLAUDE_PLUGIN_ROOT}/shared/glossary/it.md` gives them). With `horizons: dated`, the three horizon headings become
+one heading per dated horizon (`## Q1 2027`, `## Release 2.0, March 2027`), in date order. A heading with nothing to
+say keeps a one-line "nothing planned" rather than disappearing.
 
 ```markdown
 # <Product>: product roadmap

@@ -32,14 +32,14 @@ scope falls beyond the 85% line, Dates says so and lists the options.
 
 **Context:** The plan exists at version 1.0.0; three items were added and five finished.
 
-**Action:** Ask "aggiorna il piano di rilascio".
+**Action:** Ask "update the release plan".
 
 **Result:** A new snapshot and forecast, items moved between bands, Changes from the previous version filled, and the
 version raised.
 
 ## Usage
 
-Ask in your own words ("release plan", "piano di rilascio") or run `/pm-skills:release-plan`. Name the release; the
+Ask in your own words ("release plan", "plan the release") or run `/pm-skills:release-plan`. Name the release; the
 skill finds its items in the issues or releases tool, or asks.
 
 ## Inputs and outputs

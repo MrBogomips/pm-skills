@@ -32,7 +32,7 @@ next IDs.
 
 **Context:** The session starts with "1 past their review date".
 
-**Action:** Ask "rivedi i rischi".
+**Action:** Ask "review the risks".
 
 **Result:** Overdue risks first, then high ones, each with a proposed re-assessment, new response or closure; once
 the whole register is reviewed, `Last reviewed` moves to today.
@@ -48,7 +48,7 @@ stronger model for this review, and proposes changes you accept or reject.
 
 ## Usage
 
-Ask in your own words ("add a risk: the payment provider may slip", "registro dei rischi") or run
+Ask in your own words ("add a risk: the payment provider may slip", "review the risks") or run
 `/pm-skills:risk-register`. Without a risk register the skill starts by setting one up.
 
 ## Inputs and outputs

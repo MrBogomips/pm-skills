@@ -38,7 +38,7 @@ and gates to add to the registers, written only for the ones you accept.
 
 ## Usage
 
-Ask in your own words ("project charter", "carta del progetto") or run `/pm-skills:project-charter`.
+Ask in your own words ("project charter", "revise the charter") or run `/pm-skills:project-charter`.
 
 ## Inputs and outputs
 

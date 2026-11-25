@@ -1,12 +1,15 @@
 ---
 name: lessons-learned
-description: Writes the lessons learned of a project or a phase, at its close or at a gate - what worked, what did not, recommendations and owned follow-up, each backed by facts from retrospectives, gates, decisions, changes and risks; never about people. Use for "lessons learned", "post-mortem", "lezioni apprese", "cosa abbiamo imparato"; not to decide whether the project can close (phase-gate-review).
+description: Writes the lessons learned of a project or a phase, at its close or at a gate - what worked, what did not, recommendations and owned follow-up, each backed by facts from retrospectives, gates, decisions, changes and risks; never about people. Use for "lessons learned", "post-mortem", "what did we learn"; not to decide whether the project can close (phase-gate-review).
 ---
 
 # Lessons learned
 
 Records what a project or a phase learned so that the next one can use it: what worked, what did not, and what to do
 differently, each point backed by a fact. It can be written at any gate, not only at the close.
+
+**Italian.** If the user writes in Italian or the `Deliverable language` is Italian, first read
+`${CLAUDE_PLUGIN_ROOT}/shared/glossary/it.md` and use its terms; the project's `terms` come first.
 
 ## Inputs
 

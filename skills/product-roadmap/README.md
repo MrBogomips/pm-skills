@@ -30,7 +30,7 @@ the release items as committed, and shows the draft before writing it.
 
 **Context:** A change request was approved and a theme moved to the next quarter.
 
-**Action:** Ask "aggiorna la roadmap".
+**Action:** Ask "update the roadmap".
 
 **Result:** A revision with a minor version bump, "Changes from the previous version" listing what moved and the
 change request behind it, and the same file updated after you agree.
@@ -46,7 +46,7 @@ throughput, which is a separate job.
 
 ## Usage
 
-Ask in your own words ("product roadmap", "update the roadmap", "roadmap di prodotto") or run
+Ask in your own words ("product roadmap", "update the roadmap", "now/next/later") or run
 `/pm-skills:product-roadmap`.
 
 ## Inputs and outputs

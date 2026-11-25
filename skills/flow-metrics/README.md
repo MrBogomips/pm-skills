@@ -31,7 +31,7 @@ with WIP against the limits and questions for the team about where the items wai
 
 **Context:** The project folder holds a snapshot from August.
 
-**Action:** Ask "confronta le metriche di flusso con agosto".
+**Action:** Ask "compare the flow metrics with August".
 
 **Result:** The two snapshots side by side with the same workflow mapping: cycle time percentiles, throughput and WIP,
 and what moved.
@@ -47,7 +47,7 @@ script from temporary files that are not kept; any metric whose data is missing 
 
 ## Usage
 
-Ask in your own words ("flow metrics", "cycle time", "metriche di flusso", "tempo di ciclo") or run
+Ask in your own words ("flow metrics", "cycle time", "throughput", "aging items") or run
 `/pm-skills:flow-metrics`. Say the period or the snapshot to compare with if you have one in mind.
 
 ## Inputs and outputs

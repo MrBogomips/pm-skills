@@ -30,13 +30,13 @@ dates.
 
 **Context:** The discovery phase ended with gate G-001.
 
-**Action:** Ask "lezioni apprese della fase di discovery".
+**Action:** Ask "lessons learned of the discovery phase".
 
 **Result:** The same document scoped to the phase, with `gate: G-001`.
 
 ## Usage
 
-Ask in your own words ("lessons learned", "lezioni apprese") or run `/pm-skills:lessons-learned`.
+Ask in your own words ("lessons learned", "what did we learn") or run `/pm-skills:lessons-learned`.
 
 ## Inputs and outputs
 

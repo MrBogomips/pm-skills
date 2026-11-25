@@ -1,12 +1,15 @@
 ---
 name: publish-deliverable
-description: Renders a Markdown project document (status report, minutes, any deliverable) into Word, PDF, slides, email or an artifact through the renderer the project declares, and sends or uploads it only through a declared write tool. Use to export or distribute it ("export to Word", "make a PDF of the report", "esporta in Word", "genera il PDF", "pubblica il documento"); not to write the document.
+description: Renders a Markdown project document (status report, minutes, any deliverable) into Word, PDF, slides, email or an artifact through the renderer the project declares, and sends or uploads it only through a declared write tool. Use to export or distribute it ("export to Word", "make a PDF of the report", "publish the document"); not to write the document.
 ---
 
 # Publish deliverable
 
 Turns a Markdown deliverable into the format its readers need, with the renderer the project declares, and delivers
 it only where and when the user says. The Markdown stays the source; the output is regenerated, never edited.
+
+**Italian.** If the user writes in Italian or the `Deliverable language` is Italian, first read
+`${CLAUDE_PLUGIN_ROOT}/shared/glossary/it.md` and use its terms; the project's `terms` come first.
 
 ## Inputs
 

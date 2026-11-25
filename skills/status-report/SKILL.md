@@ -1,12 +1,15 @@
 ---
 name: status-report
-description: Drafts the project status report for the reporting period from the registers and the project tools, outcomes before activities, with status colors backed by facts and a critical review when it goes to a steering committee or the client. Use for a status, progress, weekly or monthly report ("status report", "SAL", "report di avanzamento", "stato avanzamento lavori").
+description: Drafts the project status report for the reporting period from the registers and the project tools, outcomes before activities, with status colors backed by facts and a critical review when it goes to a steering committee or the client. Use for a status, progress, weekly or monthly report ("status report", "progress report", "weekly report", "highlight report").
 ---
 
 # Status report
 
 Writes the status report for one reporting period: where the project stands, what it delivered, what is at risk and
 what the reader has to decide, every claim backed by a register or a tool.
+
+**Italian.** If the user writes in Italian or the `Deliverable language` is Italian, first read
+`${CLAUDE_PLUGIN_ROOT}/shared/glossary/it.md` and use its terms; the project's `terms` come first.
 
 ## Inputs
 
@@ -73,4 +76,4 @@ what the reader has to decide, every claim backed by a register or a tool.
 - `scale`: the thresholds of the status colors, overall and per heading.
 - `rules`: extra checks or approvals, such as a sponsor's approval before issuing.
 - `steps`: extra steps before drafting, before the review, or after issuing.
-- `terms`: the project's words for the report and its parts ("SAL").
+- `terms`: the project's words for the report and its parts ("highlight report").
