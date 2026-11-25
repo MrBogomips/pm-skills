@@ -72,7 +72,7 @@ def _assignment(row: md.Row, roles: tuple[str, ...], errors: list[str]) -> Assig
         errors.append(f"line {n}: Deliverable is empty: name the deliverable or activity")
     if c["WBS"] and not WBS_RE.match(c["WBS"]):
         errors.append(f"line {n}: WBS '{c['WBS']}' must be empty or a dotted work package ID (1.2.3)")
-    md.check_contacts(n, "Deliverable", c["Deliverable"], errors)
+    md.check_contacts(n, "Deliverable", c["Deliverable"], errors, phone=False)
     cells = {role: c[role] for role in roles}
     for role, value in cells.items():
         if value not in CELLS:

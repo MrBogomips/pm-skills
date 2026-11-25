@@ -16,8 +16,9 @@ is reached at the right level. It builds on the stakeholder register and the RAC
   `/pm-skills:project-setup`; you may still draft in the session if the user wants, asking for what you would have
   read there and inventing no configuration.
 - **Registers, read only**: the stakeholder register (roles, levels, engagement gap, approach, owner), the RACI matrix
-  (roles consulted and informed per deliverable), the gate register (who decides gates), the tailoring register.
-- **Documents**: the earlier communication plan, the project charter (authority, escalation).
+  (roles consulted and informed per deliverable), the gate register (gates and who decided earlier outcomes), the tailoring register.
+- **Documents**: the earlier communication plan, the project charter (authority, who approves and decides gates,
+  escalation).
 - **Tools register**: tools with Purpose `publish` (how reports are distributed) and `meetings`.
 - **Formats**: `${CLAUDE_PLUGIN_ROOT}/shared/documents/communication-plan.md` and
   `${CLAUDE_PLUGIN_ROOT}/shared/documents/common.md`.

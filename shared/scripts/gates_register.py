@@ -132,7 +132,7 @@ def _criterion(row: md.Row, errors: list[str]) -> Criterion:
         errors.append(f"line {n}: # '{c['#']}' must be a whole number from 1, in ASCII digits")
     if not c["Criterion"]:
         errors.append(f"line {n}: Criterion is empty")
-    md.check_contacts(n, "Criterion", c["Criterion"], errors)
+    md.check_contacts(n, "Criterion", c["Criterion"], errors, phone=False)
     return Criterion(c["Gate"], number, c["Criterion"], n)
 
 
@@ -149,8 +149,8 @@ def _outcome(row: md.Row, errors: list[str]) -> Outcome:
         errors.append(f"line {n}: Decided by is empty: the role or body that took the decision")
     if c["Outcome"] in NEEDS_CONDITIONS and not c["Conditions"]:
         errors.append(f"line {n}: Conditions are required for '{c['Outcome']}': what must happen, by when")
-    for column in ("Decided by", "Conditions"):
-        md.check_contacts(n, column, c[column], errors)
+    md.check_contacts(n, "Decided by", c["Decided by"], errors)
+    md.check_contacts(n, "Conditions", c["Conditions"], errors, phone=False)
     return Outcome(c["Gate"], when, c["Outcome"], c["Decided by"], c["Conditions"], c["Review"], n)
 
 

@@ -65,7 +65,7 @@ Every gate has at least one criterion.
 | `Outcome` | the decision | `go`, `go with conditions`, `hold` or `stop` |
 | `Decided by` | the role or body that took it (steering committee, sponsor) | not empty |
 | `Conditions` | what must happen, and by when, for the decision to stand; for a hold, what is missing | required for `go with conditions` and `hold` |
-| `Review` | the gate review document, relative to the documents folder, as `doc_naming.py` prints it | optional; not checked for existence |
+| `Review` | the gate review document the decision was taken on, relative to the documents folder, as `doc_naming.py` prints it | optional; not checked for existence |
 
 ## Rules
 
@@ -81,7 +81,10 @@ Every gate has at least one criterion.
    `phase-gate-review` enforces this rule; git keeps the record.
 6. An outcome is written only when the people with the authority have decided it: the register records decisions,
    never an assessment.
-7. No cell holds an email address or a phone number.
+7. The `Review` link of an outcome keeps pointing to the review the decision was taken on: with no version in file
+   names, a later revision keeps the name; with `Version in file name: yes`, the row names that version's file.
+8. No cell holds an email address; `Gate` and `Decided by` hold no phone number either. `Criterion` and `Conditions`
+   are not checked for phone numbers, so that they can state quantities (`1 000 000 requests a day`).
 
 ## Validation
 

@@ -26,7 +26,8 @@ registers and seeds the empty ones.
 ## Steps
 
 1. **Read the configuration** and the `## project-charter` section of `TAILORING.md`; say which rules apply. Find an
-   existing charter by the naming convention: if one is issued, go to step 7.
+   existing charter by the naming convention: if one is issued, go to step 7; if a draft exists, complete it
+   in place instead of starting a new one.
 2. **Draft** in the format, in the `Deliverable language`, from the sources. Ask only for what they do not hold,
    typically the purpose, the objectives with their success criteria, what is out of scope and the authority of the
    project manager; never fill those with a guess. Each summary of a register points to it.
@@ -43,7 +44,8 @@ registers and seeds the empty ones.
    risks not already in the risk register, the stakeholders not already in the stakeholder register, the phases'
    gates and their criteria not already in the gate register, each as a new row with the next free ID computed from
    the file and the values its format requires; a required value the charter does not give is asked, never made up.
-   Write only the entries the user accepts, one register at a time, and validate each with its script in
+   A register declared but missing is created with its format's empty structure (title, sections, headers), shown
+   with the entries. Write only the entries the user accepts, one register at a time, and validate each with its script in
    `${CLAUDE_PLUGIN_ROOT}/shared/scripts/` (`risks_register.py`, `stakeholders_register.py`, `gates_register.py`)
    until it exits 0. A change to an existing entry is listed with the skill that owns it; never edit it here.
 6. **Issue** when the user reports the approval: set `status: issued`, `approved-by` and `approved-on` as the user

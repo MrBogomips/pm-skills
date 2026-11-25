@@ -41,6 +41,7 @@ is theirs; the skill records it when the user reports it.
      do not show it;
    - add the open high risks, pending changes and known issues that bear on the decision, and a recommendation with
      its reasons;
+   - name who decides the gate: the charter's Authority, or the decider of its earlier outcomes, else ask;
    - dispatch `pm-critical-reviewer` with the draft, the gate and its decider, the register paths and the facts
      collected. When the gate is decided by a steering committee or the client, tell the user that the review goes
      to the agent with the model escalated to `fable`, because it is a decision for a steering committee or a
@@ -49,8 +50,8 @@ is theirs; the skill records it when the user reports it.
    - name the document with `python3 "${CLAUDE_PLUGIN_ROOT}/shared/scripts/doc_naming.py" next --project <PROJECT.md> --dir <folder> --type phase-gate-review --date <assessment day>`,
      show it with Decision "pending", and write it with `status: draft` after the user agrees.
 4. **Record** a decision, only when the user reports what was decided, by whom and on what date:
-   - append the outcome row (conditions as the user states them, with dates) and set the gate's Status as the
-     format's rules say; fill the Decision heading of the review, `status: issued`, as a patch revision
+   - append the outcome row (conditions as the user states them, with dates; `Review` the review the decision was
+     taken on, as the format says) and set the gate's Status as the format's rules say; fill the Decision heading of the review, `status: issued`, as a patch revision
      (`doc_naming.py bump <version> patch`); show both changes, write after agreement;
    - propose a decision log entry only when the conditions change scope, schedule or budget;
    - when the closing gate passes, suggest `/pm-skills:lessons-learned`.

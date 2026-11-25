@@ -25,8 +25,9 @@ activity, by role. Roles survive turnover; who holds a role is in the team regis
 
 1. **Start.** Read the project register, the matrix and the tailoring section; say which tailoring rules apply.
 2. **Set up** (no matrix, or the user asks): propose `RACI.md` at the project root (or where the Working documents
-   section places registers) and the line `- RACI matrix: \`RACI.md\`` for `PROJECT.md`. Show both, write after the
-   user agrees, then validate `PROJECT.md` with
+   section places registers) and the line `- RACI matrix: \`RACI.md\`` for `PROJECT.md`. Write `RACI.md` only in
+   step 5, with the agreed header and its first rows: a file without a table does not validate. Write the
+   `PROJECT.md` line after the user agrees, then validate it with
    `python3 "${CLAUDE_PLUGIN_ROOT}/shared/scripts/project_register.py" validate <path>`.
 3. **Propose rows and columns.**
    - Rows: the work packages of the latest `wbs` (with their ID in `WBS`), else the deliverables of the charter,

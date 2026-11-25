@@ -112,6 +112,10 @@ class RaciRegister(ErrorAssertions):
         text = replaced(RACI, "| Release notes |", "| Release notes ada@acme.example |")
         self.assertError(ra.validate(text), 7, "email address")
 
+    def test_quantities_are_not_phone_numbers(self):
+        text = replaced(RACI, "| Release notes |", "| Load test at 1 000 000 requests per day |")
+        self.assertEqual(ra.validate(text), [])
+
     def test_summary(self):
         self.assertEqual(summary_of(ra, "RACI.md", RACI), "RACI matrix `RACI.md`: 3 deliverables, 5 roles.")
 
@@ -261,6 +265,12 @@ class GateRegister(ErrorAssertions):
     def test_rejects_extra_content(self):
         text = replaced(GATES, "## Criteria\n", "Gates are decided by the steering committee.\n\n## Criteria\n")
         self.assertError(ga.validate(text), 10, "unexpected content")
+
+    def test_quantities_are_not_phone_numbers(self):
+        text = replaced(GATES, "| Release scope meets the Definition of Done |",
+                        "| Load test passed at 1 000 000 requests per day |")
+        text = replaced(text, "| Criterion 3 not met |", "| Rerun the load test at 100 000 000 requests |")
+        self.assertEqual(ga.validate(text), [])
 
     def test_rejects_contacts(self):
         text = replaced(GATES, "| hold | steering committee |", "| hold | ada@acme.example |")

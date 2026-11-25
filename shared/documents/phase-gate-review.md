@@ -34,7 +34,7 @@ one-line "nothing to report".
 
 | Heading | What goes there |
 |---|---|
-| Gate and criteria | the gate, its milestone and planned date, and who decides it |
+| Gate and criteria | the gate, its milestone and planned date, and who decides it: the charter's Authority, else the decider of earlier outcomes, else the user's answer |
 | Assessment | a table `\| # \| Criterion \| Assessment \| Evidence \|`, one row per criterion of `GATES.md`; Assessment is `met`, `partly met`, `not met` or `no evidence`; Evidence names the fact and its source |
 | Open conditions | the conditions of earlier outcomes of this gate, each with its state from the facts, or "to confirm" when the facts do not show it |
 | Risks and issues for the decision | open high risks, pending changes and known issues that bear on the decision, from the registers |
