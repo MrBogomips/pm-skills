@@ -1,13 +1,14 @@
 ---
-summary: Claude Code plugin for project managers, optimized for software projects - configuration, team, capacity, stakeholders, risks, decisions, change requests, Scrum events, roadmap, status reports, publishing, tailoring and a coach, grounded in small validated registers under git.
+summary: Claude Code plugin for project managers, optimized for software projects - configuration, team, capacity, stakeholders, risks, decisions, change requests, Scrum events, roadmap, flow metrics, forecasts, estimates, schedule, budget, status reports, publishing, tailoring and a coach, grounded in small validated registers under git.
 ---
 
 # pm-skills
 
 Project management skills for Claude Code. Your project keeps a few small Markdown registers under git (its
-configuration, tools, team, capacity, stakeholders, risks, decisions and change requests); the skills read them
+configuration, tools, team, capacity, stakeholders, risks, decisions, change requests, schedule and budget); the skills read them
 together with your issue tracker and code host, draft the recurring documents (minutes, status reports, sprint
-plans, reviews, retrospectives, the roadmap), and suggest who should take or review work. They work
+plans, reviews, retrospectives, the roadmap, release plans), compute flow metrics, forecasts, critical path and
+earned value with tested scripts, and suggest who should take or review work. They work
 on any project and are optimized for building software and managing software products.
 
 ## Why
@@ -38,6 +39,12 @@ evaluations of people.
 | [`retrospective`](skills/retrospective/README.md) | Governance | Prepares and records a retrospective with owned actions, following up the previous ones. |
 | [`backlog-refinement`](skills/backlog-refinement/README.md) | Scope | Readiness, splitting and ordering proposals for the top of the backlog. |
 | [`product-roadmap`](skills/product-roadmap/README.md) | Governance, Scope | The product roadmap: Product Goal, themes and horizons, committed versus intended. |
+| [`flow-metrics`](skills/flow-metrics/README.md) | Schedule, Scope | Cycle time, throughput, WIP and work item age from a saved flow snapshot, team-level; DORA when the tools allow. |
+| [`delivery-forecast`](skills/delivery-forecast/README.md) | Schedule | When N items will be done, or how many by a date: Monte Carlo percentiles, never a single date. |
+| [`release-plan`](skills/release-plan/README.md) | Scope, Schedule | Scope and dates of a release from the forecast, the roadmap and approved changes. |
+| [`estimate`](skills/estimate/README.md) | Finance, Schedule | Three-point and analogous estimates of effort and cost, from the rates per role in `BUDGET.md`. |
+| [`schedule-check`](skills/schedule-check/README.md) | Schedule | Critical path, float and slip against the baseline; keeps `SCHEDULE.md` and its baselines. |
+| [`budget-tracker`](skills/budget-tracker/README.md) | Finance | Keeps `BUDGET.md`; earned value, reserves apart, forecasts at completion. |
 | [`pm-tailoring`](skills/pm-tailoring/README.md) | All | Adapts the plugin to the project with the lightest change that works. User-invocable only. |
 | [`pm-coach`](skills/pm-coach/README.md) | All | Reasoned advice grounded in your registers. User-invocable only. |
 
@@ -48,8 +55,10 @@ and the Kanban Guide; more are planned (see `DESIGN.md`).
 
 - `project-activity-scout` (`haiku`): collects recent activity from the project's tools, per person or per project,
   read only.
-- `pm-critical-reviewer` (`opus`): challenges risk responses, change impact analyses and deliverables before they go
-  out, read only.
+- `pm-critical-reviewer` (`opus`): challenges risk responses, change impact analyses, estimates and deliverables
+  before they go out, read only.
+- `flow-data-scout` (`haiku`): collects the transition history of work items from the issues tool as a flow snapshot,
+  with no assignees, read only.
 
 ## Hooks
 

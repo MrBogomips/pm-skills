@@ -338,7 +338,7 @@ def _available_cli(argv: list[str]) -> int:
         return 2
     try:
         text = args.file.read_text(encoding="utf-8")
-    except OSError as exc:
+    except (OSError, UnicodeDecodeError) as exc:
         print(f"cannot read {args.file}: {exc}", file=sys.stderr)
         return 2
     register, errors = parse(text)

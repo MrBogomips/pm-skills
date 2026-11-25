@@ -52,6 +52,8 @@ is ignored, and so is a line inside a fenced code block, which is an example.
 - Stakeholder register: `STAKEHOLDERS.md`
 - Capacity register: `CAPACITY.md`
 - Change log: `CHANGES.md`
+- Budget register: `BUDGET.md`
+- Schedule register: `SCHEDULE.md`
 ```
 
 Headings and keys are schema keys: they stay in English whatever the language of the values.
@@ -78,7 +80,7 @@ Every key is optional: the register grows over one or more sessions, and a key i
 | Conventions | `Naming` | `by date` or `coded` (see `shared/documents/common.md`); `coded` needs `Internal code` |
 | Conventions | `Type codes` | comma-separated `<document type>=<CODE>`, overriding the plugin's default codes |
 | Conventions | `Version in file name` | `yes` or `no` (the default) |
-| Registers | `Tools register`, `Team register`, `Tailoring register`, `Risk register`, `Decision log`, `Stakeholder register`, `Capacity register`, `Change log` | the path of the register, between backticks; two registers never share a file |
+| Registers | `Tools register`, `Team register`, `Tailoring register`, `Risk register`, `Decision log`, `Stakeholder register`, `Capacity register`, `Change log`, `Budget register`, `Schedule register` | the path of the register, between backticks; two registers never share a file |
 
 ## Rules
 

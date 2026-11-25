@@ -11,11 +11,13 @@ from pathlib import Path
 from types import ModuleType
 from typing import Optional
 
+import budget_register
 import capacity_register
 import changes_register
 import decisions_register
 import project_register
 import risks_register
+import schedule_register
 import stakeholders_register
 import tailoring_register
 import teams_register
@@ -32,6 +34,8 @@ MODULES: dict[str, ModuleType] = {
     "Stakeholder register": stakeholders_register,
     "Capacity register": capacity_register,
     "Change log": changes_register,
+    "Budget register": budget_register,
+    "Schedule register": schedule_register,
 }
 
 
@@ -75,7 +79,7 @@ def summary(project_dir: Path, today: date) -> Optional[str]:
             label = _label(register.path, project_dir)
             try:
                 line = register.module.summary_line(register.path, today, label=label)
-            except (OSError, ValueError) as exc:
+            except (OSError, ValueError, ArithmeticError) as exc:
                 line = f"{register.name} `{label}` cannot be read ({type(exc).__name__})"
             parts.append(line.rstrip("."))
         return "pm-skills: " + "; ".join(parts) + "."

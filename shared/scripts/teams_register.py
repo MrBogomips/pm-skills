@@ -288,7 +288,7 @@ def _cli(argv: list[str]) -> int:
         return 2
     try:
         text = Path(argv[1]).read_text(encoding="utf-8")
-    except OSError as exc:
+    except (OSError, UnicodeDecodeError) as exc:
         print(f"cannot read {argv[1]}: {exc}", file=sys.stderr)
         return 2
     errors = validate(text)

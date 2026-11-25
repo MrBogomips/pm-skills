@@ -19,6 +19,7 @@ NOT_PHONE_RE = re.compile(r"`[^`]*`|\b\d+\.\d+\.\d+\b|\b[A-Z]+-\d{3,}\b")
 FENCE_RE = re.compile(r"^\s*(```|~~~)")
 ENTRY_RE = re.compile(r"^-\s+([A-Za-z][A-Za-z ]*?):\s*(.*)$")
 PATH_RE = re.compile(r"^`([^`]+)`")
+WHOLE_NUMBER_RE = re.compile(r"[0-9]{1,15}")
 
 
 @dataclass(frozen=True)
@@ -56,8 +57,18 @@ def parse_date(value: str, line: int, what: str, errors: list[str]) -> Optional[
 
 
 def is_number(value: str) -> bool:
-    """ASCII digits only: str.isdigit() also accepts superscripts, which int() rejects."""
-    return value.isascii() and value.isdigit()
+    """A whole number of at most 15 ASCII digits: str.isdigit() and int() also accept other scripts' digits, and
+    an unbounded number of digits can overflow dates and decimal arithmetic."""
+    return WHOLE_NUMBER_RE.fullmatch(value) is not None
+
+
+def whole_number(value: str) -> int:
+    """An argparse type: a whole number of ASCII digits, without sign, spaces or underscores (exit 2 otherwise)."""
+    import argparse
+
+    if not is_number(value):
+        raise argparse.ArgumentTypeError(f"'{value}' must be a whole number of at most 15 ASCII digits")
+    return int(value)
 
 
 def split_list(value: str) -> tuple[str, ...]:
@@ -134,7 +145,7 @@ def validate_cli(argv: list[str], name: str, validate: Callable[[str], list[str]
         return 2
     try:
         text = Path(argv[1]).read_text(encoding="utf-8")
-    except OSError as exc:
+    except (OSError, UnicodeDecodeError) as exc:
         print(f"cannot read {argv[1]}: {exc}", file=sys.stderr)
         return 2
     errors = validate(text)

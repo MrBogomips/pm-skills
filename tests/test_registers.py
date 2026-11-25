@@ -738,3 +738,36 @@ class AsciiIds(unittest.TestCase):
         for validate, text, old, new in cases:
             with self.subTest(old=old):
                 self.assertNotEqual(validate(replaced(text, old, new)), [])
+
+
+class RobustReading(unittest.TestCase):
+    """A register that cannot be decoded or summed up is reported, never a traceback."""
+
+    def test_validate_of_a_file_that_is_not_utf8_is_an_io_error(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            bad = Path(tmp) / "bad.md"
+            bad.write_bytes(b"\xff\xfe\x00bad \x80\x81\n")
+            for script in ("risks_register.py", "capacity_register.py", "changes_register.py"):
+                with self.subTest(script=script):
+                    result = subprocess.run([sys.executable, str(SCRIPTS / script), "validate", str(bad)],
+                                            capture_output=True, text=True)
+                    self.assertEqual(result.returncode, 2, result.stdout + result.stderr)
+                    self.assertNotIn("Traceback", result.stderr)
+                    self.assertIn("cannot read", result.stderr)
+
+    def test_arithmetic_error_in_one_register_does_not_hide_the_others(self):
+        import decimal
+        from unittest import mock
+
+        import budget_register
+        import registers
+
+        with tempfile.TemporaryDirectory() as tmp:
+            project = Path(tmp)
+            (project / "AGENTS.md").write_text("# Rules\n\n- Project register: `PROJECT.md`\n", encoding="utf-8")
+            for name in ("PROJECT.md", "TEAMS.md", "BUDGET.md"):
+                (project / name).write_text(fixture_text(name), encoding="utf-8")
+            with mock.patch.object(budget_register, "summary_line", side_effect=decimal.InvalidOperation):
+                line = registers.summary(project, TODAY)
+        self.assertIn("Budget register `BUDGET.md` cannot be read", line)
+        self.assertIn("Team register `TEAMS.md`", line)
