@@ -100,7 +100,8 @@ absence, contacts beyond work accounts, individual cost) or evaluations (judgmen
 
 They may hold what the project needs to plan and deliver: availability by period with no reason given, the project
 calendar ("unavailable"), and delivery performance as measurable facts, by team and by person. Performance metrics
-are computed when needed, never stored; rates are per role. Validators reject anything outside the schema.
+are computed when needed, never stored; rates are per role. Flow snapshots keep work items and their
+transitions, never who worked on them, so that team metrics can be recomputed and compared over time. Validators reject anything outside the schema.
 
 ### No session model assumed
 
@@ -153,8 +154,8 @@ only that register:
 | `Reporting cadence` | `weekly`, `biweekly`, `monthly` or free text | `status-report` |
 | `Agile framework` | `scrum`, `kanban` or free text | `sprint-planning`, `sprint-review`, `retrospective`, `backlog-refinement` |
 | `Sprint length` | a number of weeks | `sprint-planning`, `sprint-review` |
-| `Definition of Done` | the path of the project's Definition of Done | `sprint-planning`, `sprint-review`, *`release-plan`* |
-| `Definition of Workflow` | the path of the Kanban Definition of Workflow | `sprint-planning` (Kanban replenishment), *`flow-metrics`*, *`delivery-forecast`* |
+| `Definition of Done` | the path of the project's Definition of Done | `sprint-planning`, `sprint-review`, `release-plan` |
+| `Definition of Workflow` | the path of the Kanban Definition of Workflow | `sprint-planning` (Kanban replenishment), `flow-metrics`, `delivery-forecast` |
 
 The Definition of Done and the Definition of Workflow are short, stable texts of the project, kept by
 `project-setup`, with no validator. A skill that uses the Definition of Workflow names the elements it needs (work
@@ -187,7 +188,7 @@ reviews them when the project changes. Another skill that needs a missing key as
 ### Registers and documents
 
 A **register** keeps state that persists and that another skill or a later session reads again: project, tools,
-tailoring, team, capacity, risks, stakeholders, decisions, changes. There is one register per type, each with its own schema;
+tailoring, team, capacity, risks, stakeholders, decisions, changes, schedule, budget. There is one register per type, each with its own schema;
 a mixed register (a single RAID log) is not used. Every register has:
 
 - its format in `shared/registers/<register>.md`, the single source: skills and agents point to it as
@@ -299,7 +300,7 @@ Each agent pins its model in the frontmatter by class, and says why in its body:
 
 | Class | Model | What it does | Agents |
 |---|---|---|---|
-| Collector | `haiku` | gathers facts from the project's tools, read only, in a fixed output shape; no advice, no proposals | `project-activity-scout`, *`flow-data-scout`* |
+| Collector | `haiku` | gathers facts from the project's tools, read only, in a fixed output shape; no advice, no proposals | `project-activity-scout`, `flow-data-scout` |
 | Analyst | `sonnet` | turns facts from several sources into an analysis or a draft | none planned |
 | Critical reviewer | `opus` | challenges plans, estimates, risk responses and deliverables; finds what is missing | `pm-critical-reviewer` |
 
@@ -326,9 +327,9 @@ Every pull request that adds, renames or removes a skill updates this map.
 | Domain | Initiating | Planning | Executing | Monitoring and Controlling | Closing |
 |---|---|---|---|---|---|
 | Governance | `project-setup`, *`project-charter`* | `product-roadmap` | `decision-log` | `status-report`, `change-request`, `decision-log`, `retrospective`, *`phase-gate-review`* | *`phase-gate-review`*, *`lessons-learned`* |
-| Scope | *`project-charter`* | `product-roadmap`, *`wbs-builder`*, `backlog-refinement`, `sprint-planning`, *`release-plan`* | | `change-request`, `sprint-review` | |
-| Schedule | | *`estimate`*, `sprint-planning`, *`release-plan`* | | *`schedule-check`*, *`flow-metrics`*, *`delivery-forecast`* | |
-| Finance | | *`estimate`* | | *`budget-tracker`*, `change-request` | |
+| Scope | *`project-charter`* | `product-roadmap`, *`wbs-builder`*, `backlog-refinement`, `sprint-planning`, `release-plan` | | `change-request`, `sprint-review` | |
+| Schedule | | `estimate`, `sprint-planning`, `release-plan` | | `schedule-check`, `flow-metrics`, `delivery-forecast` | |
+| Finance | | `estimate` | | `budget-tracker`, `change-request` | |
 | Stakeholders | `stakeholder-register` | *`communication-plan`* | `meeting-minutes`, `publish-deliverable` | `stakeholder-register`, `status-report`, `sprint-review` | |
 | Resources | | `team-register`, `capacity-register`, *`raci-matrix`* | `assignment-advisor` | `team-register`, `capacity-register` | |
 | Risk | | `risk-register` | | `risk-register`, `change-request` | |
@@ -347,14 +348,14 @@ Scrum (Scrum Guide 2020) and Kanban (Kanban Guide v2025.5), by event, artifact a
 | Sprint Review | `sprint-review` |
 | Sprint Retrospective | `retrospective` |
 | Product Backlog and Product Goal | `backlog-refinement`, `product-roadmap` |
-| Increment and Definition of Done | the `Definition of Done` file in the Profile, read by `sprint-planning`, `sprint-review`, *`release-plan`* |
+| Increment and Definition of Done | the `Definition of Done` file in the Profile, read by `sprint-planning`, `sprint-review`, `release-plan` |
 
 | Kanban | Skills |
 |---|---|
 | Defining and visualizing the workflow | the `Definition of Workflow` file in the Profile, kept by `project-setup` |
-| Actively managing items in the workflow | *`flow-metrics`* (work item age against the Service Level Expectation) |
-| Improving the workflow | *`flow-metrics`*, `retrospective` |
-| Flow measures: WIP, throughput, work item age, cycle time | *`flow-metrics`*, *`delivery-forecast`* |
+| Actively managing items in the workflow | `flow-metrics` (work item age against the Service Level Expectation) |
+| Improving the workflow | `flow-metrics`, `retrospective` |
+| Flow measures: WIP, throughput, work item age, cycle time | `flow-metrics`, `delivery-forecast` |
 
 ## Planned skills
 
@@ -373,18 +374,9 @@ frontmatter, naming and versioning, hooks over every register `PROJECT.md` lists
 `capacity-register`, `sprint-planning`, `sprint-review`, `retrospective`, `backlog-refinement`, `product-roadmap`
 and `pm-tailoring`, with `shared/integration-contract.md` for project skills.
 
-**Wave 3: numbers.**
-
-| Skill | Kind | Job | Agents |
-|---|---|---|---|
-| `flow-metrics` | analysis | cycle time, throughput, work in progress and work item age from the transition history; DORA metrics when the tools allow | `flow-data-scout` |
-| `delivery-forecast` | analysis | Monte Carlo forecast of dates or scope from throughput | `flow-data-scout` |
-| `release-plan` | document | the scope and dates of a release, from the forecast and the Definition of Done | `flow-data-scout` |
-| `estimate` | analysis | three-point and analogous estimates of effort and cost | `pm-critical-reviewer` |
-| `schedule-check` | analysis | critical path, float and dates over the working calendar against the baseline | |
-| `budget-tracker` | analysis | spend against budget and earned value, with rates per role | |
-
-Agent: `flow-data-scout` (collector, `haiku`): the transition history as a dataset for the scripts.
+**Wave 3: shipped in 1.2.0.** Numbers: `flow-metrics`, `delivery-forecast` and `release-plan` with the
+`flow-data-scout` collector and flow snapshots, `estimate`, `schedule-check` with the schedule register and its
+baselines, and `budget-tracker` with the budget register.
 
 **Wave 4: life cycle.**
 

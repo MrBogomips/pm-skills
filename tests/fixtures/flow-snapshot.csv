@@ -1,0 +1,30 @@
+item,type,state,entered_at
+ACME-101,story,To Do,2026-10-20
+ACME-101,story,In Progress,2026-10-27
+ACME-101,story,Review,2026-10-30
+ACME-101,story,Done,2026-11-02
+ACME-102,story,To Do,2026-10-21
+ACME-102,story,In Progress,2026-11-03
+ACME-102,story,Done,2026-11-05
+ACME-103,bug,To Do,2026-11-01
+ACME-103,bug,In Progress,2026-11-04T09:00:00
+ACME-103,bug,Done,2026-11-04T17:30:00
+ACME-104,story,To Do,2026-10-22
+ACME-104,story,In Progress,2026-11-05
+ACME-104,story,Review,2026-11-12
+ACME-104,story,Done,2026-11-18
+ACME-105,task,To Do,2026-10-23
+ACME-105,task,In Progress,2026-11-10
+ACME-105,task,Done,2026-11-20
+ACME-106,bug,To Do,2026-10-28
+ACME-106,bug,In Progress,2026-10-29
+ACME-106,bug,Done,2026-10-31
+ACME-106,bug,In Progress,2026-11-19
+ACME-107,story,To Do,2026-11-02
+ACME-107,story,In Progress,2026-11-09
+ACME-107,story,Review,2026-11-16
+ACME-108,story,To Do,2026-11-15
+ACME-109,story,In Progress,2026-11-20
+ACME-110,story,To Do,2026-10-25
+ACME-110,story,In Progress,2026-10-26
+ACME-110,story,To Do,2026-10-28

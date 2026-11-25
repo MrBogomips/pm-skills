@@ -35,3 +35,5 @@
 - Stakeholder register: `STAKEHOLDERS.md`
 - Capacity register: `CAPACITY.md`
 - Change log: `CHANGES.md`
+- Budget register: `BUDGET.md`
+- Schedule register: `SCHEDULE.md`

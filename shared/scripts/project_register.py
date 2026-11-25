@@ -42,6 +42,8 @@ REGISTERS = {
     "Stakeholder register": "stakeholders.md",
     "Capacity register": "capacity.md",
     "Change log": "changes.md",
+    "Budget register": "budget.md",
+    "Schedule register": "schedule.md",
 }
 
 
