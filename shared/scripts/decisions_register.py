@@ -18,12 +18,12 @@ from typing import Optional
 import md_register as md
 
 TITLE = "# Decisions"
-HEADING_RE = re.compile(r"^## (D-\d{3,})\s+(\S.*)$")
+HEADING_RE = re.compile(r"^## (D-[0-9]{3,})\s+(\S.*)$")
 REQUIRED = ("Date", "Status", "Decided by", "Context", "Decision")
 OPTIONAL = ("Options", "Consequences", "Supersedes", "Superseded by", "Source")
 KEYS = REQUIRED + OPTIONAL
 STATUSES = ("accepted", "superseded", "revoked")
-REF_RE = re.compile(r"^D-\d{3,}$")
+REF_RE = re.compile(r"^D-[0-9]{3,}$")
 SKILL = "/pm-skills:decision-log"
 
 

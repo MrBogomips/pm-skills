@@ -32,3 +32,6 @@
 - Tailoring register: `TAILORING.md`
 - Risk register: `RISKS.md`
 - Decision log: `DECISIONS.md`
+- Stakeholder register: `STAKEHOLDERS.md`
+- Capacity register: `CAPACITY.md`
+- Change log: `CHANGES.md`

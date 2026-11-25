@@ -10,7 +10,7 @@ from datetime import date
 from pathlib import Path
 from typing import Callable, Optional
 
-DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+DATE_RE = re.compile(r"^[0-9]{4}-[0-9]{2}-[0-9]{2}$")
 SEPARATOR_CELL_RE = re.compile(r"^:?-+:?$")
 EMAIL_RE = re.compile(r"\S+@\S+\.\S+")
 PHONE_RE = re.compile(r"\+?\d[\d\s().-]{7,}\d")

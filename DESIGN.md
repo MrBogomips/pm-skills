@@ -151,10 +151,10 @@ only that register:
 |---|---|---|
 | `Delivery approach` | `predictive`, `agile` or `hybrid` | tailoring in every skill |
 | `Reporting cadence` | `weekly`, `biweekly`, `monthly` or free text | `status-report` |
-| `Agile framework` | `scrum`, `kanban` or free text | agile skills (planned) |
-| `Sprint length` | a number of weeks | Scrum skills (planned) |
-| `Definition of Done` | the path of the project's Definition of Done | `sprint-planning`, `sprint-review`, `release-plan` (planned) |
-| `Definition of Workflow` | the path of the Kanban Definition of Workflow | `flow-metrics`, `delivery-forecast` (planned) |
+| `Agile framework` | `scrum`, `kanban` or free text | `sprint-planning`, `sprint-review`, `retrospective`, `backlog-refinement` |
+| `Sprint length` | a number of weeks | `sprint-planning`, `sprint-review` |
+| `Definition of Done` | the path of the project's Definition of Done | `sprint-planning`, `sprint-review`, *`release-plan`* |
+| `Definition of Workflow` | the path of the Kanban Definition of Workflow | `sprint-planning` (Kanban replenishment), *`flow-metrics`*, *`delivery-forecast`* |
 
 The Definition of Done and the Definition of Workflow are short, stable texts of the project, kept by
 `project-setup`, with no validator. A skill that uses the Definition of Workflow names the elements it needs (work
@@ -265,7 +265,7 @@ using a fixed vocabulary:
 one entry per extension point the skill declares. Its validator rejects a skill or an extension point that does not
 exist, and the two hooks cover it like every register. A skill reads its own section at the start. No rule may
 loosen a guardrail: the people rule, writes through declared tools with confirmation, showing before writing and
-naming the sources not read always apply. Rules can be written by hand before `pm-tailoring` exists.
+naming the sources not read always apply. Rules can also be written by hand.
 
 **Project skills.** A project sometimes needs a skill of its own: a Word document in the organization's format, an
 email, a ticketing system with its quirks. `pm-tailoring` helps build one only for a real need, after the reuse
@@ -325,15 +325,15 @@ Every pull request that adds, renames or removes a skill updates this map.
 
 | Domain | Initiating | Planning | Executing | Monitoring and Controlling | Closing |
 |---|---|---|---|---|---|
-| Governance | `project-setup`, *`project-charter`* | *`product-roadmap`* | `decision-log` | `status-report`, *`change-request`*, `decision-log`, *`retrospective`*, *`phase-gate-review`* | *`phase-gate-review`*, *`lessons-learned`* |
-| Scope | *`project-charter`* | *`product-roadmap`*, *`wbs-builder`*, *`backlog-refinement`*, *`sprint-planning`*, *`release-plan`* | | *`change-request`*, *`sprint-review`* | |
-| Schedule | | *`estimate`*, *`sprint-planning`*, *`release-plan`* | | *`schedule-check`*, *`flow-metrics`*, *`delivery-forecast`* | |
-| Finance | | *`estimate`* | | *`budget-tracker`*, *`change-request`* | |
-| Stakeholders | *`stakeholder-register`* | *`communication-plan`* | `meeting-minutes`, `publish-deliverable` | *`stakeholder-register`*, `status-report`, *`sprint-review`* | |
-| Resources | | `team-register`, *`capacity-register`*, *`raci-matrix`* | `assignment-advisor` | `team-register`, *`capacity-register`* | |
-| Risk | | `risk-register` | | `risk-register`, *`change-request`* | |
+| Governance | `project-setup`, *`project-charter`* | `product-roadmap` | `decision-log` | `status-report`, `change-request`, `decision-log`, `retrospective`, *`phase-gate-review`* | *`phase-gate-review`*, *`lessons-learned`* |
+| Scope | *`project-charter`* | `product-roadmap`, *`wbs-builder`*, `backlog-refinement`, `sprint-planning`, *`release-plan`* | | `change-request`, `sprint-review` | |
+| Schedule | | *`estimate`*, `sprint-planning`, *`release-plan`* | | *`schedule-check`*, *`flow-metrics`*, *`delivery-forecast`* | |
+| Finance | | *`estimate`* | | *`budget-tracker`*, `change-request` | |
+| Stakeholders | `stakeholder-register` | *`communication-plan`* | `meeting-minutes`, `publish-deliverable` | `stakeholder-register`, `status-report`, `sprint-review` | |
+| Resources | | `team-register`, `capacity-register`, *`raci-matrix`* | `assignment-advisor` | `team-register`, `capacity-register` | |
+| Risk | | `risk-register` | | `risk-register`, `change-request` | |
 
-Across all domains: `pm-coach` and *`pm-tailoring`*.
+Across all domains: `pm-coach` and `pm-tailoring`.
 
 The focus areas come from secondary sources: the text of the guide was not available. The guide's process names and
 count (forty, by the same sources) stay out of this file until someone checks them against the guide.
@@ -342,18 +342,18 @@ Scrum (Scrum Guide 2020) and Kanban (Kanban Guide v2025.5), by event, artifact a
 
 | Scrum | Skills |
 |---|---|
-| Sprint Planning; Sprint Backlog and Sprint Goal | *`sprint-planning`* |
+| Sprint Planning; Sprint Backlog and Sprint Goal | `sprint-planning` |
 | Daily Scrum | excluded on purpose: the Developers' event, not project management work |
-| Sprint Review | *`sprint-review`* |
-| Sprint Retrospective | *`retrospective`* |
-| Product Backlog and Product Goal | *`backlog-refinement`*, *`product-roadmap`* |
-| Increment and Definition of Done | the `Definition of Done` file in the Profile, read by *`sprint-planning`*, *`sprint-review`*, *`release-plan`* |
+| Sprint Review | `sprint-review` |
+| Sprint Retrospective | `retrospective` |
+| Product Backlog and Product Goal | `backlog-refinement`, `product-roadmap` |
+| Increment and Definition of Done | the `Definition of Done` file in the Profile, read by `sprint-planning`, `sprint-review`, *`release-plan`* |
 
 | Kanban | Skills |
 |---|---|
 | Defining and visualizing the workflow | the `Definition of Workflow` file in the Profile, kept by `project-setup` |
 | Actively managing items in the workflow | *`flow-metrics`* (work item age against the Service Level Expectation) |
-| Improving the workflow | *`flow-metrics`*, *`retrospective`* |
+| Improving the workflow | *`flow-metrics`*, `retrospective` |
 | Flow measures: WIP, throughput, work item age, cycle time | *`flow-metrics`*, *`delivery-forecast`* |
 
 ## Planned skills
@@ -369,19 +369,9 @@ frontmatter, naming and versioning, hooks over every register `PROJECT.md` lists
 `risk-register`, `decision-log`, `meeting-minutes`, `status-report`, `publish-deliverable`, `pm-coach` and the
 `pm-critical-reviewer` agent.
 
-**Wave 2: governance and agile.**
-
-| Skill | Kind | Job | Agents |
-|---|---|---|---|
-| `change-request` | register | a change request with its impact on scope, schedule, finance and risk | `pm-critical-reviewer` |
-| `stakeholder-register` | register | stakeholders, their interest, influence and engagement | |
-| `capacity-register` | register | availability by period and the project calendar, with no reasons | |
-| `sprint-planning` | document | sprint goal and selection against capacity | |
-| `sprint-review` | document | what was delivered against the goal, and the stakeholders' feedback | |
-| `retrospective` | document | what to keep, change and try, with owned actions | |
-| `backlog-refinement` | analysis | readiness, splitting and ordering of backlog items | |
-| `product-roadmap` | document | the Product Goal, themes and horizons of a software product | |
-| `pm-tailoring` | guidance | adapts the plugin to the project along the tailoring ladder: rules on extension points, project formats, tools and, for a real need, a project skill that follows the integration contract; user-invocable only | |
+**Wave 2: shipped in 1.1.0.** Governance and agile: `change-request` with the change log, `stakeholder-register`,
+`capacity-register`, `sprint-planning`, `sprint-review`, `retrospective`, `backlog-refinement`, `product-roadmap`
+and `pm-tailoring`, with `shared/integration-contract.md` for project skills.
 
 **Wave 3: numbers.**
 

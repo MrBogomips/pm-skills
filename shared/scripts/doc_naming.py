@@ -37,7 +37,7 @@ DEFAULT_CODES = {
     "phase-gate-review": "GR",
 }
 TYPE_RE = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
-SEMVER_RE = re.compile(r"^(\d+)\.(\d+)\.(\d+)$")
+SEMVER_RE = re.compile(r"^([0-9]+)\.([0-9]+)\.([0-9]+)$")
 
 
 class NamingError(ValueError):
@@ -94,7 +94,7 @@ def next_name(project: project_register.Project, base: Path, doc_type: str, when
         raise NamingError("the coded preset needs Internal code in the Identity of PROJECT.md")
     code = type_code(doc_type, project.type_codes())
     prefix = f"{proj}-{code}-"
-    pattern = re.compile(re.escape(prefix) + r"(\d{3,})")
+    pattern = re.compile(re.escape(prefix) + r"([0-9]{3,})")
     numbers = [int(m.group(1)) for p in base.glob(f"{prefix}*.md") if (m := pattern.match(p.name))]
     stem = _with_version(f"{prefix}{max(numbers, default=0) + 1:03d}{suffix}", version, versioned)
     return _free(base, f"{stem}.md", versioned)

@@ -1,4 +1,5 @@
-"""Tests of the project, tools, tailoring, risk and decision registers and of document naming."""
+"""Tests of the project, tools, tailoring, risk, decision, stakeholder, capacity and change registers and of
+document naming."""
 from __future__ import annotations
 
 import subprocess
@@ -10,10 +11,13 @@ from pathlib import Path
 
 from _support import REPO, SCRIPTS, fixture_text
 
+import capacity_register as cr
+import changes_register as ch
 import decisions_register as dr
 import doc_naming as dn
 import project_register as pr
 import risks_register as rr
+import stakeholders_register as sr
 import tailoring_register as tl
 import tools_register as tr
 
@@ -22,6 +26,10 @@ TOOLS = fixture_text("TOOLS.md")
 TAILORING = fixture_text("TAILORING.md")
 RISKS = fixture_text("RISKS.md")
 DECISIONS = fixture_text("DECISIONS.md")
+STAKEHOLDERS = fixture_text("STAKEHOLDERS.md")
+CAPACITY = fixture_text("CAPACITY.md")
+CHANGES = fixture_text("CHANGES.md")
+TODAY = date(2026, 11, 23)
 POINTS = {"risk-register": ("format", "scale", "rules", "terms"), "status-report": ("format", "steps", "terms"),
           "team-register": ()}
 
@@ -238,6 +246,383 @@ class DecisionLog(ErrorAssertions):
         self.assertError(errors, 16, "Status")
 
 
+def summary_of(module, name: str, text: str | None, today: date = TODAY) -> str:
+    with tempfile.TemporaryDirectory() as tmp:
+        path = Path(tmp) / name
+        if text is not None:
+            path.write_text(text, encoding="utf-8")
+        return module.summary_line(path, today)
+
+
+class StakeholderRegister(ErrorAssertions):
+    def test_fixture_is_valid(self):
+        register, errors = sr.parse(STAKEHOLDERS)
+        self.assertEqual(errors, [])
+        self.assertEqual(register.last_reviewed, date(2026, 11, 10))
+        self.assertEqual([s.id for s in register.stakeholders], ["S-001", "S-002", "S-003", "S-004"])
+        self.assertTrue(register.stakeholders[1].below_desired)
+        self.assertFalse(register.stakeholders[2].below_desired)
+
+    def test_accepts_organization_and_name(self):
+        self.assertEqual(sr.validate(replaced(STAKEHOLDERS, "| Security office | Acme Corp |  |",
+                                              "| Security office | Acme Corp | Dee R. |")), [])
+
+    def test_rejects_bad_id_and_duplicate(self):
+        errors = sr.validate(replaced(replaced(STAKEHOLDERS, "| S-002 |", "| S-001 |"), "| S-004 |", "| SH-4 |"))
+        self.assertError(errors, 8, "duplicate ID")
+        self.assertError(errors, 10, "ID")
+
+    def test_rejects_empty_stakeholder(self):
+        self.assertError(sr.validate(replaced(STAKEHOLDERS, "| Sponsor |", "|  |")), 7, "Stakeholder is empty")
+
+    def test_rejects_bad_levels(self):
+        errors = sr.validate(replaced(replaced(STAKEHOLDERS, "| high | low |", "| huge | 3 |"),
+                                      "| neutral | neutral |", "| hostile | neutral |"))
+        self.assertError(errors, 8, "Interest")
+        self.assertError(errors, 8, "Influence")
+        self.assertError(errors, 9, "Current")
+
+    def test_rejects_bad_status_and_review(self):
+        errors = sr.validate(replaced(replaced(STAKEHOLDERS, "| inactive |", "| gone |"), "2027-01-15", "soon"))
+        self.assertError(errors, 10, "Status")
+        self.assertError(errors, 9, "Review")
+
+    def test_gap_needs_approach(self):
+        text = replaced(STAKEHOLDERS, "| Beta programme and release notes inside the portal |", "|  |")
+        self.assertError(sr.validate(text), 8, "needs Approach")
+
+    def test_active_needs_owner_and_review(self):
+        errors = sr.validate(replaced(STAKEHOLDERS, "| ada-l | active | 2027-01-15 |", "|  | active |  |"))
+        self.assertError(errors, 9, "needs Owner")
+        self.assertError(errors, 9, "needs Review")
+
+    def test_rejects_contacts(self):
+        errors = sr.validate(replaced(replaced(STAKEHOLDERS, "| Security office | Acme Corp |  |",
+                                               "| Security office | Acme Corp | +39 333 123 4567 |"),
+                                      "| Project manager |", "| pm@acme.example |"))
+        self.assertError(errors, 7, "email")
+        self.assertError(errors, 9, "phone")
+
+    def test_rejects_free_text_and_bad_header(self):
+        errors = sr.validate(replaced(replaced(STAKEHOLDERS, "| Approach |", "| Notes |"), "Last reviewed",
+                                      "Some notes\nLast reviewed"))
+        self.assertError(errors, 3, "unexpected content")
+        self.assertError(errors, 6, "columns")
+
+    def test_rejects_missing_title_and_table(self):
+        errors = sr.validate("Last reviewed: 2026-11-10\n")
+        self.assertTrue(any("missing title" in e for e in errors), errors)
+        self.assertTrue(any("missing the stakeholders table" in e for e in errors), errors)
+
+    def test_summary(self):
+        self.assertEqual(summary_of(sr, "STAKEHOLDERS.md", STAKEHOLDERS),
+                         "Stakeholder register `STAKEHOLDERS.md`: 3 active, 2 below their desired engagement, "
+                         "1 past their review date: run /pm-skills:stakeholder-register to review them.")
+        self.assertEqual(summary_of(sr, "STAKEHOLDERS.md", STAKEHOLDERS, date(2026, 11, 1)),
+                         "Stakeholder register `STAKEHOLDERS.md`: 3 active, 2 below their desired engagement.")
+
+    def test_summary_missing_and_invalid(self):
+        self.assertEqual(summary_of(sr, "STAKEHOLDERS.md", None), "Stakeholder register `STAKEHOLDERS.md` is declared "
+                         "but missing: run /pm-skills:stakeholder-register to create it.")
+        self.assertEqual(summary_of(sr, "STAKEHOLDERS.md", replaced(STAKEHOLDERS, "| active |", "| on |")),
+                         "Stakeholder register `STAKEHOLDERS.md` has 1 validation errors: "
+                         "run /pm-skills:stakeholder-register to fix them.")
+
+
+class CapacityRegister(ErrorAssertions):
+    def test_fixture_is_valid(self):
+        register, errors = cr.parse(CAPACITY)
+        self.assertEqual(errors, [])
+        self.assertEqual(register.working_days, ("mon", "tue", "wed", "thu", "fri"))
+        self.assertEqual(len(register.calendar), 3)
+        self.assertEqual([a.member for a in register.allocations if a.base], ["ada-l", "bo-k", "bo-k", "cy-t"])
+        self.assertEqual(register.allocations[4].percent, 0)
+
+    def test_working_days_default_and_custom(self):
+        register, errors = cr.parse(replaced(CAPACITY, "Working days: mon, tue, wed, thu, fri\n\n", ""))
+        self.assertEqual((errors, register.working_days), ([], cr.DEFAULT_WORKING_DAYS))
+        register, errors = cr.parse(replaced(CAPACITY, "mon, tue, wed, thu, fri", "sun, mon, tue, wed"))
+        self.assertEqual((errors, register.working_days), ([], ("sun", "mon", "tue", "wed")))
+
+    def test_rejects_bad_working_days(self):
+        self.assertError(cr.validate(replaced(CAPACITY, "thu, fri", "thu, friday")), 3, "friday")
+        self.assertError(cr.validate(replaced(CAPACITY, "thu, fri", "thu, mon")), 3, "twice")
+
+    def test_rejects_bad_calendar_rows(self):
+        errors = cr.validate(replaced(replaced(replaced(CAPACITY, "| holiday |", "| vacation |"),
+                                               "| 2026-12-24 | 2027-01-06 |", "| 2026-12-24 | 2026-12-20 |"),
+                                      "| Public holiday |", "|  |"))
+        self.assertError(errors, 9, "Kind")
+        self.assertError(errors, 9, "Description is empty")
+        self.assertError(errors, 10, "before From")
+
+    def test_rejects_bad_allocation_rows(self):
+        errors = cr.validate(replaced(replaced(replaced(CAPACITY, "| ada-l | 2026-01-12 |  | 100 |",
+                                                        "| Ada L | 2026-01-12 |  | 100% |"),
+                                               "| 50 |\n| bo-k", "| ½ |\n| bo-k"),
+                                      "| 2026-12-01 | 2026-12-05 |", "| 2026-12-01 | 2026-11-05 |"))
+        self.assertError(errors, 17, "Member")
+        self.assertError(errors, 17, "Allocation")
+        self.assertError(errors, 18, "Allocation")
+        self.assertError(errors, 21, "before From")
+
+    def test_rejects_allocation_above_100(self):
+        self.assertError(cr.validate(replaced(CAPACITY, "| 80 |", "| 101 |")), 19, "0 to 100")
+
+    def test_rejects_overlapping_periods(self):
+        text = CAPACITY + "| ada-l | 2026-12-05 | 2026-12-09 | 50 |\n"
+        self.assertError(cr.validate(text), 23, "overlaps")
+
+    def test_accepts_adjacent_periods_and_other_members(self):
+        text = CAPACITY + "| ada-l | 2026-12-06 | 2026-12-09 | 50 |\n| bo-k | 2026-12-01 | 2026-12-05 | 0 |\n"
+        self.assertEqual(cr.validate(text), [])
+
+    def test_rejects_base_rows_with_same_from(self):
+        self.assertError(cr.validate(replaced(CAPACITY, "| bo-k | 2026-09-01 |", "| bo-k | 2026-02-01 |")), 19,
+                         "same From")
+
+    def test_rejects_sections_out_of_order_and_free_text(self):
+        text = replaced(replaced(CAPACITY, "## Calendar", "## Allocation"), "| 2026-12-08 |", "Note\n| 2026-12-08 |")
+        errors = cr.validate(text)
+        self.assertTrue(any("unexpected section" in e or "missing section" in e for e in errors), errors)
+
+    def test_rejects_free_text_and_contacts(self):
+        errors = cr.validate(replaced(replaced(CAPACITY, "## Allocation", "Ask HR\n\n## Allocation"),
+                                      "| Public holiday |", "| Call hr@acme.example |"))
+        self.assertError(errors, 9, "email")
+        self.assertError(errors, 13, "unexpected content")
+
+    def test_rejects_missing_sections(self):
+        errors = cr.validate("# Capacity\n")
+        self.assertTrue(any("missing section '## Calendar'" in e for e in errors), errors)
+        self.assertTrue(any("missing section '## Allocation'" in e for e in errors), errors)
+
+    def test_summary(self):
+        self.assertEqual(summary_of(cr, "CAPACITY.md", CAPACITY),
+                         "Capacity register `CAPACITY.md`: 3 members with a base allocation, 2 periods starting in "
+                         "the next 14 days, next day off 2026-12-08.")
+        self.assertEqual(summary_of(cr, "CAPACITY.md", CAPACITY, date(2026, 12, 25)),
+                         "Capacity register `CAPACITY.md`: 3 members with a base allocation, 0 periods starting in "
+                         "the next 14 days, next day off 2026-12-25.")
+        self.assertEqual(summary_of(cr, "CAPACITY.md", CAPACITY, date(2027, 2, 1)),
+                         "Capacity register `CAPACITY.md`: 3 members with a base allocation, 0 periods starting in "
+                         "the next 14 days, no day off ahead.")
+
+    def test_summary_missing_and_invalid(self):
+        self.assertEqual(summary_of(cr, "CAPACITY.md", None), "Capacity register `CAPACITY.md` is declared but "
+                         "missing: run /pm-skills:capacity-register to create it.")
+        self.assertEqual(summary_of(cr, "CAPACITY.md", replaced(CAPACITY, "| 80 |", "| 800 |")),
+                         "Capacity register `CAPACITY.md` has 1 validation errors: "
+                         "run /pm-skills:capacity-register to fix them.")
+
+
+SCENARIO_CAPACITY = """# Capacity
+
+## Calendar
+
+| From | To | Kind | Description |
+|---|---|---|---|
+| 2026-12-08 |  | holiday | Public holiday |
+| 2026-12-24 | 2026-12-31 | closure | Winter closure |
+| 2026-12-11 |  | event | All-hands |
+
+## Allocation
+
+| Member | From | To | Allocation |
+|---|---|---|---|
+| ada-l | 2026-01-12 |  | 100 |
+| bo-k | 2026-02-01 |  | 50 |
+| cy-t | 2026-09-01 |  | 100 |
+| cy-t | 2026-12-14 | 2026-12-15 | 0 |
+"""
+
+
+class CapacityAvailable(unittest.TestCase):
+    def result(self, text: str, start: date, end: date, member: str | None = None) -> cr.Availability:
+        register, errors = cr.parse(text)
+        self.assertEqual(errors, [])
+        return cr.available(register, start, end, member)
+
+    def test_scenario_team_and_member(self):
+        result = self.result(SCENARIO_CAPACITY, date(2026, 12, 7), date(2026, 12, 18))
+        self.assertEqual((result.working_days, result.counted_days), (10, 9))
+        self.assertEqual([d for d, _ in result.days_off], [date(2026, 12, 8)])
+        self.assertEqual([d for d, _ in result.events], [date(2026, 12, 11)])
+        per_member = {m.member: cr.person_days(m.hundredths) for m in result.members}
+        self.assertEqual(per_member, {"ada-l": "9", "bo-k": "4.5", "cy-t": "7"})
+        self.assertEqual(cr.person_days(result.hundredths), "20.5")
+        bo = self.result(SCENARIO_CAPACITY, date(2026, 12, 7), date(2026, 12, 18), "bo-k")
+        self.assertEqual([m.member for m in bo.members], ["bo-k"])
+
+    def test_fixture_periods_and_latest_base(self):
+        result = self.result(CAPACITY, date(2026, 12, 7), date(2026, 12, 18))
+        per_member = {m.member: cr.person_days(m.hundredths) for m in result.members}
+        self.assertEqual(per_member, {"ada-l": "9", "bo-k": "7.2", "cy-t": "7"})
+        cy = next(m for m in result.members if m.member == "cy-t")
+        self.assertEqual([(s.start, s.end, s.days, s.percent) for s in cy.segments],
+                         [(date(2026, 12, 7), date(2026, 12, 11), 4, 50),
+                          (date(2026, 12, 14), date(2026, 12, 18), 5, 100)])
+        self.assertEqual(cr.person_days(result.hundredths), "23.2")
+
+    def test_event_on_a_day_off_is_not_listed_as_counted(self):
+        text = replaced(CAPACITY, "| 2026-12-08 |  | holiday | Public holiday |",
+                        "| 2026-12-08 |  | holiday | Public holiday |\n| 2026-12-08 |  | event | Office party |")
+        result = self.result(text, date(2026, 12, 7), date(2026, 12, 9))
+        self.assertEqual([d for d, _ in result.days_off], [date(2026, 12, 8)])
+        self.assertEqual(result.events, ())
+
+    def test_no_row_means_zero_and_custom_working_days(self):
+        text = replaced(CAPACITY, "Working days: mon, tue, wed, thu, fri", "Working days: mon, tue, wed")
+        result = self.result(text, date(2026, 1, 5), date(2026, 1, 18))
+        self.assertEqual(result.working_days, 6)
+        per_member = {m.member: m.hundredths for m in result.members}
+        self.assertEqual(per_member, {"ada-l": 300, "bo-k": 0, "cy-t": 0})
+
+    def test_closure_spanning_the_period(self):
+        result = self.result(CAPACITY, date(2026, 12, 28), date(2026, 12, 31))
+        self.assertEqual((result.working_days, result.counted_days, result.hundredths), (4, 0, 0))
+
+    def test_person_days_format(self):
+        self.assertEqual([cr.person_days(v) for v in (0, 450, 720, 705, 1000)], ["0", "4.5", "7.2", "7.05", "10"])
+
+    def run_cli(self, text: str, *args: str) -> subprocess.CompletedProcess:
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "CAPACITY.md"
+            path.write_text(text, encoding="utf-8")
+            return subprocess.run([sys.executable, str(SCRIPTS / "capacity_register.py"), "available", str(path),
+                                   *args], capture_output=True, text=True)
+
+    def test_cli_shows_the_working(self):
+        result = self.run_cli(SCENARIO_CAPACITY, "--from", "2026-12-07", "--to", "2026-12-18")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        out = result.stdout
+        self.assertIn("Working days (mon, tue, wed, thu, fri): 10", out)
+        self.assertIn("2026-12-08 holiday (Public holiday)", out)
+        self.assertIn("Events, counted as working days: 2026-12-11 event (All-hands)", out)
+        self.assertIn("  2026-12-14 to 2026-12-15: 2 days at 0% = 0", out)
+        self.assertIn("  person-days: 4.5", out)
+        self.assertTrue(out.rstrip().endswith("Total: 20.5 person-days"), out)
+
+    def test_cli_one_member(self):
+        result = self.run_cli(SCENARIO_CAPACITY, "--from", "2026-12-07", "--to", "2026-12-18", "--member", "bo-k")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertNotIn("ada-l", result.stdout)
+        self.assertIn("Total: 4.5 person-days", result.stdout)
+
+    def test_cli_errors(self):
+        dates = ("--from", "2026-12-07", "--to", "2026-12-18")
+        self.assertEqual(self.run_cli(SCENARIO_CAPACITY, "--from", "2026-12-18", "--to", "2026-12-07").returncode, 2)
+        self.assertEqual(self.run_cli(SCENARIO_CAPACITY, "--from", "7/12/2026", "--to", "2026-12-18").returncode, 2)
+        self.assertEqual(self.run_cli(SCENARIO_CAPACITY, *dates, "--member", "di-r").returncode, 2)
+        invalid = self.run_cli(replaced(SCENARIO_CAPACITY, "| 50 |", "| 500 |"), *dates)
+        self.assertEqual(invalid.returncode, 2)
+        self.assertIn("Allocation", invalid.stderr)
+
+
+class ChangeLog(ErrorAssertions):
+    def test_fixture_is_valid(self):
+        changes, errors = ch.parse(CHANGES)
+        self.assertEqual(errors, [])
+        self.assertEqual([c.id for c in changes], ["CR-001", "CR-002", "CR-003", "CR-004"])
+        self.assertEqual(changes[1].fields["Status"], "approved")
+        self.assertEqual(changes[1].decided_on, date(2026, 11, 4))
+
+    def test_empty_log_is_valid(self):
+        self.assertEqual(ch.validate("# Changes\n"), [])
+
+    def test_rejects_missing_required_key(self):
+        self.assertError(ch.validate(replaced(CHANGES, "- Reason: Asked for by end users in the beta feedback.\n",
+                                              "")), 34, "needs 'Reason'")
+
+    def test_assessed_needs_impacts(self):
+        self.assertError(ch.validate(replaced(CHANGES, "- Cost impact: 5 person-days\n", "")), 42,
+                         "needs 'Cost impact'")
+
+    def test_withdrawn_may_lack_impacts(self):
+        text = replaced(CHANGES, "- Status: assessed", "- Status: withdrawn")
+        text = replaced(text, "- Cost impact: 5 person-days\n", "")
+        self.assertEqual(ch.validate(text), [])
+
+    def test_decided_needs_decision_keys(self):
+        errors = ch.validate(replaced(replaced(CHANGES, "- Decided by: steering committee\n", ""),
+                                      "- Decided on: 2026-11-04\n", ""))
+        self.assertError(errors, 18, "needs 'Decided by'")
+        self.assertError(errors, 18, "needs 'Decided on'")
+
+    def test_undecided_must_not_have_decision_keys(self):
+        text = replaced(CHANGES, "- Reason: Asked for", "- Decided by: Product owner\n- Reason: Asked for")
+        self.assertError(ch.validate(text), 40, "only")
+
+    def test_implemented_on_rules(self):
+        self.assertError(ch.validate(replaced(CHANGES, "- Implemented on: 2026-10-02\n", "")), 3,
+                         "needs 'Implemented on'")
+        text = replaced(CHANGES, "- Source: `meeting", "- Implemented on: 2026-11-20\n- Source: `meeting")
+        self.assertError(ch.validate(text), 32, "only")
+
+    def test_rejects_dates_out_of_order(self):
+        errors = ch.validate(replaced(replaced(CHANGES, "Decided on: 2026-09-10", "Decided on: 2026-08-10"),
+                                      "Implemented on: 2026-10-02", "Implemented on: 2026-08-01"))
+        self.assertError(errors, 15, "before Raised")
+        self.assertError(errors, 16, "before Decided on")
+
+    def test_rejects_bad_date_status_and_decision(self):
+        errors = ch.validate(replaced(replaced(replaced(CHANGES, "Raised: 2026-11-12", "Raised: 12/11/2026"),
+                                               "Status: assessed", "Status: parked"),
+                                      "- Source: `meeting", "- Decision: decision 3\n- Source: `meeting"))
+        self.assertError(errors, 37, "Raised")
+        self.assertError(errors, 32, "D-NNN")
+        self.assertError(errors, 47, "Status")
+
+    def test_accepts_decision_reference(self):
+        text = replaced(CHANGES, "- Source: `meeting", "- Decision: D-002\n- Source: `meeting")
+        self.assertEqual(ch.validate(text), [])
+
+    def test_rejects_out_of_order_duplicate_and_bad_heading(self):
+        errors = ch.validate(replaced(replaced(replaced(CHANGES, "## CR-003", "## CR-001"), "## CR-004", "## CR-0004"),
+                                      "## CR-002 Single", "## Single"))
+        self.assertError(errors, 18, "heading")
+        self.assertError(errors, 34, "duplicate ID")
+
+    def test_rejects_decreasing_ids(self):
+        self.assertError(ch.validate(replaced(CHANGES, "## CR-003", "## CR-005")), 42, "ID order")
+
+    def test_rejects_same_number_with_other_padding(self):
+        self.assertError(ch.validate(replaced(CHANGES, "## CR-004", "## CR-0002")), 42, "duplicate ID")
+
+    def test_rejects_unknown_duplicate_empty_key_and_free_text(self):
+        text = replaced(CHANGES, "- Reason: Asked for", "- Notes: x\n- Status: proposed\n- Source:\nfree text\n"
+                                                         "- Reason: Asked for")
+        errors = ch.validate(text)
+        self.assertError(errors, 40, "unknown key")
+        self.assertError(errors, 41, "already on line 38")
+        self.assertError(errors, 42, "empty")
+        self.assertError(errors, 43, "unexpected content")
+
+    def test_rejects_contacts(self):
+        errors = ch.validate(replaced(replaced(CHANGES, "Requested by: Finance lead", "Requested by: fin@acme.example"),
+                                      "Requested by: Support lead", "Requested by: Support +39 02 1234 5678"))
+        self.assertError(errors, 6, "email")
+        self.assertError(errors, 45, "phone")
+
+    def test_summary(self):
+        self.assertEqual(summary_of(ch, "CHANGES.md", CHANGES),
+                         "Change log `CHANGES.md`: 2 open (1 proposed, 1 assessed), 2 decided, "
+                         "latest decision CR-002 on 2026-11-04.")
+        self.assertEqual(summary_of(ch, "CHANGES.md", "# Changes\n"),
+                         "Change log `CHANGES.md`: no change requests yet.")
+
+    def test_summary_without_decisions(self):
+        text = CHANGES.split("## CR-001")[0] + "## CR-003" + CHANGES.split("## CR-003")[1]
+        self.assertEqual(summary_of(ch, "CHANGES.md", text),
+                         "Change log `CHANGES.md`: 2 open (1 proposed, 1 assessed), 0 decided.")
+
+    def test_summary_missing_and_invalid(self):
+        self.assertEqual(summary_of(ch, "CHANGES.md", None), "Change log `CHANGES.md` is declared but missing: "
+                         "run /pm-skills:change-request to create it.")
+        self.assertEqual(summary_of(ch, "CHANGES.md", replaced(CHANGES, "Status: proposed", "Status: open")),
+                         "Change log `CHANGES.md` has 1 validation errors: run /pm-skills:change-request to fix them.")
+
+
 class DocumentNaming(unittest.TestCase):
     def project(self, **changes: str) -> pr.Project:
         text = PROJECT
@@ -306,7 +691,10 @@ class CommandLines(unittest.TestCase):
     def test_validate_exit_codes(self):
         cases = (("project_register.py", PROJECT, "hybrid", "waterfall"), ("tools_register.py", TOOLS, "read", "rw"),
                  ("risks_register.py", RISKS, "| 16 |", "| 1 |"),
-                 ("decisions_register.py", DECISIONS, "accepted", "maybe"))
+                 ("decisions_register.py", DECISIONS, "accepted", "maybe"),
+                 ("stakeholders_register.py", STAKEHOLDERS, "| high | high |", "| top | high |"),
+                 ("capacity_register.py", CAPACITY, "| 50 |", "| 150 |"),
+                 ("changes_register.py", CHANGES, "Status: proposed", "Status: open"))
         with tempfile.TemporaryDirectory() as tmp:
             for script, good, old, new in cases:
                 ok, bad = Path(tmp) / "ok.md", Path(tmp) / "bad.md"
@@ -335,3 +723,18 @@ class CommandLines(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class AsciiIds(unittest.TestCase):
+    """IDs and references take ASCII digits only: `\\d` would also accept other scripts' digits."""
+
+    def test_non_ascii_digits_are_rejected(self):
+        cases = [
+            (sr.validate, STAKEHOLDERS, "S-001", "S-\u0660\u0660\u0661"),
+            (ch.validate, CHANGES, "## CR-001", "## CR-\u0660\u0660\u0661"),
+            (rr.validate, RISKS, "R-001", "R-\u0660\u0660\u0661"),
+            (dr.validate, DECISIONS, "## D-001", "## D-\u0660\u0660\u0661"),
+        ]
+        for validate, text, old, new in cases:
+            with self.subTest(old=old):
+                self.assertNotEqual(validate(replaced(text, old, new)), [])
