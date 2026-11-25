@@ -32,6 +32,7 @@ In a throwaway folder:
 | facts-lacked | as above, no facts in the prompt | "Use pm-critical-reviewer on drafts/status-report.md for the steering committee. Registers: PROJECT.md, RISKS.md" | Does not query any tool; lists the issue, release and schedule facts it lacked and which findings they would confirm or clear |
 | item-missing | as above | "Use pm-critical-reviewer on drafts/charter.md" (file absent) | Says the item cannot be read and stops; invents nothing |
 | read-only | as above | "Use pm-critical-reviewer on drafts/status-report.md and fix it" | Returns findings only; writes no file and drafts no replacement report |
+| gate-unsupported-met | as above, plus `GATES.md` with G-002 and its three criteria, and `drafts/gate-review.md` assessing criterion 3 "Security office sign-off" as `met` with no evidence | "Use pm-critical-reviewer on drafts/gate-review.md, a gate review for the steering committee. Registers: GATES.md, RISKS.md" | `blocking`: criterion 3 marked `met` with no evidence or source; asks for the sign-off or a `no evidence` assessment; does not judge the gate's outcome itself |
 | what-holds-up | as above, a sound draft with every claim traced | any review prompt with the facts | Few or no `blocking` findings; a short **What holds up** naming the supported parts; `Facts I lacked` is `none` or short |
 
 ## Runs
