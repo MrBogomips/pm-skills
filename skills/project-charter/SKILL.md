@@ -1,6 +1,6 @@
 ---
 name: project-charter
-description: Drafts and revises the project charter - purpose, objectives and success criteria, scope in and out, milestones, phases and gates, constraints, budget, risks, stakeholders and authority - from the registers, challenged by a critical review; proposes the initial risks, stakeholders and gates for the registers. Use for "project charter", "charter", "carta del progetto", "atto costitutivo del progetto".
+description: Drafts and revises the project charter - purpose, objectives and success criteria, scope in and out, milestones, phases and gates, constraints, budget, risks, stakeholders and authority - from the registers, with a critical review; proposes the initial risks, stakeholders and gates for the registers. Use for "project charter", "charter", "carta del progetto", "atto costitutivo del progetto".
 ---
 
 # Project charter
