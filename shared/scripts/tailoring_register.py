@@ -128,7 +128,7 @@ def summary_line(path: Path, today: date, label: Optional[str] = None) -> str:
         return f"Tailoring register {name} is declared but missing."
     rules, errors = parse(text)
     if errors:
-        return f"Tailoring register {name} has {len(errors)} validation errors: fix them before relying on it."
+        return f"Tailoring register {name} has {md.count_of(len(errors), 'validation error')}: fix them before relying on it."
     tailored = sorted(rules)
     if not tailored:
         return f"Tailoring register {name}: no skill tailored."

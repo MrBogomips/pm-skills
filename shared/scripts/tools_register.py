@@ -106,7 +106,7 @@ def summary_line(path: Path, today: date, label: Optional[str] = None) -> str:
         return f"Tools register {name} is declared but missing: run {SKILL} to create it."
     tools, errors = parse(text)
     if errors:
-        return f"Tools register {name} has {len(errors)} validation errors: run {SKILL} to fix them."
+        return f"Tools register {name} has {md.count_of(len(errors), 'validation error')}: run {SKILL} to fix them."
     writable = sum(1 for t in tools if t.mode == "write")
     return f"Tools register {name}: {len(tools)} tools, {writable} with write access."
 

@@ -22,6 +22,12 @@ PATH_RE = re.compile(r"^`([^`]+)`")
 WHOLE_NUMBER_RE = re.compile(r"[0-9]{1,15}")
 
 
+
+def count_of(count: int, singular: str, plural: Optional[str] = None) -> str:
+    """`count` followed by the noun in the right number: "1 validation error", "2 validation errors"."""
+    noun = singular if count == 1 else (plural or f"{singular}s")
+    return f"{count} {noun}"
+
 @dataclass(frozen=True)
 class Row:
     line: int

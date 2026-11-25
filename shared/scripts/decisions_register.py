@@ -137,7 +137,7 @@ def summary_line(path: Path, today: date, label: Optional[str] = None) -> str:
         return f"Decision log {name} is declared but missing: run {SKILL} to create it."
     decisions, errors = parse(text)
     if errors:
-        return f"Decision log {name} has {len(errors)} validation errors: run {SKILL} to fix them."
+        return f"Decision log {name} has {md.count_of(len(errors), 'validation error')}: run {SKILL} to fix them."
     if not decisions:
         return f"Decision log {name}: no decisions yet."
     accepted = sum(1 for d in decisions if d.fields.get("Status") == "accepted")

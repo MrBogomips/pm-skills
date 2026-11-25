@@ -209,7 +209,7 @@ def summary_line(path: Path, today: date, label: Optional[str] = None) -> str:
         return f"Capacity register {name} is declared but missing: run {SKILL} to create it."
     register, errors = parse(text)
     if errors:
-        return f"Capacity register {name} has {len(errors)} validation errors: run {SKILL} to fix them."
+        return f"Capacity register {name} has {md.count_of(len(errors), 'validation error')}: run {SKILL} to fix them."
     members = len({a.member for a in register.allocations if a.base})
     horizon = today + timedelta(days=LOOKAHEAD_DAYS)
     starting = sum(1 for a in register.allocations if not a.base and a.start and today <= a.start <= horizon)

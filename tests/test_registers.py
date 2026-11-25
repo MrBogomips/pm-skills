@@ -15,6 +15,7 @@ import capacity_register as cr
 import changes_register as ch
 import decisions_register as dr
 import doc_naming as dn
+import md_register as md
 import project_register as pr
 import risks_register as rr
 import stakeholders_register as sr
@@ -43,6 +44,18 @@ class ErrorAssertions(unittest.TestCase):
     def assertError(self, errors: list[str], line: int, keyword: str) -> None:
         matching = [e for e in errors if e.startswith(f"line {line}:") and keyword in e]
         self.assertTrue(matching, f"no 'line {line}: …{keyword}…' in {errors}")
+
+
+class CountOf(unittest.TestCase):
+    def test_singular_for_one(self):
+        self.assertEqual(md.count_of(1, "validation error"), "1 validation error")
+
+    def test_plural_otherwise(self):
+        self.assertEqual(md.count_of(0, "validation error"), "0 validation errors")
+        self.assertEqual(md.count_of(2, "validation error"), "2 validation errors")
+
+    def test_irregular_plural(self):
+        self.assertEqual(md.count_of(3, "entry", "entries"), "3 entries")
 
 
 class ProjectRegister(ErrorAssertions):
@@ -325,7 +338,7 @@ class StakeholderRegister(ErrorAssertions):
         self.assertEqual(summary_of(sr, "STAKEHOLDERS.md", None), "Stakeholder register `STAKEHOLDERS.md` is declared "
                          "but missing: run /pm-skills:stakeholder-register to create it.")
         self.assertEqual(summary_of(sr, "STAKEHOLDERS.md", replaced(STAKEHOLDERS, "| active |", "| on |")),
-                         "Stakeholder register `STAKEHOLDERS.md` has 1 validation errors: "
+                         "Stakeholder register `STAKEHOLDERS.md` has 1 validation error: "
                          "run /pm-skills:stakeholder-register to fix them.")
 
 
@@ -412,7 +425,7 @@ class CapacityRegister(ErrorAssertions):
         self.assertEqual(summary_of(cr, "CAPACITY.md", None), "Capacity register `CAPACITY.md` is declared but "
                          "missing: run /pm-skills:capacity-register to create it.")
         self.assertEqual(summary_of(cr, "CAPACITY.md", replaced(CAPACITY, "| 80 |", "| 800 |")),
-                         "Capacity register `CAPACITY.md` has 1 validation errors: "
+                         "Capacity register `CAPACITY.md` has 1 validation error: "
                          "run /pm-skills:capacity-register to fix them.")
 
 
@@ -620,7 +633,7 @@ class ChangeLog(ErrorAssertions):
         self.assertEqual(summary_of(ch, "CHANGES.md", None), "Change log `CHANGES.md` is declared but missing: "
                          "run /pm-skills:change-request to create it.")
         self.assertEqual(summary_of(ch, "CHANGES.md", replaced(CHANGES, "Status: proposed", "Status: open")),
-                         "Change log `CHANGES.md` has 1 validation errors: run /pm-skills:change-request to fix them.")
+                         "Change log `CHANGES.md` has 1 validation error: run /pm-skills:change-request to fix them.")
 
 
 class DocumentNaming(unittest.TestCase):
