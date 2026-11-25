@@ -37,6 +37,7 @@ hooks/hooks.json, hooks/*.py        hooks and their scripts
 shared/registers/<register>.md      the format of each project register: the single source, read by skills
 shared/documents/<type>.md          the format of each document type, and common.md for what they share
 shared/tools/<tool>.md              known pitfalls of a tool reached by several skills or agents
+shared/integration-contract.md      what a project skill must respect to work with the plugin
 shared/scripts/                     Python stdlib scripts shared by skills and hooks
 tests/                              validate.sh, selftest.sh, Python unit tests, fixtures/, scenarios/
 ```

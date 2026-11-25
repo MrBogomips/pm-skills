@@ -23,8 +23,8 @@ COLUMNS = ("ID", "Type", "Risk", "Category", "Probability", "Impact", "Score", "
 SCALE_PREFIX = "Scale:"
 LAST_REVIEWED = "Last reviewed:"
 DEFAULT_SCALE = (1, 5)
-SCALE_RE = re.compile(r"^(\d+)\s*-\s*(\d+)$")
-ID_RE = re.compile(r"^R-\d{3,}$")
+SCALE_RE = re.compile(r"^([0-9]+)\s*-\s*([0-9]+)$")
+ID_RE = re.compile(r"^R-[0-9]{3,}$")
 TYPES = ("threat", "opportunity")
 STRATEGIES = {
     "threat": ("avoid", "mitigate", "transfer", "accept", "escalate"),

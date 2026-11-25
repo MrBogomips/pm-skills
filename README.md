@@ -1,12 +1,13 @@
 ---
-summary: Claude Code plugin for project managers, optimized for software projects - project configuration, team, risks, decisions, minutes, status reports, publishing and a coach, grounded in small validated registers under git.
+summary: Claude Code plugin for project managers, optimized for software projects - configuration, team, capacity, stakeholders, risks, decisions, change requests, Scrum events, roadmap, status reports, publishing, tailoring and a coach, grounded in small validated registers under git.
 ---
 
 # pm-skills
 
 Project management skills for Claude Code. Your project keeps a few small Markdown registers under git (its
-configuration, tools, team, risks and decisions); the skills read them together with your issue tracker and code
-host, draft the recurring documents (minutes, status reports), and suggest who should take or review work. They work
+configuration, tools, team, capacity, stakeholders, risks, decisions and change requests); the skills read them
+together with your issue tracker and code host, draft the recurring documents (minutes, status reports, sprint
+plans, reviews, retrospectives, the roadmap), and suggest who should take or review work. They work
 on any project and are optimized for building software and managing software products.
 
 ## Why
@@ -29,6 +30,15 @@ evaluations of people.
 | [`meeting-minutes`](skills/meeting-minutes/README.md) | Stakeholders | Minutes with decisions, actions and risks, proposed for the registers. |
 | [`status-report`](skills/status-report/README.md) | Governance, Stakeholders | The status report for the reporting period, outcomes first. |
 | [`publish-deliverable`](skills/publish-deliverable/README.md) | Stakeholders | Renders a Markdown deliverable into Word, PDF, slides, email or an artifact. |
+| [`change-request`](skills/change-request/README.md) | Governance, Scope, Finance | Raises change requests in `CHANGES.md`, assesses their impact, records the decision. |
+| [`stakeholder-register`](skills/stakeholder-register/README.md) | Stakeholders | Keeps `STAKEHOLDERS.md`: roles, interest, influence and engagement, with the approach. |
+| [`capacity-register`](skills/capacity-register/README.md) | Resources | Keeps `CAPACITY.md`: calendar, allocation and absences; computes available person-days. |
+| [`sprint-planning`](skills/sprint-planning/README.md) | Scope, Schedule | The sprint plan: Sprint Goal and selection against capacity and recent throughput. |
+| [`sprint-review`](skills/sprint-review/README.md) | Scope, Stakeholders | What was delivered against the Sprint Goal, feedback and backlog adaptations. |
+| [`retrospective`](skills/retrospective/README.md) | Governance | Prepares and records a retrospective with owned actions, following up the previous ones. |
+| [`backlog-refinement`](skills/backlog-refinement/README.md) | Scope | Readiness, splitting and ordering proposals for the top of the backlog. |
+| [`product-roadmap`](skills/product-roadmap/README.md) | Governance, Scope | The product roadmap: Product Goal, themes and horizons, committed versus intended. |
+| [`pm-tailoring`](skills/pm-tailoring/README.md) | All | Adapts the plugin to the project with the lightest change that works. User-invocable only. |
 | [`pm-coach`](skills/pm-coach/README.md) | All | Reasoned advice grounded in your registers. User-invocable only. |
 
 Domains are the performance domains of the PMBOK Guide, Eighth Edition. Agile skills follow the Scrum Guide 2020
@@ -38,7 +48,8 @@ and the Kanban Guide; more are planned (see `DESIGN.md`).
 
 - `project-activity-scout` (`haiku`): collects recent activity from the project's tools, per person or per project,
   read only.
-- `pm-critical-reviewer` (`opus`): challenges risk responses and deliverables before they go out, read only.
+- `pm-critical-reviewer` (`opus`): challenges risk responses, change impact analyses and deliverables before they go
+  out, read only.
 
 ## Hooks
 
@@ -64,7 +75,8 @@ plugin, and dispatch its agents.
 1. In your project, run `/pm-skills:project-setup`. It proposes `PROJECT.md` (identity, profile, naming conventions)
    and `TOOLS.md` (for example Jira and GitHub, read only) from what it finds, and writes them after you agree.
 2. Ask to "set up the team register", then use the skills in your own words: "add a risk", "scrivi il verbale della
-   riunione", "status report", "who should review acme/web#42?".
+   riunione", "status report", "pianifica lo sprint", "who should review acme/web#42?".
+3. To adapt a skill to your project's way of working, run `/pm-skills:pm-tailoring`.
 
 ### Upgrading from 0.x
 

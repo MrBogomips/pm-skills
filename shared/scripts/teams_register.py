@@ -27,7 +27,7 @@ SOURCES = "Sources:"  # removed in 1.0: the tools live in TOOLS.md
 
 SLUG_RE = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
 GITHUB_RE = re.compile(r"^[A-Za-z0-9](?:[A-Za-z0-9-]{0,38})$")
-DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+DATE_RE = re.compile(r"^[0-9]{4}-[0-9]{2}-[0-9]{2}$")
 EMAIL_RE = re.compile(r"\S+@\S+\.\S+")
 GIT_IDENTITY_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 PHONE_RE = re.compile(r"\+?\d[\d\s().-]{7,}\d")

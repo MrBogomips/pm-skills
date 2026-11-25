@@ -39,6 +39,9 @@ REGISTERS = {
     "Tailoring register": "tailoring.md",
     "Risk register": "risks.md",
     "Decision log": "decisions.md",
+    "Stakeholder register": "stakeholders.md",
+    "Capacity register": "capacity.md",
+    "Change log": "changes.md",
 }
 
 
