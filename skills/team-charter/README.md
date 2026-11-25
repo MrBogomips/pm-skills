@@ -1,15 +1,15 @@
 ---
-summary: For teams and their project managers or Scrum Masters - prepares a team charter workshop with a draft from the project files and the questions only the team can answer, then records the agreements the team made, never about individuals.
+summary: For teams and their managers or Scrum Masters - prepares a team charter workshop with a draft and open questions, then records the team's agreements, never about individuals.
 ---
 
 # team-charter
 
 Prepares and records the team charter: the team's purpose, values and working agreements on communication, meetings
-and hours, decisions, reviews and quality, tools, and how disagreements are handled.
+and hours, decisions, reviews and quality, tools, and how disagreements are handled. It prepares the workshop with a draft and open questions, then records what the team agreed, never about individuals.
 
 ## Why
 
-A team charter is worth something only if the team writes it; a template filled in by one person is ignored. This
+A team charter is worth something only if the team writes it. This
 skill does the preparation (what the project already settles, agreements the team made in retrospectives) and leaves
 the decisions to the workshop as open questions. After the workshop it records the agreements as the team made them,
 with no names attached, and leaves unanswered questions open instead of inventing answers.
@@ -49,7 +49,7 @@ whether you are preparing or recording; the skill asks if it cannot tell.
 
 ## Requirements
 
-A project register (`/pm-skills:project-setup`).
+A project register (`/pm-skills:project-setup`) is recommended; without it the skill works in the session.
 
 ## Limitations
 

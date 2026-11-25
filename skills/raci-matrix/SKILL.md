@@ -58,7 +58,8 @@ activity, by role. Roles survive turnover; who holds a role is in the team regis
 
 ## Never
 
-- Never use a person's name, slug, email address or phone number as a column or in a cell.
+- Never use a person's name, slug, email address or phone number as a column or in a cell, and never offer it as
+  an option: when asked for a person's column, ask which role they hold.
 - Never write the team register, the stakeholder register or the `wbs` document; report what does not match.
 - Never set an `A` the user has not confirmed.
 - Never name the person who holds a role unless the user asks who it is.

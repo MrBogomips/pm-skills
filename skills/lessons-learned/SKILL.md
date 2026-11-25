@@ -1,6 +1,6 @@
 ---
 name: lessons-learned
-description: Writes the lessons learned of a project or a phase - context in facts, what worked, what did not, recommendations for the next phase, project or organization, and owned follow-up - from retrospectives, gate outcomes, decisions, changes and closed risks; about the way of working, never about people. Use for "lessons learned", "project post-mortem", "lezioni apprese", "chiusura del progetto".
+description: Writes the lessons learned of a project or a phase, at its close or at a gate - what worked, what did not, recommendations and owned follow-up, each backed by facts from retrospectives, gates, decisions, changes and risks; never about people. Use for "lessons learned", "post-mortem", "lezioni apprese", "cosa abbiamo imparato"; not to decide whether the project can close (phase-gate-review).
 ---
 
 # Lessons learned

@@ -27,7 +27,8 @@ is reached at the right level. It builds on the stakeholder register and the RAC
 
 1. **Read the configuration** and the `## communication-plan` section of `TAILORING.md`; say which rules apply.
 2. **Audiences**: the active stakeholders as roles or groups, with their register IDs, grouped where they need the
-   same information; say what each needs to know, from its interest, influence and approach.
+   same information; say what each needs to know, from its interest, influence and approach. With no stakeholder
+   register, ask the user for the audiences first, and mention `/pm-skills:stakeholder-register` as the lasting fix.
 3. **Communications**: for each audience, what it receives, how often, through which channel and who owns it. Base
    the frequency on `Reporting cadence` and the sprint length; name what produces it (`status-report`,
    `sprint-review`, `meeting-minutes`, `phase-gate-review`) or "manual". Roles marked `C` or `I` in the RACI matrix
@@ -46,7 +47,8 @@ is reached at the right level. It builds on the stakeholder register and the RAC
 
 ## Always
 
-- Audiences and owners are roles or groups; channels name the means, never an address.
+- Audiences and owners are roles or groups, in the plan and in the fixes you propose, never a person's name or
+  slug; channels name the means, never an address.
 - Cover every active stakeholder, or say why one is left out.
 - Show before writing; write only after the user agrees.
 

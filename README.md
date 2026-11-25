@@ -1,16 +1,12 @@
 ---
-summary: Claude Code plugin for project managers, optimized for software projects - configuration, team, capacity, stakeholders, risks, decisions, change requests, Scrum events, roadmap, flow metrics, forecasts, estimates, schedule, budget, charter, WBS, RACI, phase gates, lessons learned, status reports, publishing, tailoring and a coach, grounded in small validated registers under git.
+summary: Claude Code plugin for project managers, optimized for software: skills that keep small validated registers under git and draft the recurring project documents from them.
 ---
 
 # pm-skills
 
-Project management skills for Claude Code. Your project keeps a few small Markdown registers under git (its
-configuration, tools, team, capacity, stakeholders, risks, decisions, change requests, schedule, budget, RACI matrix and gates); the skills read them
-together with your issue tracker and code host, draft the recurring documents (minutes, status reports, sprint
-plans, reviews, retrospectives, the roadmap, release plans, the charter, the WBS, communication plans, gate reviews,
-lessons learned and the team charter), compute flow metrics, forecasts, critical path and
-earned value with tested scripts, and suggest who should take or review work. They work
-on any project and are optimized for building software and managing software products.
+Project management skills for Claude Code. Your project keeps small Markdown registers under git; the skills read them
+with your issue tracker and code host, draft the recurring documents, compute metrics, forecasts and earned value with
+tested scripts, and suggest who should take or review work. Optimized for software, usable on any project.
 
 ## Why
 
@@ -61,17 +57,16 @@ and the Kanban Guide; more are planned (see `DESIGN.md`).
 
 ## Agents
 
-- `project-activity-scout` (`haiku`): collects recent activity from the project's tools, per person or per project,
+- `project-activity-scout`: collects recent activity from the project's tools, per person or per project,
   read only.
-- `pm-critical-reviewer` (`opus`): challenges risk responses, change impact analyses, estimates, charters, gate
+- `pm-critical-reviewer`: challenges risk responses, change impact analyses, estimates, charters, gate
   assessments and deliverables before they go out, read only.
-- `flow-data-scout` (`haiku`): collects the transition history of work items from the issues tool as a flow snapshot,
+- `flow-data-scout`: collects the transition history of work items from the issues tool as a flow snapshot,
   with no assignees, read only.
 
 ## Hooks
 
-- **SessionStart**: adds one line to the session's context summing up every register the project declares (size,
-  last review, risks past their review date), or a reminder when one is missing or invalid.
+- **SessionStart**: adds one line to the session's context summing up the registers the project declares, or a reminder when one is missing or invalid.
 - **PostToolUse** (Write, Edit): when Claude edits a declared register, reports its validation errors back.
 
 Both stay silent in projects that declare no project register. They cannot be switched off one by one: disable the
@@ -105,8 +100,8 @@ reminds you; run `/pm-skills:project-setup` and it proposes the migration in one
 
 - Python 3, on macOS or Linux, for the validators, the scripts and the hooks; git for the project.
 - For facts from your tools: the ones you declare in `TOOLS.md`, for example the `gh` CLI logged in for GitHub and an
-  Atlassian MCP server for Jira. Without a code host CLI, commits are read from local clones. Each skill's README says
-  what it can still do without them.
+  Atlassian MCP server for Jira. Without a code host CLI, commits are read from local clones. Skills say in their
+  output which sources they could not read.
 
 ## Limitations
 

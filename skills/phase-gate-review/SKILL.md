@@ -1,6 +1,6 @@
 ---
 name: phase-gate-review
-description: Keeps the project's gate register (GATES.md) - phase gates, their criteria and every outcome - and prepares gate reviews that assess each criterion against evidence, follow up earlier conditions and recommend; records the outcome only when the people with the authority have decided. Use for "phase gate", "gate review", "go/no-go", "ready to close", "revisione di fase", "passaggio di fase".
+description: Keeps the gate register (GATES.md) - phase gates, criteria, outcomes - and prepares gate reviews: each criterion against evidence, earlier conditions followed up, a recommendation; records an outcome only once those with authority decide. Use for "phase gate", "gate review", "go/no-go", "ready to close?", "revisione di fase", "passaggio di fase", "possiamo chiudere?"; not lessons learned.
 ---
 
 # Phase gate review
@@ -43,7 +43,7 @@ is theirs; the skill records it when the user reports it.
      its reasons;
    - name who decides the gate: the charter's Authority, or the decider of its earlier outcomes, else ask;
    - dispatch `pm-critical-reviewer` with the draft, the gate and its decider, the register paths and the facts
-     collected. When the gate is decided by a steering committee or the client, tell the user that the review goes
+     collected. When the gate is decided by a steering committee or the client, tell the user before dispatching that the review goes
      to the agent with the model escalated to `fable`, because it is a decision for a steering committee or a
      client; the user may decline, and the review then runs on the agent's own model. Address its findings or show
      them to the user;

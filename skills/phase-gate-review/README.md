@@ -1,12 +1,12 @@
 ---
-summary: For project managers and sponsors - keeps GATES.md (gates, criteria, outcomes) and prepares gate reviews that assess each criterion against evidence and recommend, recording the outcome only once the people with the authority have decided.
+summary: For project managers and sponsors - keeps GATES.md and prepares gate reviews that assess each criterion against evidence, recording the outcome only once the deciders have decided.
 ---
 
 # phase-gate-review
 
 Keeps the project's gate register and prepares the review of a phase gate or of the project's close. Each criterion
 is assessed against evidence from the registers and the tools, the conditions of earlier outcomes are followed up,
-and a critical reviewer challenges the draft before the people who decide read it.
+and the draft is challenged before the people who decide read it. The outcome is recorded only once they have decided.
 
 ## Why
 
@@ -25,14 +25,13 @@ missing.
 **Action:** Ask "prepare the gate review for G-002".
 
 **Result:** A draft with each criterion `met`, `partly met`, `not met` or `no evidence` and its source, open risks
-that bear on the decision, a recommendation, and the critical reviewer's findings; escalated to a stronger model
-because the steering committee decides.
+that bear on the decision, a recommendation, and the critical reviewer's findings; challenged in depth because the steering committee decides.
 
 ### Record the decision
 
 **Context:** The steering committee decided "go with conditions": pen test fixes by 11 December.
 
-**Action:** Ask "registra l'esito del gate G-002".
+**Action:** Ask "record the outcome of gate G-002" and say who decided and on what date (Italian works too).
 
 **Result:** The outcome appended to `GATES.md`, the gate marked `passed`, the Decision filled in the review; at the
 next review of the gate the condition comes back with its state.
@@ -50,11 +49,11 @@ whether you are defining gates, reviewing one or recording a decision; the skill
 - Writes `GATES.md` in the format of [`shared/registers/gates.md`](../../shared/registers/gates.md), validated by
   `shared/scripts/gates_register.py`, and gate reviews in the format of
   [`shared/documents/phase-gate-review.md`](../../shared/documents/phase-gate-review.md).
-- Dispatches `pm-critical-reviewer` on each review.
+- Review documents go in the folder of the project's Working documents section, as drafts until issued.
 
 ## Requirements
 
-A project register (`/pm-skills:project-setup`). A tools register for the evidence from the tools.
+A project register (`/pm-skills:project-setup`) is recommended. A tools register for the evidence from the tools.
 
 ## Limitations
 

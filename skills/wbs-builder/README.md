@@ -1,5 +1,5 @@
 ---
-summary: For project managers - builds the work breakdown structure and its dictionary from the charter or the roadmap, checked against the 100% rule, and on your confirmation creates the work packages as work items.
+summary: For project managers - builds the work breakdown structure and its dictionary from the charter or roadmap, checked against the 100% rule, and creates work packages as work items on confirmation.
 ---
 
 # wbs-builder
@@ -19,7 +19,7 @@ lists what it breaks.
 
 ### Break down the scope at planning
 
-**Context:** Acme Portal's charter is issued; the backlog has five epics.
+**Context:** Acme Portal's charter is issued; the issues tool declared in `TOOLS.md` holds five epics.
 
 **Action:** Ask "build the WBS".
 
@@ -30,7 +30,7 @@ exclusions from the charter under Out of scope, and the places where the 100% ru
 
 **Context:** The WBS is approved and Jira is declared with Mode `write`.
 
-**Action:** Ask "crea i work package su Jira".
+**Action:** Ask "create the work packages in Jira" (Italian works too).
 
 **Result:** An itemized list of the items to create; only the ones you confirm are created, and their keys go into
 the dictionary.
@@ -50,7 +50,7 @@ Ask in your own words ("WBS", "work breakdown structure", "scomposizione del lav
 
 ## Requirements
 
-A project register (`/pm-skills:project-setup`) and a scope source: a charter, a roadmap or a scope you describe.
+A project register (`/pm-skills:project-setup`) is recommended, and a scope source is needed: a charter, a roadmap or a scope you describe.
 
 ## Limitations
 

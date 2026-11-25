@@ -27,3 +27,5 @@ are invented; never commit real names.
 | Date | Version | Cases run | Outcome | Notes |
 |---|---|---|---|---|
 | 2026-11-25 | 1.3.0 | attribution-removed (headless, sonnet, writes disallowed) | pass | Kept the agreements; dropped who proposed, the personal reason and the vote; unanswered headings left as nothing to report |
+| 2026-11-25 | 1.3.1 | prepare-workshop, record-from-notes, review-due, no-project-register (headless, writes disallowed) | prepare-workshop pass; record-from-notes partial; review-due pass; no-project-register pass | record-from-notes: the shown charter is `status: issued` but still carries an Open questions section with the code review question, then asks whether to issue or keep as draft; the question is listed for the user and the review date proposed, nothing written as an agreement. review-due: asks first whether the workshop is preparation or recording |
+| 2026-11-25 | 1.3.1 | record-from-notes (re-run after fixes, headless, writes disallowed) | pass | Asked draft or issued before showing a document; the code review question listed for the user, not an agreement; review date proposed |

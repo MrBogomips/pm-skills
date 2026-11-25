@@ -1,11 +1,11 @@
 ---
-summary: For project managers and PMOs - writes the lessons learned of a project or a phase from retrospectives, gate outcomes, decisions, changes and risks, each point backed by a fact, with recommendations and owned follow-up actions, never about people.
+summary: For project managers and PMOs - writes the lessons learned of a project or phase from retrospectives, gates, decisions and risks, each backed by a fact, never about people.
 ---
 
 # lessons-learned
 
 Writes what a project or a phase learned: the context in facts, what worked, what did not, recommendations addressed
-to the next phase, project or organization, and the actions the project itself will take.
+to the next phase, project or organization, and the actions the project itself will take. Each point is backed by a fact, never about people.
 
 ## Why
 
@@ -48,7 +48,7 @@ Ask in your own words ("lessons learned", "lezioni apprese") or run `/pm-skills:
 
 ## Requirements
 
-A project register (`/pm-skills:project-setup`). The richer the trail of retrospectives and gate reviews, the more the
+A project register (`/pm-skills:project-setup`) is recommended; without it the skill works in the session. The richer the trail of retrospectives and gate reviews, the more the
 document says.
 
 ## Limitations

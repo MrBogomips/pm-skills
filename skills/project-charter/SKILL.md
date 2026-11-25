@@ -1,6 +1,6 @@
 ---
 name: project-charter
-description: Drafts and revises the project charter - purpose, objectives and success criteria, scope in and out, milestones, phases and gates, constraints, budget, risks, stakeholders and authority - from the registers, with a critical review; proposes the initial risks, stakeholders and gates for the registers. Use for "project charter", "charter", "carta del progetto", "atto costitutivo del progetto".
+description: Drafts and revises the project charter - purpose, objectives and success criteria, scope in and out, milestones, phases and gates, constraints, budget, risks, stakeholders and authority - from the registers, critically reviewed; proposes initial risks, stakeholders and gates for the registers. Use for "project charter", "revise the charter", "carta del progetto", "atto costitutivo del progetto".
 ---
 
 # Project charter
@@ -32,8 +32,8 @@ registers and seeds the empty ones.
    typically the purpose, the objectives with their success criteria, what is out of scope and the authority of the
    project manager; never fill those with a guess. Each summary of a register points to it.
 3. **Review.** Dispatch `pm-critical-reviewer` with the draft, its purpose and audience, the register paths and the
-   facts read. When the charter goes to a steering committee or the client for approval, tell the user that the
-   review goes to the agent with the model escalated to `fable`, because it is a deliverable for a steering
+   facts read. When the charter goes to a steering committee or the client for approval, tell the user before dispatching that
+   the review goes to the agent with the model escalated to `fable`, because it is a deliverable for a steering
    committee or a client; the user may decline, and the review then runs on the agent's own model. Address its
    findings or show them to the user.
 4. **Name and show.** Name the file with
@@ -51,7 +51,8 @@ registers and seeds the empty ones.
 6. **Issue** when the user reports the approval: set `status: issued`, `approved-by` and `approved-on` as the user
    states them, and fill the Approval heading. Suggest `/pm-skills:publish-deliverable` to share it.
 7. **Revise** an issued charter only for an approved change: read it in the change log, name its ID in `change`,
-   show the differences, and raise `version` with `doc_naming.py bump <version> major|minor` (major for scope,
+   show the differences, revise the same document as `common.md` says (never a new document number), and raise
+   `version` with `doc_naming.py bump <version> major|minor` (major for scope,
    objectives or authority). Without an approved change, suggest `/pm-skills:change-request`.
 8. **Report** what you read, what you inferred and what you could not read.
 
@@ -67,6 +68,7 @@ registers and seeds the empty ones.
 - Never edit or delete an existing register entry, and never write the schedule register: its baselines belong to
   `schedule-check`.
 - Never revise an issued charter without an approved change.
+- Never propose changing the criteria of a gate that has an outcome: a changed criterion goes in a new gate.
 - Never apply a tailoring rule that loosens a guardrail; say that it was ignored and why.
 
 ## Extension points
