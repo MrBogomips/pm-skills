@@ -1,12 +1,15 @@
 ---
 name: sprint-review
-description: Drafts the sprint review - what was delivered against the Sprint Goal and the Definition of Done, what was not and why, the stakeholders' feedback and the Product Backlog adaptations - and points risks and decisions to their registers. Use for a sprint review or demo ("sprint review", "what did the sprint deliver", "revisione dello sprint", "esito dello sprint"); not for periodic status reports.
+description: Drafts the sprint review - what was delivered against the Sprint Goal and the Definition of Done, what was not and why, the stakeholders' feedback and the Product Backlog adaptations - and points risks and decisions to their registers. Use for a sprint review or demo ("sprint review", "sprint demo", "what did the sprint deliver"); not for periodic status reports.
 ---
 
 # Sprint review
 
 Records the outcome of a sprint for the people who inspect it: the Increment against the Sprint Goal, the feedback
 it drew and the changes to the Product Backlog that follow, every claim backed by the issues tool or the notes.
+
+**Italian.** If the user writes in Italian or the `Deliverable language` is Italian, first read
+`${CLAUDE_PLUGIN_ROOT}/shared/glossary/it.md` and use its terms; the project's `terms` come first.
 
 ## Inputs
 

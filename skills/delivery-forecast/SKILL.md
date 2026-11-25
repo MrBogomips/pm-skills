@@ -1,12 +1,15 @@
 ---
 name: delivery-forecast
-description: Forecasts when a number of work items will be done, or how many will be done by a date, with a simulation over the team's weekly throughput from a saved snapshot, always as 50/85/95% ranges with their assumptions. Use for "when will it be done", "how many items by", "forecast", "quando finiamo", "quando sarà pronto", "previsione di consegna", "quanti item entro".
+description: Forecasts when a number of work items will be done, or how many will be done by a date, with a simulation over the team's weekly throughput from a saved snapshot, always as 50/85/95% ranges with their assumptions. Use for "when will it be done", "how many items by", "forecast", "delivery date".
 ---
 
 # Delivery forecast
 
 Answers "when will these items be done?" and "how many will be done by then?" with probabilities, from the team's
 own throughput history, and states what the forecast assumes so the reader knows when it stops holding.
+
+**Italian.** If the user writes in Italian or the `Deliverable language` is Italian, first read
+`${CLAUDE_PLUGIN_ROOT}/shared/glossary/it.md` and use its terms; the project's `terms` come first.
 
 ## Inputs
 

@@ -1,6 +1,6 @@
 ---
 name: schedule-check
-description: Checks the project schedule - critical path, float and dates over the working calendar, slip against the approved baseline - from the schedule tool or SCHEDULE.md; records a new baseline only with who approved it and when, and imports a tool's plan as the fallback register. Use for "schedule check", "critical path", "are we late", "cammino critico", "siamo in ritardo", "nuova baseline".
+description: Checks the project schedule - critical path, float and dates over the working calendar, slip against the approved baseline - from the schedule tool or SCHEDULE.md; records a new baseline only with who approved it and when, and imports a tool's plan as the fallback register. Use for "schedule check", "critical path", "are we late", "new baseline".
 ---
 
 # Schedule check
@@ -8,6 +8,9 @@ description: Checks the project schedule - critical path, float and dates over t
 Answers whether the plan holds: the critical path, the float left, and how far dates moved from the approved
 baseline, computed by a script over the project's working calendar. Keeps `SCHEDULE.md`, the fallback plan and the
 history of baselines.
+
+**Italian.** If the user writes in Italian or the `Deliverable language` is Italian, first read
+`${CLAUDE_PLUGIN_ROOT}/shared/glossary/it.md` and use its terms; the project's `terms` come first.
 
 ## Inputs
 

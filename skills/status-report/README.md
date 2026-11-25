@@ -26,18 +26,18 @@ read. A report for a steering committee or the client is challenged by a critica
 **Result:** A draft for 2026-11-11..2026-11-24, with issues closed, pull requests merged and releases of the period,
 the risks that changed and the decisions taken, written as a draft after your agreement.
 
-### The SAL for the client
+### The highlight report for the client
 
-**Context:** The report goes to the client's steering committee, and the project calls it "SAL".
+**Context:** The report goes to the client's steering committee, and the project calls it "highlight report".
 
-**Action:** Ask "prepara il SAL per il comitato".
+**Action:** Ask "prepare the highlight report for the committee".
 
 **Result:** The draft titled as the project wants, with the client's extra section; before you see it, a critical
 review (announced, with a stronger model you can decline) whose open points come with the draft.
 
 ## Usage
 
-Ask in your own words ("status report", "SAL", "report di avanzamento") or run `/pm-skills:status-report`. Say the
+Ask in your own words ("status report", "progress report", "weekly report") or run `/pm-skills:status-report`. Say the
 period or the audience if you know them; otherwise the skill proposes them and asks.
 
 ## Inputs and outputs

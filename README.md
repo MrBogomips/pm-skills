@@ -87,8 +87,9 @@ plugin, and dispatch its agents.
 
 1. In your project, run `/pm-skills:project-setup`. It proposes `PROJECT.md` (identity, profile, naming conventions)
    and `TOOLS.md` (for example Jira and GitHub, read only) from what it finds, and writes them after you agree.
-2. Ask to "set up the team register", then use the skills in your own words: "add a risk", "scrivi il verbale della
-   riunione", "status report", "pianifica lo sprint", "who should review acme/web#42?".
+2. Ask to "set up the team register", then use the skills in your own words: "add a risk", "write the minutes",
+   "status report", "plan the next sprint", "who should review acme/web#42?". Ask in any language: the skills answer in it, and in
+   Italian they use the terms of a shared glossary (`shared/glossary/it.md`).
 3. To adapt a skill to your project's way of working, run `/pm-skills:pm-tailoring`.
 
 ### Upgrading from 0.x

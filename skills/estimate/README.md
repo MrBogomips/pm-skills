@@ -22,7 +22,7 @@ for optimism, missing work and unstated assumptions.
 
 **Context:** The team gives ranges for the five stories of the payment feature.
 
-**Action:** Ask "stima a tre punti di queste cinque storie" with the ranges.
+**Action:** Ask "three-point estimate of these five stories" with the ranges.
 
 **Result:** Per story the PERT mean and standard deviation, the total at 50, 85 and 95%, the note that the totals use
 a normal approximation, and the assumptions behind them.
@@ -47,7 +47,7 @@ before the script computes the totals.
 
 ## Usage
 
-Ask in your own words ("how much effort is this", "quanto costa") or run `/pm-skills:estimate`.
+Ask in your own words ("how much effort is this", "how much will it cost") or run `/pm-skills:estimate`.
 
 ## Inputs and outputs
 

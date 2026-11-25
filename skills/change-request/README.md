@@ -43,13 +43,13 @@ and proposes the new risk the change creates for the risk register, writing each
 
 **Context:** The SSO work was released.
 
-**Action:** Ask "segna la CR-004 come implementata".
+**Action:** Ask "mark CR-004 as implemented".
 
 **Result:** CR-004 moves to implemented with the release date, checked against the release the tools show.
 
 ## Usage
 
-Ask in your own words ("change request", "valuta l'impatto della modifica") or run `/pm-skills:change-request`.
+Ask in your own words ("change request", "assess the impact of this change") or run `/pm-skills:change-request`.
 Without a change log the skill starts by setting one up.
 
 ## Inputs and outputs

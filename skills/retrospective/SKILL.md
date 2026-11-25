@@ -1,12 +1,15 @@
 ---
 name: retrospective
-description: Prepares and records a retrospective - before the meeting, the facts of the sprint or period and the state of the previous actions; after it, keep, change and try with owned, dated actions - about the way of working, never about people. Use for a retrospective ("retro", "prepare the retrospective", "retrospettiva", "prepara la retro", "azioni della retro").
+description: Prepares and records a retrospective - before the meeting, the facts of the sprint or period and the state of the previous actions; after it, keep, change and try with owned, dated actions - about the way of working, never about people. Use for a retrospective ("retro", "prepare the retrospective", "record the retro", "retro actions").
 ---
 
 # Retrospective
 
 Helps the team improve its way of working: facts to look at before the meeting, then a record of what to keep,
 change and try, with actions that have an owner and a date and are followed up at the next retrospective.
+
+**Italian.** If the user writes in Italian or the `Deliverable language` is Italian, first read
+`${CLAUDE_PLUGIN_ROOT}/shared/glossary/it.md` and use its terms; the project's `terms` come first.
 
 ## Inputs
 

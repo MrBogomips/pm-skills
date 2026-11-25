@@ -39,7 +39,7 @@ is ignored, and so is a line inside a fenced code block, which is an example.
 ## Conventions
 
 - Naming: coded
-- Type codes: status-report=SAL
+- Type codes: status-report=HR
 - Version in file name: no
 
 ## Registers

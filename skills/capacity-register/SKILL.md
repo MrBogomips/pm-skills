@@ -1,12 +1,15 @@
 ---
 name: capacity-register
-description: Keeps the project's capacity register (CAPACITY.md) - the project calendar, each member's allocation and absences with no reasons, holidays imported from a calendar tool - and answers how many person-days a member or the team has in a period, showing how it was computed. Use for "capacity", "who is away", "add a holiday", "capacità del team", "giorni disponibili", "registra un'assenza".
+description: Keeps the project's capacity register (CAPACITY.md) - the project calendar, each member's allocation and absences with no reasons, holidays imported from a calendar tool - and answers how many person-days a member or the team has in a period, showing how it was computed. Use for "capacity", "who is away", "add a holiday", "team availability", "record an absence".
 ---
 
 # Capacity register
 
 Keeps `CAPACITY.md`: the project's working calendar and how much of each member's time goes to the project, period
 by period, and answers availability questions from it. `sprint-planning` reads it for capacity.
+
+**Italian.** If the user writes in Italian or the `Deliverable language` is Italian, first read
+`${CLAUDE_PLUGIN_ROOT}/shared/glossary/it.md` and use its terms; the project's `terms` come first.
 
 ## Inputs
 

@@ -1,6 +1,6 @@
 ---
 name: phase-gate-review
-description: Keeps the gate register (GATES.md) - phase gates, criteria, outcomes - and prepares gate reviews: each criterion against evidence, earlier conditions followed up, a recommendation; records an outcome only once those with authority decide. Use for "phase gate", "gate review", "go/no-go", "ready to close?", "revisione di fase", "passaggio di fase", "possiamo chiudere?"; not lessons learned.
+description: Keeps the gate register (GATES.md) - phase gates, criteria, outcomes - and prepares gate reviews: each criterion against evidence, earlier conditions followed up, a recommendation; records an outcome only once those with authority decide. Use for "phase gate", "stage gate", "gate review", "go/no-go", "ready to close?"; not lessons learned.
 ---
 
 # Phase gate review
@@ -8,6 +8,9 @@ description: Keeps the gate register (GATES.md) - phase gates, criteria, outcome
 Keeps `GATES.md` and prepares the review of a gate (or of the project's close): each criterion assessed against
 evidence, the conditions of earlier outcomes followed up, a recommendation for the people who decide. The decision
 is theirs; the skill records it when the user reports it.
+
+**Italian.** If the user writes in Italian or the `Deliverable language` is Italian, first read
+`${CLAUDE_PLUGIN_ROOT}/shared/glossary/it.md` and use its terms; the project's `terms` come first.
 
 ## Inputs
 

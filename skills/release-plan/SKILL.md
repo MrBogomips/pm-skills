@@ -1,12 +1,15 @@
 ---
 name: release-plan
-description: Drafts the release plan - the release goal, its scope cut into likely, at risk and unlikely by a Monte Carlo forecast of throughput, the 50/85/95% dates, release criteria, dependencies and approved changes - and revises it as the release nears. Use for "release plan", "plan the release", "what makes the release", "piano di rilascio", "pianifica il rilascio". Not the roadmap (product-roadmap).
+description: Drafts the release plan - the release goal, its scope cut into likely, at risk and unlikely by a Monte Carlo forecast of throughput, the 50/85/95% dates, release criteria, dependencies and approved changes - and revises it as the release nears. Use for "release plan", "plan the release", "what makes the release", "release scope". Not the roadmap (product-roadmap).
 ---
 
 # Release plan
 
 Writes the plan of one release: what it is for, which items are likely to make it by the date and which are not,
 when it is likely to ship, and what it has to meet before it goes out, every date from the forecast script.
+
+**Italian.** If the user writes in Italian or the `Deliverable language` is Italian, first read
+`${CLAUDE_PLUGIN_ROOT}/shared/glossary/it.md` and use its terms; the project's `terms` come first.
 
 ## Inputs
 

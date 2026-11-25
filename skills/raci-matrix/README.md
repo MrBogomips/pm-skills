@@ -37,7 +37,7 @@ only if you ask.
 
 ## Usage
 
-Ask in your own words ("RACI", "responsibility matrix", "matrice RACI") or run `/pm-skills:raci-matrix`.
+Ask in your own words ("RACI", "responsibility matrix", "who is accountable for") or run `/pm-skills:raci-matrix`.
 
 ## Inputs and outputs
 

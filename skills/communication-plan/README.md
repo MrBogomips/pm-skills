@@ -36,7 +36,7 @@ security office, marked `C` or `I` in the RACI matrix, receives nothing.
 
 ## Usage
 
-Ask in your own words ("communication plan", "piano di comunicazione") or run `/pm-skills:communication-plan`.
+Ask in your own words ("communication plan", "who gets which report") or run `/pm-skills:communication-plan`.
 
 ## Inputs and outputs
 

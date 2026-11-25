@@ -30,7 +30,7 @@ replaces an earlier decision, both entries are linked in the same write.
 
 **Context:** A new developer asks why notifications do not use the jobs table.
 
-**Action:** Ask "cosa avevamo deciso sulle notifiche?".
+**Action:** Ask "what did we decide about notifications?".
 
 **Result:** The decision in force, with its ID, date, who decided and why, and the earlier decision it replaced.
 
@@ -38,7 +38,7 @@ replaces an earlier decision, both entries are linked in the same write.
 
 **Context:** You paste a thread where the team leaned towards a new framework but nobody decided.
 
-**Action:** Ask "registra una decisione".
+**Action:** Ask "record a decision".
 
 **Result:** The skill says the thread holds no decision, records nothing, and offers to record it once someone
 decides.

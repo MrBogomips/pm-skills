@@ -1,6 +1,6 @@
 ---
 name: backlog-refinement
-description: Reviews the top of the product backlog from the issues tool - readiness of each item, proposed splits, a proposed order with reasons, stale and duplicate items - and writes back only through a write tool, on confirmation. The Product Owner decides. Use to refine or groom the backlog ("refine the backlog", "is the backlog ready", "raffiniamo il backlog", "backlog pronto"); not to plan a sprint.
+description: Reviews the top of the product backlog from the issues tool - readiness of each item, proposed splits, a proposed order with reasons, stale and duplicate items - and writes back only through a write tool, on confirmation. The Product Owner decides. Use to refine or groom the backlog ("refine the backlog", "groom the backlog", "is the backlog ready"); not to plan a sprint.
 ---
 
 # Backlog refinement
@@ -8,6 +8,9 @@ description: Reviews the top of the product backlog from the issues tool - readi
 Checks whether the items at the top of the backlog are ready to be planned, proposes how to split the ones that are
 too big and in what order to take them, and flags what has gone stale or is there twice. It proposes; ordering is
 the Product Owner's decision.
+
+**Italian.** If the user writes in Italian or the `Deliverable language` is Italian, first read
+`${CLAUDE_PLUGIN_ROOT}/shared/glossary/it.md` and use its terms; the project's `terms` come first.
 
 ## Inputs
 

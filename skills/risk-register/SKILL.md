@@ -1,12 +1,15 @@
 ---
 name: risk-register
-description: Keeps the project's risk register (RISKS.md) - identifies threats and opportunities, assesses probability and impact, plans responses with owners and review dates, reviews and closes risks, flags the high ones. Use to set up, add to or review the risk register ("risk register", "add a risk", "review the risks", "registro dei rischi", "aggiungi un rischio", "rivedi i rischi").
+description: Keeps the project's risk register (RISKS.md) - identifies threats and opportunities, assesses probability and impact, plans responses with owners and review dates, reviews and closes risks, flags the high ones. Use to set up, add to or review the risk register ("risk register", "risk log", "add a risk", "review the risks").
 ---
 
 # Risk register
 
 Keeps `RISKS.md`: the project's threats and opportunities, their assessment, the response chosen and who owns it.
 It proposes; the user decides every risk, score and response written.
+
+**Italian.** If the user writes in Italian or the `Deliverable language` is Italian, first read
+`${CLAUDE_PLUGIN_ROOT}/shared/glossary/it.md` and use its terms; the project's `terms` come first.
 
 ## Inputs
 

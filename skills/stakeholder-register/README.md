@@ -31,7 +31,7 @@ an approach, an owner and a review date.
 
 **Context:** The session starts with "2 past review" for the stakeholder register.
 
-**Action:** Ask "rivedi gli stakeholder".
+**Action:** Ask "review the stakeholders".
 
 **Result:** Overdue entries first, then influential stakeholders below their desired engagement, each with a
 proposed change of level, approach or review date; once the whole register is reviewed, `Last reviewed` moves to

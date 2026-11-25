@@ -46,7 +46,7 @@ the coach names who holds each Scrum accountability rather than assigning one to
 
 ## Usage
 
-Run `/pm-skills:pm-coach` with the situation in your own words ("come dovrei gestire...", "consigliami come PM").
+Run `/pm-skills:pm-coach` with the situation in your own words ("how should I handle...", "advise me as a PM").
 Say "just tell me" or "let me think it through" to change the style at any time. The skill starts only when you
 call it.
 

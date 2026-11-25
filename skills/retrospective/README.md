@@ -30,14 +30,14 @@ and the two previous actions with their state, or "to confirm with the team" whe
 
 **Context:** After the meeting you paste the notes from the board.
 
-**Action:** Ask "registra la retrospettiva".
+**Action:** Ask "record the retrospective".
 
 **Result:** Keep, change and try rephrased as practices, actions with a slug and a date, names and quotes removed;
 with an issues tool in Mode `write`, an offer to create the actions as work items, on your confirmation.
 
 ## Usage
 
-Ask in your own words ("retro", "retrospettiva", "azioni della retro") or run `/pm-skills:retrospective`. Say
+Ask in your own words ("retro", "prepare the retrospective", "retro actions") or run `/pm-skills:retrospective`. Say
 whether you are preparing or recording; the skill asks if it cannot tell.
 
 ## Inputs and outputs

@@ -1,12 +1,15 @@
 ---
 name: product-roadmap
-description: Drafts and revises the product roadmap - Product Goal, themes, now/next/later or dated horizons - linked to epics in the issues tool and to releases, with what is committed kept apart from what is intended, versioned in place. Does not forecast dates. Use for "product roadmap", "update the roadmap", "roadmap di prodotto", "aggiorna la roadmap".
+description: Drafts and revises the product roadmap - Product Goal, themes, now/next/later or dated horizons - linked to epics in the issues tool and to releases, with what is committed kept apart from what is intended, versioned in place. Does not forecast dates. Use for "product roadmap", "update the roadmap", "now/next/later".
 ---
 
 # Product roadmap
 
 Writes and keeps the product roadmap: the Product Goal, the themes that serve it and the horizons in which they are
 expected, every item tied to an epic or a release and marked committed or intended by its source.
+
+**Italian.** If the user writes in Italian or the `Deliverable language` is Italian, first read
+`${CLAUDE_PLUGIN_ROOT}/shared/glossary/it.md` and use its terms; the project's `terms` come first.
 
 ## Inputs
 

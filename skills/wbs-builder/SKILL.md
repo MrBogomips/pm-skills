@@ -1,6 +1,6 @@
 ---
 name: wbs-builder
-description: Builds and revises the work breakdown structure and its dictionary - the whole scope decomposed into deliverables and work packages, checked against the 100% rule, with acceptance and accountable role - from the charter or the roadmap; on request creates the work packages as work items. Use for "WBS", "work breakdown structure", "scomposizione del lavoro", "WBS del progetto".
+description: Builds and revises the work breakdown structure and its dictionary - the whole scope decomposed into deliverables and work packages, checked against the 100% rule, with acceptance and accountable role - from the charter or the roadmap; on request creates the work packages as work items. Use for "WBS", "work breakdown structure", "break down the scope".
 ---
 
 # WBS builder
@@ -8,6 +8,9 @@ description: Builds and revises the work breakdown structure and its dictionary 
 Decomposes the project's whole scope into deliverables and work packages, with a dictionary that says what each work
 package contains and how it is accepted. The WBS is the scope reference for the RACI matrix, estimates and the
 schedule.
+
+**Italian.** If the user writes in Italian or the `Deliverable language` is Italian, first read
+`${CLAUDE_PLUGIN_ROOT}/shared/glossary/it.md` and use its terms; the project's `terms` come first.
 
 ## Inputs
 

@@ -1,12 +1,15 @@
 ---
 name: meeting-minutes
-description: Writes meeting minutes with decisions, owned actions and risks raised, from notes, a transcript or a meeting tool, and proposes the decisions and risks for the decision log and the risk register. Use when the user asks for minutes of a meeting or its action items ("write the minutes", "minutes of the steering", "verbale", "scrivi il verbale della riunione", "verbalizza").
+description: Writes meeting minutes with decisions, owned actions and risks raised, from notes, a transcript or a meeting tool, and proposes the decisions and risks for the decision log and the risk register. Use when the user asks for minutes of a meeting or its action items ("write the minutes", "minutes of the steering", "meeting notes", "action items from the meeting").
 ---
 
 # Meeting minutes
 
 Turns what was said in a meeting into minutes that people who were not there can act on, then offers to record the
 decisions and the new risks in the project's registers, linked back to the minutes.
+
+**Italian.** If the user writes in Italian or the `Deliverable language` is Italian, first read
+`${CLAUDE_PLUGIN_ROOT}/shared/glossary/it.md` and use its terms; the project's `terms` come first.
 
 ## Inputs
 

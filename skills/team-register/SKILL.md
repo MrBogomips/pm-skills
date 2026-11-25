@@ -1,6 +1,6 @@
 ---
 name: team-register
-description: Keeps a project's team register (TEAMS.md) - current and former members with accounts, roles and areas - and reconciles it with recent activity in the project's tools. Use to set up, update or reconcile the team, record a join, departure or role change, or ask who is on the team ("aggiorna il team", "riconcilia il team", "chi c'è nel team").
+description: Keeps a project's team register (TEAMS.md) - current and former members with accounts, roles and areas - and reconciles it with recent activity in the project's tools. Use to set up, update or reconcile the team, record a join, departure or role change, or ask who is on the team ("update the team", "reconcile the team", "who is on the team").
 ---
 
 # Team register
@@ -19,6 +19,9 @@ and fix it until the command exits 0.
 
 Talk to the user in their language; the register's headings and column names stay in English. Read the
 `team-register` section of the tailoring register, if the project declares one, and say which rules you applied.
+
+**Italian.** If the user writes in Italian or the `Deliverable language` is Italian, first read
+`${CLAUDE_PLUGIN_ROOT}/shared/glossary/it.md` and use its terms; the project's `terms` come first.
 
 ## Find the register
 

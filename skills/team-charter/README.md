@@ -29,14 +29,14 @@ from recent retrospectives, and the open questions under each heading.
 
 **Context:** After the workshop you paste the notes from the board.
 
-**Action:** Ask "registra la carta del team".
+**Action:** Ask "record the team charter".
 
 **Result:** The agreements rephrased as what the team does, values with their practical meaning, names and votes
 removed, the questions still open listed for you, and a review date.
 
 ## Usage
 
-Ask in your own words ("team charter", "working agreements", "carta del team") or run `/pm-skills:team-charter`. Say
+Ask in your own words ("team charter", "working agreements", "team norms") or run `/pm-skills:team-charter`. Say
 whether you are preparing or recording; the skill asks if it cannot tell.
 
 ## Inputs and outputs

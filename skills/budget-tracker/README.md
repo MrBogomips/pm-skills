@@ -31,7 +31,7 @@ reported apart and the sources read.
 
 **Context:** There is no costs tool, but the issues tool holds hours logged by role.
 
-**Action:** Ask "calcola il consuntivo dalle ore registrate".
+**Action:** Ask "compute the actual cost from the logged hours".
 
 **Result:** Hours aggregated by role, each costed at the rate in force with the script, and the total actual cost as
 of the status date.
@@ -47,7 +47,7 @@ change log, written after you agree; the line's original amount stays.
 
 ## Usage
 
-Ask in your own words ("earned value", "budget del progetto", "forecast at completion") or run
+Ask in your own words ("earned value", "how much have we spent", "forecast at completion") or run
 `/pm-skills:budget-tracker`. Without a budget register the skill starts by setting one up.
 
 ## Inputs and outputs

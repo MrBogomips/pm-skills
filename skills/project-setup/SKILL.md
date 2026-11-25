@@ -1,6 +1,6 @@
 ---
 name: project-setup
-description: Sets up and reviews a project's configuration for pm-skills - PROJECT.md (identity, profile, conventions, registers) and TOOLS.md (the tools and what each may do) - over one or more sessions, checks for git, and migrates projects from before 1.0. Use to set up, configure, review or migrate the project ("configura il progetto", "imposta pm-skills", "rivedi la configurazione").
+description: Sets up and reviews a project's configuration for pm-skills - PROJECT.md (identity, profile, conventions, registers) and TOOLS.md (the tools and what each may do) - over one or more sessions, checks for git, and migrates projects from before 1.0. Use to set up, configure, review or migrate the project ("set up the project", "configure pm-skills", "review the configuration").
 disable-model-invocation: true
 ---
 
@@ -8,6 +8,9 @@ disable-model-invocation: true
 
 Builds and keeps the project register (`PROJECT.md`) and the tools register (`TOOLS.md`), section by section, over
 as many sessions as the user needs; reviews them when the project changes. Every other skill reads them.
+
+**Italian.** If the user writes in Italian or the `Deliverable language` is Italian, first read
+`${CLAUDE_PLUGIN_ROOT}/shared/glossary/it.md` and use its terms; the project's `terms` come first.
 
 ## Inputs
 
@@ -39,7 +42,7 @@ as many sessions as the user needs; reviews them when the project changes. Every
    Workflow: work items, start and finish points, states, WIP limits, pull policies, the Service Level Expectation).
 5. **Conventions.** Propose `coded` when the project has an external client (`Contract type` other than `internal`),
    `by date` otherwise; show an example name for each from `doc_naming.py`. Ask for type codes that differ from the
-   defaults (an Italian project may want `status-report=SAL`). The version in the file name stays `no` unless asked.
+   defaults (a PRINCE2 project may want `status-report=HR`). The version in the file name stays `no` unless asked.
    If the instruction file has no Working documents section, propose where documents go and record it there.
 6. **Tools.** Propose rows from what the session can reach and what the project mentions: MCP servers (`mcp:`), CLIs
    (`cli:`) checked with a harmless read (`gh auth status`), office files that hold plans or costs (`file:`), and
@@ -60,7 +63,7 @@ as many sessions as the user needs; reviews them when the project changes. Every
 
    and fix until both exit 0. End with the checklist again and what is left for a later session.
 
-**Review** ("rivedi la configurazione"): run the checklist, compare each section with what the project shows now
+**Review** ("review the configuration"): run the checklist, compare each section with what the project shows now
 (new repositories, a tool no longer reachable, a changed end date, a register declared but missing), and propose
 only the differences.
 

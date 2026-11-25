@@ -41,7 +41,7 @@ instruction-file line replaced; nothing is written before you agree.
 
 **Context:** The project added a repository and moved its end date.
 
-**Action:** Run `/pm-skills:project-setup` and say "rivedi la configurazione".
+**Action:** Run `/pm-skills:project-setup` and say "review the configuration".
 
 **Result:** Only the differences between the registers and what the project shows now, as proposals.
 

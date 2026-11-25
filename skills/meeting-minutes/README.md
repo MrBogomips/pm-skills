@@ -32,14 +32,14 @@ approval, a numbered list of proposed decision log entries and risk rows, and mi
 **Context:** Your notes of the sprint review list five follow-ups; the project declares an issue tracker in write
 mode.
 
-**Action:** Ask "scrivi il verbale della riunione e crea i task per le azioni".
+**Action:** Ask "write the minutes of the meeting and create tasks for the actions".
 
 **Result:** The minutes, then the five actions as an itemized list of work items; only those you confirm are created,
 and their keys are added to the Actions table.
 
 ## Usage
 
-Ask in your own words ("verbale", "write the minutes", "verbalizza la riunione di ieri") or run
+Ask in your own words ("write the minutes", "minutes of yesterday's meeting", "action items from the meeting") or run
 `/pm-skills:meeting-minutes`, with the notes pasted, a file path or the meeting's name.
 
 ## Inputs and outputs

@@ -15,8 +15,9 @@ The common keys, plus:
 
 ## Headings
 
-The headings below, in this order, translated into the document's language. A heading with nothing to say keeps a
-one-line "nothing to report" rather than disappearing, so that readers can compare reports.
+The headings below, in this order, translated into the document's language (in Italian, as
+`${CLAUDE_PLUGIN_ROOT}/shared/glossary/it.md` gives them). A heading with nothing to say keeps a one-line "nothing to
+report" rather than disappearing, so that readers can compare reports.
 
 ```markdown
 # <Project name>: status report <date>

@@ -120,14 +120,23 @@ A skill may suggest one, never depend on it.
 ### Skill anatomy
 
 - **Frontmatter**: `name` equal to the directory; `description` of at most 400 characters (the validator checks it), saying what the skill
-  does and when to use it, with specific trigger phrases in English and Italian.
+  does and when to use it, with specific trigger phrases in English only.
 - **User-invocable only**: a skill the user starts on purpose, and that would only crowd the context otherwise, sets
   `disable-model-invocation: true`: `pm-coach`, `project-setup` and `pm-tailoring`.
-- **Body**: the purpose in two lines, then **Inputs** (including the registers, project register keys and tool
+- **Body**: the purpose in two lines, the **Italian.** line (see Glossary below), then **Inputs** (including the registers, project register keys and tool
   capabilities it uses), **Steps**, **Always** / **Never**, and **Extension points** (see
   [Tailoring](#tailoring)).
-- **Language**: `SKILL.md` is written in English; the skill talks to the user and writes documents in the user's
-  language, or in the project's `Deliverable language`.
+- **Language**: skills are general purpose. Frontmatter, `SKILL.md`, README and examples are in English, with the
+  terms English-speaking practitioners use (a "highlight report", not a local name for it). The skill talks to the
+  user and writes documents in the user's language, or in the project's `Deliverable language`.
+- **Glossary**: `shared/glossary/<language>.md` maps the plugin's English terms to another language and back, one
+  table per area (`it.md` for Italian). Every skill has an **Italian.** line right after its purpose: when the user
+  writes in Italian or the `Deliverable language` is Italian, read the glossary first. A pointer among the Inputs is
+  not enough: headless runs skipped it. The skill reads the user's words with the glossary and uses its first term
+  in what it writes, the same one every time; a term marked *kept in English* is not translated. The project's
+  `terms` (see [Tailoring](#tailoring)) come first. A skill is chosen from its English description, before any file
+  is read: the glossary helps a skill that runs, not its triggering. A new term a skill uses in Italian goes into the
+  glossary in the same pull request.
 - **README.md** next to `SKILL.md`, as `DoD.md` requires.
 
 ### Project register
@@ -242,7 +251,7 @@ renderer, `artifact:<type>`.
 ### Tailoring
 
 A project adapts the plugin to its own way of working: a risk scale from 1 to 5, a sponsor's approval above a
-threshold for change requests, a section its client wants in every status report, "SAL" instead of "status report".
+threshold for change requests, a section its client wants in every status report, "highlight report" instead of "status report".
 `pm-tailoring` guides the user to the lightest change that does it, along a ladder:
 
 1. a key in the Profile of `PROJECT.md`;
@@ -386,6 +395,9 @@ accountable role per deliverable and the history of every gate outcome.
 
 **After wave 4: 1.4.0.** `actionable-message`: emails and chat messages whose every request names its owner, the
 ask, the deadline, the references and a contact, sent only through a declared `messages` tool.
+
+**1.5.0.** Descriptions, READMEs and examples in English only; `shared/glossary/it.md` maps the plugin's terms to
+Italian and back, and every skill reads it when the user or the `Deliverable language` is Italian.
 
 **Next.** The open items are GitHub issues: the second wave of team skills (#3), a register reviewer agent (#7) and
 persona agents for simulated conversations (#8).

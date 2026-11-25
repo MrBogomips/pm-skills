@@ -3,8 +3,9 @@
 # does not: a skill directory without a SKILL.md, skill or agent names that differ from their
 # directory or file, a `skills` field that would stop Claude Code from loading every skill, a
 # stray marketplace.json, an invalid hooks.json or a UserPromptSubmit hook, a skill without its README.md or its
-# Extension points section, a description over the design limit, and (when
-# PM_SKILLS_FORBIDDEN_TERMS names a local file of terms) client names in the public repository.
+# Extension points section, a description over the design limit, a malformed glossary or a skill that does not
+# point to it, and (when PM_SKILLS_FORBIDDEN_TERMS names a local file of terms) client names in the public
+# repository.
 #
 # Usage: bash tests/validate.sh [repo-root]    (requires jq; bash 3.2 compatible)
 set -euo pipefail
@@ -113,6 +114,9 @@ check_skills() {
         check_component "$d/SKILL.md" "skills/$(basename "$d")/SKILL.md" "$(basename "$d")"
         check_extension_points "$d/SKILL.md" "skills/$(basename "$d")/SKILL.md"
         if [[ ! -f "$d/README.md" ]]; then error "MISSING skills/$(basename "$d")/README.md"; fi
+        if [[ -f "$ROOT/shared/glossary/it.md" ]] && ! grep -qF 'shared/glossary/it.md' "$d/SKILL.md"; then
+            error "skills/$(basename "$d")/SKILL.md: no Italian line pointing to shared/glossary/it.md"
+        fi
     done
 }
 
@@ -133,6 +137,32 @@ check_hooks() {
     if jq -e '.hooks | has("UserPromptSubmit")' "$f" >/dev/null 2>&1; then
         error "hooks/hooks.json: no UserPromptSubmit hook, it would run on every prompt"
     fi
+}
+
+# Each shared/glossary/<language>.md: tables headed "| English | <Language> | Note |", rows of three cells with the
+# first two filled, and no English term twice in the same file.
+check_glossaries() {
+    local f rel problems
+    for f in "$ROOT"/shared/glossary/*.md; do
+        [[ -f "$f" ]] || continue
+        rel="shared/glossary/$(basename "$f")"
+        problems="$(awk '
+            function trim(s) { gsub(/^[ \t]+|[ \t]+$/, "", s); return s }
+            /^\|/ {
+                n = split($0, c, "|")
+                if (n != 5 || trim(c[5]) != "") { printf "line %d: a row needs three cells\n", NR; next }
+                a = trim(c[2]); b = trim(c[3])
+                if (a ~ /^-+$/) next
+                if (a == "English") { tables++; next }
+                if (a == "" || b == "") { printf "line %d: English and translation must both be filled\n", NR; next }
+                if (seen[a]++) printf "line %d: English term \"%s\" appears twice\n", NR, a
+            }
+            END { if (!tables) print "no table headed | English | ... | Note |" }
+        ' "$f")"
+        while IFS= read -r line; do
+            if [[ -n "$line" ]]; then error "$rel: $line"; fi
+        done <<< "$problems"
+    done
 }
 
 # Client names must never reach the public repository; the list itself lives outside it.
@@ -161,6 +191,7 @@ check_plugin
 check_skills
 check_agents
 check_hooks
+check_glossaries
 check_forbidden_terms
 
 if [[ $ERRORS -gt 0 ]]; then

@@ -1,6 +1,6 @@
 ---
 name: team-charter
-description: Prepares and records the team charter - before the workshop, a draft from the project files with the questions the team has to answer; after it, purpose, values and working agreements on communication, meetings, decisions, reviews and disagreements - about the way of working, never about people. Use for "team charter", "working agreements", "carta del team", "accordi di lavoro del team".
+description: Prepares and records the team charter - before the workshop, a draft from the project files with the questions the team has to answer; after it, purpose, values and working agreements on communication, meetings, decisions, reviews and disagreements - about the way of working, never about people. Use for "team charter", "working agreements", "team norms".
 ---
 
 # Team charter
@@ -8,6 +8,9 @@ description: Prepares and records the team charter - before the workshop, a draf
 Helps a team write down the agreements it makes for itself. Before the workshop: a draft from what the project
 already says, with the questions only the team can answer. After it: the charter as the team settled it, reviewed
 when the team or its way of working changes.
+
+**Italian.** If the user writes in Italian or the `Deliverable language` is Italian, first read
+`${CLAUDE_PLUGIN_ROOT}/shared/glossary/it.md` and use its terms; the project's `terms` come first.
 
 ## Inputs
 

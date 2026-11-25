@@ -21,7 +21,7 @@ records it in `TOOLS.md`.
 
 **Context:** `ACME-SR-007.md` is issued; `TOOLS.md` declares a Word renderer for `status-report → docx`.
 
-**Action:** Ask "esporta in Word lo status report".
+**Action:** Ask "export the status report to Word".
 
 **Result:** `ACME-SR-007.docx` in the published-material folder, rendered by the declared tool, with a check that the
 content matches the source.
@@ -30,14 +30,14 @@ content matches the source.
 
 **Context:** The minutes have to go out as PDF and no `publish` tool covers them.
 
-**Action:** Ask "genera il PDF del verbale".
+**Action:** Ask "make a PDF of the minutes".
 
 **Result:** A proposed renderer to reuse (a session skill, pandoc, a project script), the `TOOLS.md` row to add, and
 the PDF once you agree.
 
 ## Usage
 
-Ask in your own words ("export to Word", "make a PDF", "pubblica il documento") or run
+Ask in your own words ("export to Word", "make a PDF", "publish the document") or run
 `/pm-skills:publish-deliverable` with the document's path and the format.
 
 ## Inputs and outputs

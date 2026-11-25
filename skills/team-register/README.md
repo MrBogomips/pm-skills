@@ -37,7 +37,7 @@ written, and `Last reconciled` moves to today when every source could be read.
 
 ## Usage
 
-Ask in your own words ("aggiorna il team", "Ada is the tech lead from today") or run `/pm-skills:team-register`.
+Ask in your own words ("update the team", "Ada is the tech lead from today") or run `/pm-skills:team-register`.
 Without a declared register the skill starts by setting one up.
 
 ## Inputs and outputs

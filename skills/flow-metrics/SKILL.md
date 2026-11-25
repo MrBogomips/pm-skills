@@ -1,12 +1,15 @@
 ---
 name: flow-metrics
-description: Computes the team's flow metrics from the work items' transition history - cycle time percentiles, throughput, WIP, work item age against the SLE - saves a snapshot to compare over time, and DORA metrics if possible. Team level, never per person. Use for "flow metrics", "cycle time", "aging items", "metriche di flusso", "tempo di ciclo", "DORA"; not for forecasts (delivery-forecast).
+description: Computes the team's flow metrics from the work items' transition history - cycle time percentiles, throughput, WIP, work item age against the SLE - saves a snapshot to compare over time, and DORA metrics if possible. Team level, never per person. Use for "flow metrics", "cycle time", "throughput", "aging items", "DORA"; not for forecasts (delivery-forecast).
 ---
 
 # Flow metrics
 
 Measures how work flows through the team's workflow, from a saved snapshot of the transition history, and explains
 what the numbers say: how long items take, how many finish, how much is in progress and which items are aging.
+
+**Italian.** If the user writes in Italian or the `Deliverable language` is Italian, first read
+`${CLAUDE_PLUGIN_ROOT}/shared/glossary/it.md` and use its terms; the project's `terms` come first.
 
 ## Inputs
 

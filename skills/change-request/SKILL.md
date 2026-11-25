@@ -1,12 +1,15 @@
 ---
 name: change-request
-description: Keeps the project's change log (CHANGES.md) - raises a change request, assesses its impact on scope, schedule, cost and risk, has the analysis challenged, records who decided and when, marks it implemented. Use for a change to agreed scope, schedule or cost ("change request", "assess this change", "richiesta di modifica", "valuta l'impatto della modifica", "change log"); not for a decision alone.
+description: Keeps the project's change log (CHANGES.md) - raises a change request, assesses its impact on scope, schedule, cost and risk, has the analysis challenged, records who decided and when, marks it implemented. Use for a change to agreed scope, schedule or cost ("change request", "assess this change", "impact of this change", "change log"); not for a decision alone.
 ---
 
 # Change request
 
 Keeps `CHANGES.md`: each change asked for, its impact on scope, schedule, cost and risk, who decided it and when, and
 when it was implemented. It proposes the analysis; the user and the approvers the project names decide.
+
+**Italian.** If the user writes in Italian or the `Deliverable language` is Italian, first read
+`${CLAUDE_PLUGIN_ROOT}/shared/glossary/it.md` and use its terms; the project's `terms` come first.
 
 ## Inputs
 

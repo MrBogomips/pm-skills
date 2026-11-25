@@ -30,3 +30,4 @@ Manual checks of the skill, run with `claude --plugin-dir <repo>` (or headless, 
 | Date | Version | Cases run | Outcome | Notes |
 |---|---|---|---|---|
 | 2026-11-24 | 1.0.0 | applies-tailoring, all-headings-kept, colors-with-reasons, no-review-for-team | pass | headless, sonnet: `ACME-SAL-001.md` with the SAL term and the Client actions section from TAILORING.md; amber justified by R-001; empty sections say why; Sources lists what could not be read; no review for a team audience; nothing written |
+| 2026-11-25 | 1.5.0 | Italian request ("Prepara il SAL per il comitato") | pass | headless, sonnet, declared: the skill loaded from the Italian request with an English-only description; the project's `terms` ("SAL") and `Deliverable language: English` won over the glossary, as designed: the draft was in English, named `ACME-SAL-001.md`, and the skill offered Italian |

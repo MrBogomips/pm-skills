@@ -1,12 +1,15 @@
 ---
 name: raci-matrix
-description: Keeps the project's RACI matrix (RACI.md) - for each deliverable or activity, which role is responsible, accountable, consulted and informed - built from the charter, the WBS and the team and stakeholder roles, with exactly one accountable role per row; answers who is accountable for what. Use for "RACI", "responsibility matrix", "who is accountable for", "matrice RACI", "chi è responsabile di".
+description: Keeps the project's RACI matrix (RACI.md) - for each deliverable or activity, which role is responsible, accountable, consulted and informed - built from the charter, the WBS and the team and stakeholder roles, with exactly one accountable role per row; answers who is accountable for what. Use for "RACI", "responsibility matrix", "who is accountable for", "who is responsible for".
 ---
 
 # RACI matrix
 
 Keeps `RACI.md`: who does the work, who answers for it, who is consulted and who is informed, for each deliverable or
 activity, by role. Roles survive turnover; who holds a role is in the team register.
+
+**Italian.** If the user writes in Italian or the `Deliverable language` is Italian, first read
+`${CLAUDE_PLUGIN_ROOT}/shared/glossary/it.md` and use its terms; the project's `terms` come first.
 
 ## Inputs
 

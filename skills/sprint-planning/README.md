@@ -32,7 +32,7 @@ over-commitment.
 
 **Context:** The top of the backlog holds two items with no acceptance criteria.
 
-**Action:** Ask "pianifica lo sprint".
+**Action:** Ask "plan the next sprint".
 
 **Result:** The two items appear with `Ready` saying what is missing, under Open points, with a suggestion to run
 `/pm-skills:backlog-refinement`.

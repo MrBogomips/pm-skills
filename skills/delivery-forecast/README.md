@@ -31,14 +31,14 @@ commitment, and the assumptions with the number of weeks of history used.
 
 **Context:** The client asks what can be in the release of 15 January.
 
-**Action:** Ask "quanti item riusciamo a chiudere entro il 15 gennaio?".
+**Action:** Ask "how many items can we close by 15 January?".
 
 **Result:** At least N items in 85% of runs, M in 50%, with the holidays in the window from the capacity register and
 a suggestion to turn it into a release plan.
 
 ## Usage
 
-Ask in your own words ("when will it be done", "forecast", "quando finiamo") or run `/pm-skills:delivery-forecast`.
+Ask in your own words ("when will it be done", "forecast", "how many items by") or run `/pm-skills:delivery-forecast`.
 Name the scope (a release, an epic, a filter) or the number of items, and the date for a how-many forecast.
 
 ## Inputs and outputs

@@ -1,12 +1,15 @@
 ---
 name: decision-log
-description: Keeps the project decision log (DECISIONS.md): records a decision with context, options and who took it, supersedes or revokes it without rewriting history, and answers what was decided and why. Use to record or look up a single decision ("record a decision", "what did we decide about", "registra una decisione", "cosa avevamo deciso", "log delle decisioni"); not for whole-meeting minutes.
+description: Keeps the project decision log (DECISIONS.md): records a decision with context, options and who took it, supersedes or revokes it without rewriting history, and answers what was decided and why. Use to record or look up a single decision ("record a decision", "what did we decide about", "why did we decide", "decision log"); not for whole-meeting minutes.
 ---
 
 # Decision log
 
 Keeps `DECISIONS.md`: the decisions that shape the project, with their context, the options considered and who took
 them, so later work can rely on them and later readers know why.
+
+**Italian.** If the user writes in Italian or the `Deliverable language` is Italian, first read
+`${CLAUDE_PLUGIN_ROOT}/shared/glossary/it.md` and use its terms; the project's `terms` come first.
 
 ## Inputs
 

@@ -31,7 +31,7 @@ ones, each figure from the script, with the sources it read.
 
 **Context:** CR-004 moved the release by two weeks and the steering committee approved the new plan on 2026-11-20.
 
-**Action:** Ask "registra la nuova baseline approvata dal comitato il 20 novembre".
+**Action:** Ask "record the new baseline the committee approved on 20 November".
 
 **Result:** A proposed `B-02` section with the approval date, the approving body, `Change: CR-004` and the planned
 dates of each activity; written after you agree; B-01 stays untouched.

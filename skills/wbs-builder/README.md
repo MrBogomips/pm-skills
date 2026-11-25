@@ -37,7 +37,7 @@ the dictionary.
 
 ## Usage
 
-Ask in your own words ("WBS", "work breakdown structure", "scomposizione del lavoro") or run
+Ask in your own words ("WBS", "work breakdown structure", "break down the scope") or run
 `/pm-skills:wbs-builder`.
 
 ## Inputs and outputs

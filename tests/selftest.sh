@@ -167,6 +167,35 @@ d="$(new_repo hooksprompt)"; write_plugin "$d"; mkdir -p "$d/hooks"
 printf '{"hooks":{"UserPromptSubmit":[{"hooks":[{"type":"command","command":"true"}]}]}}\n' > "$d/hooks/hooks.json"
 expect_fail "UserPromptSubmit hook" "$d" "UserPromptSubmit"
 
+# --- glossaries -------------------------------------------------------------
+
+write_glossary() {
+    mkdir -p "$1/shared/glossary"
+    printf '# Glossary\n\n| English | Italian | Note |\n|---|---|---|\n%s' "$2" > "$1/shared/glossary/it.md"
+}
+
+d="$(new_repo glossaryok)"; write_plugin "$d"; write_glossary "$d" $'| risk | rischio | |\n| sprint | Sprint | kept |\n'
+expect_pass "valid glossary" "$d"
+
+d="$(new_repo glossarycells)"; write_plugin "$d"; write_glossary "$d" $'| risk | rischio |\n'
+expect_fail "glossary row with two cells" "$d" "line 5: a row needs three cells"
+
+d="$(new_repo glossaryempty)"; write_plugin "$d"; write_glossary "$d" $'| risk |  | |\n'
+expect_fail "glossary row without translation" "$d" "must both be filled"
+
+d="$(new_repo glossarydup)"; write_plugin "$d"; write_glossary "$d" $'| risk | rischio | |\n| risk | pericolo | |\n'
+expect_fail "glossary term twice" "$d" "\"risk\" appears twice"
+
+d="$(new_repo glossarynoline)"; write_plugin "$d"; write_skill "$d" alpha; write_glossary "$d" $'| risk | rischio | |\n'
+expect_fail "skill not pointing to the glossary" "$d" "no Italian line pointing to shared/glossary/it.md"
+
+d="$(new_repo glossaryline)"; write_plugin "$d"; write_skill "$d" alpha; write_glossary "$d" $'| risk | rischio | |\n'
+printf 'Read `shared/glossary/it.md`.\n' >> "$d/skills/alpha/SKILL.md"
+expect_pass "skill pointing to the glossary" "$d"
+
+d="$(new_repo glossarynotable)"; write_plugin "$d"; mkdir -p "$d/shared/glossary"; printf '# Glossary\n' > "$d/shared/glossary/it.md"
+expect_fail "glossary without a table" "$d" "no table headed"
+
 # --- forbidden terms (client names kept out of the public repository) -------
 
 TERMS="$WORK/terms.txt"; printf 'globex\n' > "$TERMS"
