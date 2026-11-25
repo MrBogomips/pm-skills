@@ -9,9 +9,11 @@ from typing import Optional
 
 from _support import fixture_text
 
+import gates_register as ga
 import raci_register as ra
 
 RACI = fixture_text("RACI.md")
+GATES = fixture_text("GATES.md")
 TODAY = date(2026, 11, 23)
 
 
@@ -121,6 +123,170 @@ class RaciRegister(ErrorAssertions):
         text = replaced(RACI, "| I | A | R | R | C |", "| I | C | R | R | C |")
         self.assertEqual(summary_of(ra, "RACI.md", text),
                          "RACI matrix `RACI.md` has 1 validation error: run /pm-skills:raci-matrix to fix them.")
+
+
+EMPTY_GATES = """# Gates
+
+## Gates
+
+| ID | Gate | Milestone | Planned | Status |
+|---|---|---|---|---|
+
+## Criteria
+
+| Gate | # | Criterion |
+|---|---|---|
+
+## Outcomes
+
+| Gate | Date | Outcome | Decided by | Conditions | Review |
+|---|---|---|---|---|---|
+"""
+HOLD_ROW = "| G-002 | 2026-11-13 | hold | steering committee | Criterion 3 not met | ACME-GR-002.md |\n"
+
+
+def gates_with(*outcomes: str, status: str = "open") -> str:
+    text = replaced(GATES, "| 2026-11-27 | open |", f"| 2026-11-27 | {status} |")
+    return text + "".join(f"{row}\n" for row in outcomes)
+
+
+class GateRegister(ErrorAssertions):
+    def test_fixture_is_valid(self):
+        register, errors = ga.parse(GATES)
+        self.assertEqual(errors, [])
+        self.assertEqual([g.id for g in register.gates], ["G-001", "G-002"])
+        self.assertEqual(register.gates[1].planned, date(2026, 11, 27))
+        self.assertEqual([(c.gate, c.number) for c in register.criteria],
+                         [("G-001", 1), ("G-002", 1), ("G-002", 2), ("G-002", 3)])
+        self.assertEqual(register.outcomes[1].outcome, "hold")
+        self.assertEqual(register.outcomes[1].review, "ACME-GR-002.md")
+
+    def test_empty_register_is_valid(self):
+        self.assertEqual(ga.validate(EMPTY_GATES), [])
+
+    def test_rejects_missing_section(self):
+        text = replaced(GATES, "## Criteria\n", "")
+        errors = ga.validate(text)
+        self.assertTrue(any("missing section '## Criteria'" in e for e in errors), errors)
+
+    def test_rejects_sections_out_of_order(self):
+        text = EMPTY_GATES.replace("## Criteria", "## Tmp").replace("## Outcomes", "## Criteria").replace(
+            "## Tmp", "## Outcomes")
+        errors = ga.validate(text)
+        self.assertTrue(any("out of order" in e for e in errors), errors)
+
+    def test_rejects_bad_gate_values(self):
+        text = replaced(GATES, "| G-001 | Discovery exit | A-004 | 2026-03-13 | passed |",
+                        "| G-1 | Discovery exit | B-004 | 2026-13-01 | closed |")
+        errors = ga.validate(text)
+        self.assertError(errors, 7, "G-1")
+        self.assertError(errors, 7, "Milestone 'B-004'")
+        self.assertError(errors, 7, "Planned")
+        self.assertError(errors, 7, "Status 'closed'")
+
+    def test_rejects_unicode_digits(self):
+        text = replaced(GATES, "| G-002 | Go-live readiness |", "| G-٠٠٢ | Go-live readiness |")
+        text = replaced(text, "| G-002 | 3 |", "| G-002 | ٣ |")
+        errors = ga.validate(text)
+        self.assertError(errors, 8, "G-")
+        self.assertError(errors, 17, "#")
+
+    def test_rejects_bad_criterion_number(self):
+        text = replaced(GATES, "| G-002 | 3 |", "| G-002 | 0 |")
+        self.assertError(ga.validate(text), 17, "#")
+
+    def test_rejects_duplicate_criterion_number(self):
+        text = replaced(GATES, "| G-002 | 3 |", "| G-002 | 2 |")
+        self.assertError(ga.validate(text), 17, "duplicate criterion 2")
+
+    def test_rejects_unknown_gate(self):
+        text = replaced(GATES, "| G-002 | 3 |", "| G-009 | 3 |")
+        text = replaced(text, "| G-002 | 2026-11-13 |", "| G-009 | 2026-11-13 |")
+        errors = ga.validate(text)
+        self.assertError(errors, 17, "unknown gate 'G-009'")
+        self.assertError(errors, 24, "unknown gate 'G-009'")
+
+    def test_rejects_gate_without_criteria(self):
+        text = replaced(GATES, "| G-001 | 1 | Product Goal and first release scope approved by the sponsor |\n", "")
+        self.assertError(ga.validate(text), 7, "no criteria")
+
+    def test_rejects_duplicate_gate_id(self):
+        text = replaced(GATES, "| G-002 | Go-live readiness |", "| G-001 | Go-live readiness |")
+        self.assertError(ga.validate(text), 8, "duplicate ID 'G-001'")
+
+    def test_rejects_bad_outcome(self):
+        text = replaced(GATES, "| 2026-11-13 | hold |", "| 2026-11-13 | approved |")
+        self.assertError(ga.validate(text), 24, "Outcome 'approved'")
+
+    def test_conditions_required(self):
+        text = replaced(GATES, "| hold | steering committee | Criterion 3 not met |", "| hold | steering committee |  |")
+        self.assertError(ga.validate(text), 24, "Conditions")
+        text = gates_with("| G-002 | 2026-11-27 | go with conditions | steering committee |  | ACME-GR-003.md |",
+                          status="passed")
+        self.assertError(ga.validate(text), 25, "Conditions")
+
+    def test_decided_by_required(self):
+        text = replaced(GATES, "| hold | steering committee |", "| hold |  |")
+        self.assertError(ga.validate(text), 24, "Decided by")
+
+    def test_status_consistency(self):
+        text = replaced(GATES, "| 2026-11-27 | open |", "| 2026-11-27 | passed |")
+        self.assertError(ga.validate(text), 8, "Status 'passed' must be 'open'")
+
+    def test_no_outcome_after_go(self):
+        text = GATES + "| G-001 | 2026-04-01 | hold | steering committee | Rework | ACME-GR-004.md |\n"
+        self.assertError(ga.validate(text), 25, "no outcome may follow 'go'")
+
+    def test_no_outcome_after_stop(self):
+        text = gates_with("| G-002 | 2026-11-20 | stop | steering committee |  |  |",
+                          "| G-002 | 2026-11-27 | go | steering committee |  |  |", status="passed")
+        self.assertError(ga.validate(text), 26, "no outcome may follow 'stop'")
+
+    def test_go_after_go_with_conditions(self):
+        text = gates_with("| G-002 | 2026-11-27 | go with conditions | steering committee | Pen test fixes by "
+                          "2026-12-11 (criterion 3) | ACME-GR-003.md |",
+                          "| G-002 | 2026-12-11 | go | steering committee |  |  |", status="passed")
+        self.assertEqual(ga.validate(text), [])
+
+    def test_stop_after_hold(self):
+        text = gates_with("| G-002 | 2026-11-20 | stop | sponsor |  |  |", status="stopped")
+        self.assertEqual(ga.validate(text), [])
+
+    def test_date_order(self):
+        text = gates_with("| G-002 | 2026-11-01 | hold | steering committee | Still open |  |")
+        self.assertError(ga.validate(text), 25, "date order")
+        text = gates_with("| G-002 | 2026-11-13 | hold | steering committee | Still open |  |")
+        self.assertEqual(ga.validate(text), [])
+
+    def test_rejects_extra_content(self):
+        text = replaced(GATES, "## Criteria\n", "Gates are decided by the steering committee.\n\n## Criteria\n")
+        self.assertError(ga.validate(text), 10, "unexpected content")
+
+    def test_rejects_contacts(self):
+        text = replaced(GATES, "| hold | steering committee |", "| hold | ada@acme.example |")
+        self.assertError(ga.validate(text), 24, "email address")
+
+    def test_summary(self):
+        self.assertEqual(summary_of(ga, "GATES.md", GATES),
+                         "Gate register `GATES.md`: 2 gates (1 passed, 1 open), next G-002 planned 2026-11-27.")
+
+    def test_summary_past_planned_date(self):
+        self.assertEqual(summary_of(ga, "GATES.md", GATES, date(2026, 11, 30)),
+                         "Gate register `GATES.md`: 2 gates (1 passed, 1 open), next G-002 planned 2026-11-27, "
+                         "past its planned date: run /pm-skills:phase-gate-review.")
+
+    def test_summary_no_open_gate(self):
+        text = gates_with("| G-002 | 2026-11-27 | go | steering committee |  |  |", status="passed")
+        self.assertEqual(summary_of(ga, "GATES.md", text),
+                         "Gate register `GATES.md`: 2 gates (2 passed), no open gate.")
+
+    def test_summary_empty_and_missing_and_invalid(self):
+        self.assertEqual(summary_of(ga, "GATES.md", EMPTY_GATES), "Gate register `GATES.md`: no gates yet.")
+        self.assertEqual(summary_of(ga, "GATES.md", None), "Gate register `GATES.md` is declared but missing: "
+                                                           "run /pm-skills:phase-gate-review to create it.")
+        text = replaced(GATES, "| 2026-11-27 | open |", "| 2026-11-27 | closed |")
+        self.assertEqual(summary_of(ga, "GATES.md", text), "Gate register `GATES.md` has 1 validation error: "
+                                                           "run /pm-skills:phase-gate-review to fix them.")
 
 
 if __name__ == "__main__":
