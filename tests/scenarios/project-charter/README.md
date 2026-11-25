@@ -29,3 +29,4 @@ are invented; never commit real names.
 
 | Date | Version | Cases run | Outcome | Notes |
 |---|---|---|---|---|
+| 2026-11-25 | 1.3.0 | revise-needs-change (headless, sonnet, writes disallowed; no approved CR in the fixture) | pass | Refused the revision without an approved change; suggested change-request; named the major bump and the WBS impact |

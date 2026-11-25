@@ -26,3 +26,4 @@ are invented; never commit real names.
 
 | Date | Version | Cases run | Outcome | Notes |
 |---|---|---|---|---|
+| 2026-11-25 | 1.3.0 | attribution-removed (headless, sonnet, writes disallowed) | pass | Kept the agreements; dropped who proposed, the personal reason and the vote; unanswered headings left as nothing to report |

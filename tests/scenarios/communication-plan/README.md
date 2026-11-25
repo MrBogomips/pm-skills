@@ -24,3 +24,4 @@ are invented; never commit real names.
 
 | Date | Version | Cases run | Outcome | Notes |
 |---|---|---|---|---|
+| 2026-11-25 | 1.3.0 | no-contacts (headless, sonnet, writes disallowed) | partial | Refused; but suggested the stakeholder register for contacts: Never rule tightened |

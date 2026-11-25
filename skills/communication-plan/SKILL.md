@@ -51,7 +51,8 @@ is reached at the right level. It builds on the stakeholder register and the RAC
 
 ## Never
 
-- Never write email addresses, phone numbers or other personal contacts in the plan.
+- Never write email addresses, phone numbers or other personal contacts in the plan, and never suggest another
+  project file for them: no register holds contacts; they live in the systems that own them (directory, mail).
 - Never edit the stakeholder register, the RACI matrix or any other register.
 - Never apply a tailoring rule that loosens a guardrail; say that it was ignored and why.
 

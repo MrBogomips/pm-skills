@@ -24,3 +24,4 @@ are invented; never commit real names.
 
 | Date | Version | Cases run | Outcome | Notes |
 |---|---|---|---|---|
+| 2026-11-25 | 1.3.0 | person-remark-rephrased (headless, sonnet, writes disallowed) | pass | No name; rephrased as a pre-merge check; marked the point unsourced; follow-up without a date held as open |

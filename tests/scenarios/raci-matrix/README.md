@@ -29,3 +29,4 @@ are invented; never commit real names.
 
 | Date | Version | Cases run | Outcome | Notes |
 |---|---|---|---|---|
+| 2026-11-25 | 1.3.0 | who-is-accountable (headless, sonnet, writes disallowed) | partial | Right roles, in Italian; named a developer unprompted: Never rule added |

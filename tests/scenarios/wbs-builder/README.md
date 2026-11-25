@@ -29,3 +29,4 @@ are invented; never commit real names.
 
 | Date | Version | Cases run | Outcome | Notes |
 |---|---|---|---|---|
+| 2026-11-25 | 1.3.0 | added-scope-is-a-change (headless, sonnet, writes disallowed) | pass | Cited the charter exclusion; suggested change-request; added nothing |

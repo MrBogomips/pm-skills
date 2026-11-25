@@ -60,6 +60,7 @@ activity, by role. Roles survive turnover; who holds a role is in the team regis
 - Never use a person's name, slug, email address or phone number as a column or in a cell.
 - Never write the team register, the stakeholder register or the `wbs` document; report what does not match.
 - Never set an `A` the user has not confirmed.
+- Never name the person who holds a role unless the user asks who it is.
 - Never apply a tailoring rule that loosens a guardrail; say that it was ignored and why.
 
 ## Extension points
