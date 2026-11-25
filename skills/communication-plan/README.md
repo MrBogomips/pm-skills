@@ -18,21 +18,21 @@ and points out who is left out.
 
 ### Draft the plan
 
-**Context:** Acme Portal has a stakeholder register with five active entries and a biweekly reporting cadence.
+**Context:** Acme Portal has a stakeholder register, a RACI matrix and a biweekly reporting cadence.
 
 **Action:** Ask "draft the communication plan".
 
 **Result:** Audiences by role with their register IDs, the status report every two weeks to the steering committee,
 the sprint review for the product owner and end users, the meetings and the escalation path, and a warning that the
-security office, below its desired engagement, receives nothing.
+security office, marked `C` or `I` in the RACI matrix, receives nothing.
 
-### Check it after the register changed
+### Update it after the register changed
 
 **Context:** Two stakeholders were added after the last steering meeting.
 
-**Action:** Ask "aggiorna il piano di comunicazione".
+**Action:** Ask "update the communication plan" (Italian works too).
 
-**Result:** A revision with the new audiences, shown before it is written.
+**Result:** A new version of the plan with the added audiences, shown before it is written.
 
 ## Usage
 
@@ -48,11 +48,10 @@ Ask in your own words ("communication plan", "piano di comunicazione") or run `/
 
 ## Requirements
 
-A project register (`/pm-skills:project-setup`). A stakeholder register makes the plan complete; without one the
-skill asks for the audiences.
+A project register (`/pm-skills:project-setup`) is recommended. A stakeholder register makes the plan complete.
 
 ## Limitations
 
 - Holds no personal contacts: channels name the means, the address lives in the systems that own it.
 - Does not change the stakeholder register; it suggests `/pm-skills:stakeholder-register` when an entry needs it.
-- Does not send anything: distribution is `publish-deliverable`'s job.
+- Does not send anything.

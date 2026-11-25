@@ -39,3 +39,4 @@ In a throwaway folder:
 
 | Date | Version | Cases run | Outcome | Notes |
 |---|---|---|---|---|
+| 2026-11-25 | 1.3.1 | gate-unsupported-met (headless, writes disallowed) | gate-unsupported-met pass | Blocking: criterion 3 marked met with an empty Evidence cell; asks for the sign-off record or a pending assessment; the gate outcome left to the committee |

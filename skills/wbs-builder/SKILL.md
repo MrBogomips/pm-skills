@@ -32,16 +32,18 @@ schedule.
    be accountable for each. In an agile or hybrid project, keep the levels the backlog's epics already give and do
    not break work packages into stories.
 3. **Check the 100% rule**: the children of each element cover all of it and nothing more; everything the scope
-   source includes is somewhere, and its exclusions go under Out of scope. Where the sources do not allow checking,
-   say so under the element instead of guessing.
+   source includes is somewhere, and its exclusions go under Out of scope. Where the sources do not detail an
+   element, add no children to it: leave it a work package and say under it what is missing. Elements from approved
+   changes are marked with the change ID.
 4. **Dictionary**: for each work package its description, deliverable, acceptance and accountable role (from the
-   RACI matrix when declared, else asked).
+   RACI matrix when declared, else asked), shown as the table of the format, not summarized.
 5. **Name and show.** Name the file with
    `python3 "${CLAUDE_PLUGIN_ROOT}/shared/scripts/doc_naming.py" next --project <PROJECT.md> --dir <folder> --type wbs --date <today>`;
    for a revision, revise the existing WBS in place. Show the structure, the dictionary and the gaps; write it after
    the user agrees, with `status: draft` until they approve it, then `issued`.
 6. **Revise.** When a revision renumbers, splits or removes a work package that `RACI.md` references, list the
    affected RACI rows and suggest `/pm-skills:raci-matrix`; the revision is major (`doc_naming.py bump <version> major`).
+   A split changes what the kept ID means: the RACI rows on it are affected too.
 7. **Work items**, only when the user asks and only through an `issues` tool with `Mode: write`: show the itemized
    list (title, type, parent, a link to the WBS) and create only those the user confirms on that list; add the item
    keys to the Work items column as a patch revision.

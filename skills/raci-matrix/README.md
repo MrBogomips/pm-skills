@@ -1,5 +1,5 @@
 ---
-summary: For project managers - keeps RACI.md, the responsibility matrix by role, with exactly one accountable role per deliverable, built from the WBS or the charter and checked against the team and stakeholder registers.
+summary: For project managers - keeps RACI.md, the responsibility matrix by role with one accountable role per deliverable, built from the WBS or charter and checked against the registers.
 ---
 
 # raci-matrix
@@ -12,8 +12,8 @@ each role.
 
 A responsibility matrix goes wrong in two ways: two people think they own the same deliverable, or nobody does, and
 it goes stale as soon as someone leaves. This skill keeps one accountable role per row, enforced by a validator that
-runs after every edit, and uses roles instead of names. It also tells you when a role or a work package in the matrix
-no longer exists in the other registers.
+runs after every edit, and uses roles instead of names. It also tells you when a role no longer exists in the team or stakeholder register, or a work package
+no longer exists in the latest WBS.
 
 ## Use cases
 
@@ -30,7 +30,7 @@ office from the stakeholder register, one proposed `A` per row with its reason; 
 
 **Context:** The go-live runbook is late and you need to know who answers for it.
 
-**Action:** Ask "chi è responsabile del runbook?".
+**Action:** Ask "who is accountable for the runbook?" (Italian works too).
 
 **Result:** The accountable role from the matrix and who is responsible for the work; the person holding the role
 only if you ask.
@@ -45,14 +45,15 @@ Ask in your own words ("RACI", "responsibility matrix", "matrice RACI") or run `
   charter.
 - Writes `RACI.md` in the format of [`shared/registers/raci.md`](../../shared/registers/raci.md), validated by
   `shared/scripts/raci_register.py`; the plugin's hooks validate it after every edit.
+- At set-up, adds the `- RACI matrix:` line to `PROJECT.md`.
 
 ## Requirements
 
-A project register (`/pm-skills:project-setup`). A team register helps; without one the skill asks for the roles.
+A project register (`/pm-skills:project-setup`) is recommended. A team register helps; without one the skill asks you to confirm the columns.
 
 ## Limitations
 
 - Holds roles, never people; mapping a role to a person is the team register's job.
 - Does not check role names against the other registers in the validator: the skill reports mismatches when you
   run it.
-- Does not change the WBS or the registers it reads.
+- Does not change the WBS, the team register or the stakeholder register.

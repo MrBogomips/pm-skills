@@ -1,5 +1,5 @@
 ---
-summary: For project managers and sponsors - drafts the project charter from the registers, challenged by a critical review, seeds the risk, stakeholder and gate registers on your confirmation, and revises an issued charter only through an approved change.
+summary: For project managers and sponsors - drafts the project charter from the registers, has it challenged, and seeds the risk, stakeholder and gate registers on your confirmation.
 ---
 
 # project-charter
@@ -24,7 +24,7 @@ charter introduces (initial risks, stakeholders, gates) are seeded from it, so t
 
 **Action:** Ask "draft the project charter".
 
-**Result:** A charter with the milestones from the roadmap and the budget from the register, questions on purpose,
+**Result:** A charter with the milestones from the schedule register (the roadmap if there is none) and the budget from the register, questions on purpose,
 objectives and authority, the critical reviewer's findings, then a numbered list of initial risks, stakeholders
 and gates to add to the registers, written only for the ones you accept.
 
@@ -32,7 +32,7 @@ and gates to add to the registers, written only for the ones you accept.
 
 **Context:** Change request CR-004, approved last week, moves the payments module out of scope.
 
-**Action:** Ask "aggiorna la carta del progetto per la CR-004".
+**Action:** Ask "update the project charter for CR-004" (Italian works too: the skill answers in your language).
 
 **Result:** The scope changes shown side by side, a major version with `change: CR-004`, written after you agree.
 
@@ -52,7 +52,7 @@ Ask in your own words ("project charter", "carta del progetto") or run `/pm-skil
 
 ## Requirements
 
-A project register (`/pm-skills:project-setup`). The other registers are optional: what is missing is asked.
+A project register (`/pm-skills:project-setup`) is recommended; without it the skill drafts in the session. The other registers are optional: what is missing is asked.
 
 ## Limitations
 

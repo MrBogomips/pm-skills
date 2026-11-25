@@ -62,6 +62,8 @@ when it was implemented. It proposes the analysis; the user and the approvers th
    suggest `/pm-skills:decision-log`, or, if the user agrees, append the entry here following
    `${CLAUDE_PLUGIN_ROOT}/shared/registers/decisions.md` (next free `D-NNN` from the file, `Source` the change
    log), then add `Decision: D-NNN` to the request. A `Decision` always names an entry that exists in the log.
+   When an approved change alters scope, also suggest revising the issued charter (`/pm-skills:project-charter`)
+   and the WBS (`/pm-skills:wbs-builder`).
 8. **Propose risks** the impact creates, as cause, event and effect, with Probability and Impact on the risk
    register's `Scale`. Suggest `/pm-skills:risk-register`, or append the rows the user accepts with the next free
    `R-NNN`; `Strategy`, `Owner` and `Review` come from the user, never made up. Changes to existing risks go to
