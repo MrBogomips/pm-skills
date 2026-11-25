@@ -418,7 +418,7 @@ def summary_line(path: Path, today: date, label: Optional[str] = None) -> str:
         return f"Schedule register {name} is declared but missing: run {SKILL} to create it."
     register, errors = parse(text)
     if errors:
-        return f"Schedule register {name} has {len(errors)} validation errors: run {SKILL} to fix them."
+        return f"Schedule register {name} has {md.count_of(len(errors), 'validation error')}: run {SKILL} to fix them."
     head = f"Schedule register {name}: source {register.source}, {len(register.activities)} activities"
     if not register.baselines:
         return f"{head}, no baseline yet."

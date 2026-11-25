@@ -128,7 +128,7 @@ def summary_line(path: Path, today: date, label: Optional[str] = None) -> str:
         return f"Stakeholder register {name} is declared but missing: run {SKILL} to create it."
     register, errors = parse(text)
     if errors:
-        return f"Stakeholder register {name} has {len(errors)} validation errors: run {SKILL} to fix them."
+        return f"Stakeholder register {name} has {md.count_of(len(errors), 'validation error')}: run {SKILL} to fix them."
     active = [s for s in register.stakeholders if s.status == "active"]
     below = sum(1 for s in active if s.below_desired)
     overdue = sum(1 for s in active if s.review and s.review < today)

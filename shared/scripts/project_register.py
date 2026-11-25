@@ -242,7 +242,7 @@ def summary_line(path: Path, today: date, label: Optional[str] = None) -> str:
         return f"Project register {name} is declared but missing: run {SKILL} to create it."
     project, errors = parse(text)
     if errors:
-        return f"Project register {name} has {len(errors)} validation errors: run {SKILL} to fix them."
+        return f"Project register {name} has {md.count_of(len(errors), 'validation error')}: run {SKILL} to fix them."
     title = project.get("Identity", "Project name") or "unnamed project"
     code = project.get("Identity", "Internal code")
     approach = project.get("Profile", "Delivery approach")

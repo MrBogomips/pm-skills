@@ -13,7 +13,9 @@ MAX_ERRORS_SHOWN = 10
 
 
 def report(label: str, format_file: str, errors: list[str]) -> str:
-    lines = [f"{label} has {len(errors)} validation errors; fix them before going on:"]
+    import md_register
+
+    lines = [f"{label} has {md_register.count_of(len(errors), 'validation error')}; fix them before going on:"]
     lines += [f"- {error}" for error in errors[:MAX_ERRORS_SHOWN]]
     if len(errors) > MAX_ERRORS_SHOWN:
         lines.append(f"… and {len(errors) - MAX_ERRORS_SHOWN} more")

@@ -16,6 +16,8 @@ from datetime import date
 from pathlib import Path
 from typing import Optional
 
+import md_register as md
+
 TITLE = "# Team"
 ACTIVE_HEADING = "## Active team"
 HISTORY_HEADING = "## History"
@@ -272,7 +274,7 @@ def summary_line(path: Path, today: date, label: Optional[str] = None) -> str:
         return f"Team register {name} is declared but missing: run {SKILL} to create it."
     register, errors = parse(text)
     if errors or register is None:
-        return f"Team register {name} has {len(errors)} validation errors: run {SKILL} to fix them."
+        return f"Team register {name} has {md.count_of(len(errors), 'validation error')}: run {SKILL} to fix them."
     head = f"Team register {name}: {len(register.active)} active"
     if register.last_reconciled is None:
         return f"{head}, never reconciled."

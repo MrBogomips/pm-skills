@@ -312,7 +312,7 @@ def summary_line(path: Path, today: date, label: Optional[str] = None) -> str:
         return f"Budget register {name} is declared but missing: run {SKILL} to create it."
     register, errors = parse(text)
     if errors:
-        return f"Budget register {name} has {len(errors)} validation errors: run {SKILL} to fix them."
+        return f"Budget register {name} has {md.count_of(len(errors), 'validation error')}: run {SKILL} to fix them."
     t = totals(register)
     reviewed = f"last reviewed {register.last_reviewed}" if register.last_reviewed else "never reviewed"
     cur = register.currency

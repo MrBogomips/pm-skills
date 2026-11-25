@@ -202,7 +202,7 @@ class ScheduleRegister(ErrorAssertions):
         self.assertEqual(summary_of(sr, "SCHEDULE.md", None), "Schedule register `SCHEDULE.md` is declared but "
                          "missing: run /pm-skills:schedule-check to create it.")
         self.assertEqual(summary_of(sr, "SCHEDULE.md", replaced(SCHEDULE, "| 85 |", "| 185 |")),
-                         "Schedule register `SCHEDULE.md` has 1 validation errors: "
+                         "Schedule register `SCHEDULE.md` has 1 validation error: "
                          "run /pm-skills:schedule-check to fix them.")
 
 
@@ -465,7 +465,7 @@ class BudgetRegister(ErrorAssertions):
         self.assertEqual(summary_of(br, "BUDGET.md", None), "Budget register `BUDGET.md` is declared but missing: "
                          "run /pm-skills:budget-tracker to create it.")
         self.assertEqual(summary_of(br, "BUDGET.md", replaced(BUDGET, "| labor |", "| people |")),
-                         "Budget register `BUDGET.md` has 1 validation errors: run /pm-skills:budget-tracker to fix them.")
+                         "Budget register `BUDGET.md` has 1 validation error: run /pm-skills:budget-tracker to fix them.")
 
 
 class EarnedValue(unittest.TestCase):
@@ -626,7 +626,7 @@ class RobustInputs(ErrorAssertions):
             big = Path(tmp) / "BUDGET.md"
             big.write_text(replaced(BUDGET, "| 182000.00 |", f"| {'9' * 40} |"), encoding="utf-8")
             self.assertClean(run("budget_register.py", "validate", str(big)), 1)
-            self.assertIn("validation errors", br.summary_line(big, TODAY))
+            self.assertIn("has 1 validation error:", br.summary_line(big, TODAY))
 
     def test_numbers_with_too_many_digits_are_refused_on_the_command_line(self):
         budget = str(FIXTURES / "BUDGET.md")

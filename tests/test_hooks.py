@@ -235,6 +235,7 @@ class PostToolUseHook(unittest.TestCase):
             self.assertEqual(output["decision"], "block")
             reason = output["reason"]
             self.assertIn("line 12:", reason)
+            self.assertIn("validation errors; fix them", reason)
             self.assertEqual(reason.count("\n- line "), 10)
             self.assertIn("teams.md", reason)
 
@@ -255,7 +256,9 @@ class PostToolUseHook(unittest.TestCase):
             text = (project / "RISKS.md").read_text(encoding="utf-8").replace("| 16 |", "| 12 |")
             (project / "RISKS.md").write_text(text, encoding="utf-8")
             result = run_hook("check_register.py", project, self.payload(project / "RISKS.md"))
-            self.assertIn("Score", json.loads(result.stdout)["reason"])
+            reason = json.loads(result.stdout)["reason"]
+            self.assertIn("Score", reason)
+            self.assertTrue(reason.startswith("RISKS.md has 1 validation error; fix them"), reason)
 
     def test_reports_errors_of_the_new_registers(self):
         cases = (("STAKEHOLDERS.md", "| high | high |", "| top | high |", "Interest", "stakeholders.md"),

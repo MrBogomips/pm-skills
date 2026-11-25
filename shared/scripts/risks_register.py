@@ -153,7 +153,7 @@ def summary_line(path: Path, today: date, label: Optional[str] = None) -> str:
         return f"Risk register {name} is declared but missing: run {SKILL} to create it."
     register, errors = parse(text)
     if errors:
-        return f"Risk register {name} has {len(errors)} validation errors: run {SKILL} to fix them."
+        return f"Risk register {name} has {md.count_of(len(errors), 'validation error')}: run {SKILL} to fix them."
     live = [r for r in register.risks if r.status in LIVE]
     overdue = [r for r in live if r.review and r.review < today]
     occurred = sum(1 for r in live if r.status == "occurred")

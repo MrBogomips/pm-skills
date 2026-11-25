@@ -181,7 +181,7 @@ def summary_line(path: Path, today: date, label: Optional[str] = None) -> str:
         return f"Change log {name} is declared but missing: run {SKILL} to create it."
     changes, errors = parse(text)
     if errors:
-        return f"Change log {name} has {len(errors)} validation errors: run {SKILL} to fix them."
+        return f"Change log {name} has {md.count_of(len(errors), 'validation error')}: run {SKILL} to fix them."
     if not changes:
         return f"Change log {name}: no change requests yet."
     counts = {s: sum(1 for c in changes if c.status == s) for s in OPEN}
