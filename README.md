@@ -28,6 +28,7 @@ evaluations of people.
 | [`meeting-minutes`](skills/meeting-minutes/README.md) | Stakeholders | Minutes with decisions, actions and risks, proposed for the registers. |
 | [`status-report`](skills/status-report/README.md) | Governance, Stakeholders | The status report for the reporting period, outcomes first. |
 | [`publish-deliverable`](skills/publish-deliverable/README.md) | Stakeholders | Renders a Markdown deliverable into Word, PDF, slides, email or an artifact. |
+| [`actionable-message`](skills/actionable-message/README.md) | Stakeholders | Emails and chat messages where every request has an owner, a deadline, references and a contact. |
 | [`change-request`](skills/change-request/README.md) | Governance, Scope, Finance | Raises change requests in `CHANGES.md`, assesses their impact, records the decision. |
 | [`stakeholder-register`](skills/stakeholder-register/README.md) | Stakeholders | Keeps `STAKEHOLDERS.md`: roles, interest, influence and engagement, with the approach. |
 | [`capacity-register`](skills/capacity-register/README.md) | Resources | Keeps `CAPACITY.md`: calendar, allocation and absences; computes available person-days. |
