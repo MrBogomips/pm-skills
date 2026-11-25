@@ -19,7 +19,7 @@ import teams_register as tr
 FIXTURE = fixture_text()
 TODAY = date(2026, 11, 23)
 REGISTER_FILES = ("PROJECT.md", "TOOLS.md", "TEAMS.md", "TAILORING.md", "RISKS.md", "DECISIONS.md", "STAKEHOLDERS.md",
-                  "CAPACITY.md", "CHANGES.md", "BUDGET.md", "SCHEDULE.md")
+                  "CAPACITY.md", "CHANGES.md", "BUDGET.md", "SCHEDULE.md", "RACI.md", "GATES.md")
 
 
 def make_project(tmp: str, declaration: str = "- Project register: `PROJECT.md`", files=REGISTER_FILES,
@@ -79,7 +79,7 @@ class Declared(unittest.TestCase):
             self.assertEqual(names, ["Project register", "Tools register", "Team register", "Tailoring register",
                                      "Risk register", "Decision log", "Stakeholder register",
                                      "Capacity register", "Change log", "Budget register",
-                                     "Schedule register"])
+                                     "Schedule register", "RACI matrix", "Gate register"])
 
     def test_missing_project_file_gives_project_only(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -139,11 +139,14 @@ class SummaryLines(unittest.TestCase):
                       "(contingency 8400.00, management reserve 10000.00), last reviewed 2026-11-20", line)
         self.assertIn("Schedule register `SCHEDULE.md`: source register, 10 activities, latest baseline B-02 "
                       "approved 2026-11-04", line)
+        self.assertIn("RACI matrix `RACI.md`: 3 deliverables, 5 roles", line)
+        self.assertIn("Gate register `GATES.md`: 2 gates (1 passed, 1 open), next G-002 planned 2026-11-27", line)
 
     def test_missing_new_registers_are_reported(self):
         with tempfile.TemporaryDirectory() as tmp:
             files = tuple(f for f in REGISTER_FILES
-                          if f not in ("STAKEHOLDERS.md", "CAPACITY.md", "CHANGES.md", "BUDGET.md", "SCHEDULE.md"))
+                          if f not in ("STAKEHOLDERS.md", "CAPACITY.md", "CHANGES.md", "BUDGET.md", "SCHEDULE.md",
+                                       "RACI.md", "GATES.md"))
             line = registers.summary(make_project(tmp, files=files), TODAY)
         self.assertIn("Stakeholder register `STAKEHOLDERS.md` is declared but missing: "
                       "run /pm-skills:stakeholder-register to create it", line)
@@ -153,6 +156,10 @@ class SummaryLines(unittest.TestCase):
                       "run /pm-skills:budget-tracker to create it", line)
         self.assertIn("Schedule register `SCHEDULE.md` is declared but missing: "
                       "run /pm-skills:schedule-check to create it", line)
+        self.assertIn("RACI matrix `RACI.md` is declared but missing: "
+                      "run /pm-skills:raci-matrix to create it", line)
+        self.assertIn("Gate register `GATES.md` is declared but missing: "
+                      "run /pm-skills:phase-gate-review to create it", line)
 
     def test_unreadable_register_does_not_hide_the_others(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -265,7 +272,9 @@ class PostToolUseHook(unittest.TestCase):
                  ("CAPACITY.md", "| 80 |", "| 180 |", "Allocation", "capacity.md"),
                  ("CHANGES.md", "Status: proposed", "Status: open", "Status", "changes.md"),
                  ("BUDGET.md", "| labor |", "| people |", "Kind", "budget.md"),
-                 ("SCHEDULE.md", "| A-004 SS+130 |", "| A-008 |", "cycle", "schedule.md"))
+                 ("SCHEDULE.md", "| A-004 SS+130 |", "| A-008 |", "cycle", "schedule.md"),
+                 ("RACI.md", "| I | A | R | R | C |", "| I | C | R | R | C |", "exactly one A", "raci.md"),
+                 ("GATES.md", "| 2026-11-27 | open |", "| 2026-11-27 | closed |", "Status", "gates.md"))
         for name, old, new, keyword, format_file in cases:
             with tempfile.TemporaryDirectory() as tmp:
                 project = make_project(tmp)

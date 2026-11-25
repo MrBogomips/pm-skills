@@ -37,3 +37,5 @@
 - Change log: `CHANGES.md`
 - Budget register: `BUDGET.md`
 - Schedule register: `SCHEDULE.md`
+- RACI matrix: `RACI.md`
+- Gate register: `GATES.md`
