@@ -48,7 +48,7 @@ The `Naming` key in the Conventions of `PROJECT.md` picks the preset; with no ke
 | `project-charter` | `PC` | `release-plan` | `RP` |
 | `lessons-learned` | `LL` | `wbs` | `WBS` |
 | `sprint-planning` | `SP` | `communication-plan` | `CP` |
-| `sprint-review` | `SV` | `raci-matrix` | `RACI` |
+| `sprint-review` | `SV` | `team-charter` | `TC` |
 | `phase-gate-review` | `GR` | | |
 
 With `Version in file name: yes`, the name ends in the version (`ACME-SR-007-1.2.0.md`) and a `+N` suffix avoids a

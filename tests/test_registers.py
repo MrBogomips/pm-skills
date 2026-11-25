@@ -691,6 +691,16 @@ class DocumentNaming(unittest.TestCase):
         with self.assertRaises(dn.NamingError):
             dn.next_name(self.project(), Path("."), "vendor-memo", date(2026, 11, 24))
 
+    def test_team_charter_code(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            self.assertEqual(dn.next_name(self.project(), Path(tmp), "team-charter", date(2026, 11, 24)),
+                             "ACME-TC-001.md")
+
+    def test_raci_is_not_a_document_type(self):
+        with self.assertRaises(dn.NamingError):
+            dn.type_code("raci-matrix", {})
+        self.assertEqual(dn.type_code("raci-matrix", {"raci-matrix": "RACI"}), "RACI")
+
     def test_bump(self):
         self.assertEqual([dn.bump("1.2.3", p) for p in ("major", "minor", "patch")], ["2.0.0", "1.3.0", "1.2.4"])
         with self.assertRaises(dn.NamingError):

@@ -33,7 +33,7 @@ DEFAULT_CODES = {
     "release-plan": "RP",
     "wbs": "WBS",
     "communication-plan": "CP",
-    "raci-matrix": "RACI",
+    "team-charter": "TC",
     "phase-gate-review": "GR",
 }
 TYPE_RE = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
