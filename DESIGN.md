@@ -331,7 +331,7 @@ Every pull request that adds, renames or removes a skill updates this map.
 | Scope | `project-charter` | `product-roadmap`, `wbs-builder`, `backlog-refinement`, `sprint-planning`, `release-plan` | | `change-request`, `sprint-review` | |
 | Schedule | | `estimate`, `sprint-planning`, `release-plan` | | `schedule-check`, `flow-metrics`, `delivery-forecast` | |
 | Finance | | `estimate` | | `budget-tracker`, `change-request` | |
-| Stakeholders | `stakeholder-register` | `communication-plan` | `meeting-minutes`, `publish-deliverable` | `stakeholder-register`, `status-report`, `sprint-review` | |
+| Stakeholders | `stakeholder-register` | `communication-plan` | `meeting-minutes`, `publish-deliverable`, `actionable-message` | `stakeholder-register`, `status-report`, `sprint-review` | |
 | Resources | | `team-register`, `capacity-register`, `raci-matrix`, `team-charter` | `assignment-advisor` | `team-register`, `capacity-register` | |
 | Risk | | `risk-register` | | `risk-register`, `change-request` | |
 
@@ -383,6 +383,9 @@ baselines, and `budget-tracker` with the budget register.
 `communication-plan`, `phase-gate-review` with the gate register, `lessons-learned` and `team-charter`. The RACI matrix
 and the gates are registers rather than documents: other skills read them as state, and their validators keep one
 accountable role per deliverable and the history of every gate outcome.
+
+**After wave 4: 1.4.0.** `actionable-message`: emails and chat messages whose every request names its owner, the
+ask, the deadline, the references and a contact, sent only through a declared `messages` tool.
 
 **Next.** The open items are GitHub issues: the second wave of team skills (#3), a register reviewer agent (#7) and
 persona agents for simulated conversations (#8).
