@@ -2,7 +2,9 @@
 # Structural validation of the pm-skills plugin. Catches what `claude plugin validate --strict`
 # does not: a skill directory without a SKILL.md, skill or agent names that differ from their
 # directory or file, a `skills` field that would stop Claude Code from loading every skill, a
-# stray marketplace.json, an invalid hooks.json or a UserPromptSubmit hook, a skill without its README.md or its
+# stray marketplace.json, an invalid hooks.json or a UserPromptSubmit hook, a skill that runs the validator of a
+# register it does not keep, a user guide page without its frontmatter or a skill missing from docs/skills.md, a
+# skill without its README.md or its
 # Extension points section, a description over the design limit, a malformed glossary or a skill that does not
 # point to it, and (when PM_SKILLS_FORBIDDEN_TERMS names a local file of terms) client names in the public
 # repository.
@@ -18,6 +20,7 @@ SEMVER_RE='^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?(\+[0-9A-Za-z.-]+)?$'
 MAX_NAME=64
 MAX_DESCRIPTION=400
 EXTENSION_POINTS_RE='^(format|scale|rules|steps|terms)$'
+GUIDE_AREA_RE='^(plugin|governance|scope|schedule|finance|stakeholders|resources|risk)$'
 ERRORS=0
 
 error() { echo "ERROR: $*"; ERRORS=$((ERRORS + 1)); }
@@ -165,6 +168,54 @@ check_glossaries() {
     done
 }
 
+# One register, one keeper: each shared/registers/<x>.md names its keeper on a "Kept by: `<skill>`" line; the keeper
+# must exist, and no other skill's SKILL.md may run that register's validator (project_register.py is exempt: every
+# keeper adds its own declaration line to PROJECT.md).
+check_keepers() {
+    local f rel keeper script s
+    for f in "$ROOT"/shared/registers/*.md; do
+        [[ -f "$f" ]] || continue
+        rel="shared/registers/$(basename "$f")"
+        keeper="$(sed -n 's/^Kept by: `\([a-z0-9-]*\)`.*/\1/p' "$f" | head -1)"
+        [[ -n "$keeper" ]] || continue
+        if [[ ! -d "$ROOT/skills/$keeper" ]]; then error "$rel: keeper '$keeper' is not a skill of the plugin"; fi
+        script="$(grep -oE 'shared/scripts/[a-z_]+_register\.py' "$f" | head -1 | sed 's|.*/||')"
+        if [[ -z "$script" || "$script" == "project_register.py" ]]; then continue; fi
+        for s in "$ROOT"/skills/*/SKILL.md; do
+            [[ -f "$s" ]] || continue
+            if [[ "$(basename "$(dirname "$s")")" == "$keeper" ]]; then continue; fi
+            if grep -qE "${script//./\\.}\"? validate" "$s"; then
+                error "skills/$(basename "$(dirname "$s")")/SKILL.md runs $script, but only '$keeper' keeps that register: hand off (shared/handoff.md)"
+            fi
+        done
+    done
+}
+
+# The user guide in docs/: every page has a frontmatter with title, area and type, and docs/skills.md names every
+# skill of the plugin. Skipped when the repository has no docs/ folder.
+check_user_guide() {
+    local f rel title area type d name
+    [[ -d "$ROOT/docs" ]] || return 0
+    while IFS= read -r f; do
+        [[ -n "$f" ]] || continue
+        rel="${f#"$ROOT"/}"
+        if [[ "$(head -1 "$f")" != "---" ]]; then error "$rel: no frontmatter (title, area, type)"; continue; fi
+        title="$(frontmatter_value title "$f")"; area="$(frontmatter_value area "$f")"; type="$(frontmatter_value type "$f")"
+        area="${area%%#*}"; area="${area%"${area##*[! ]}"}"; type="${type%%#*}"; type="${type%"${type##*[! ]}"}"
+        if [[ -z "$title" ]]; then error "$rel: frontmatter title missing"; fi
+        if ! [[ "$area" =~ $GUIDE_AREA_RE ]]; then
+            error "$rel: area '$area' must be plugin, governance, scope, schedule, finance, stakeholders, resources or risk"
+        fi
+        if ! [[ "$type" =~ ^(concept|operational)$ ]]; then error "$rel: type '$type' must be concept or operational"; fi
+    done <<< "$(find "$ROOT/docs" -name '*.md' -type f | sort)"
+    if [[ ! -f "$ROOT/docs/skills.md" ]]; then error "MISSING docs/skills.md: the user guide lists every skill"; return; fi
+    for d in "$ROOT"/skills/*/; do
+        [[ -d "$d" ]] || continue
+        name="$(basename "$d")"
+        if ! grep -qF "\`$name\`" "$ROOT/docs/skills.md"; then error "docs/skills.md: skill '$name' is not listed"; fi
+    done
+}
+
 # Client names must never reach the public repository; the list itself lives outside it.
 check_forbidden_terms() {
     local terms="${PM_SKILLS_FORBIDDEN_TERMS:-}" term hits
@@ -192,6 +243,8 @@ check_skills
 check_agents
 check_hooks
 check_glossaries
+check_keepers
+check_user_guide
 check_forbidden_terms
 
 if [[ $ERRORS -gt 0 ]]; then

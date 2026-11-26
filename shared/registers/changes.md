@@ -4,6 +4,9 @@ The change log records every request to change the project's agreed scope, sched
 its assessed impact, and who decided what. `change-request` keeps it. It is declared in the Registers section of
 `PROJECT.md` as `` - Change log: `CHANGES.md` ``.
 
+Kept by: `change-request`. Only this skill writes the register; any other skill hands its changes off to it, as
+`shared/handoff.md` says.
+
 ## Example
 
 ```markdown
@@ -24,7 +27,18 @@ its assessed impact, and who decided what. `change-request` keeps it. It is decl
 - Decided on: 2026-09-10
 - Implemented on: 2026-10-02
 
-## CR-002 Dark mode for the portal
+## CR-002 Replace the portal framework
+
+- Raised: 2026-11-05
+- Requested by: bo-k
+- Status: rejected
+- Description: Rewrite the portal in another framework.
+- Reason: No business case stated.
+- Recommendation: not assessed
+- Decided by: steering committee
+- Decided on: 2026-11-05
+
+## CR-003 Dark mode for the portal
 
 - Raised: 2026-11-12
 - Requested by: bo-k
@@ -44,8 +58,8 @@ One `## CR-NNN <title>` section per change request, with `- Key: value` entries,
 | `Status` | `proposed`, `assessed`, `approved`, `rejected`, `withdrawn` or `implemented` | required |
 | `Description` | the change asked for | required |
 | `Reason` | why it is asked | required |
-| `Scope impact`, `Schedule impact`, `Cost impact`, `Risk impact` | the assessed impact on each; `none` is a value | required for `assessed`, `approved`, `rejected` and `implemented`; optional for `proposed` and `withdrawn` |
-| `Recommendation` | what the assessor recommends | optional |
+| `Scope impact`, `Schedule impact`, `Cost impact`, `Risk impact` | the assessed impact on each; `none` is a value | required for `assessed`, `approved`, `rejected` and `implemented`, except a `rejected` request with `Recommendation: not assessed`; optional for `proposed` and `withdrawn` |
+| `Recommendation` | what the assessor recommends; exactly `not assessed` marks a request rejected at once, without an assessment | optional; `not assessed` only with `rejected` |
 | `Decided by` | who decided: a role, a body or a team register slug | required for `approved`, `rejected` and `implemented`; otherwise absent |
 | `Decided on` | the day of the decision | as `Decided by`; `YYYY-MM-DD`, not before `Raised` |
 | `Decision` | the entry of the decision log that records the decision | optional; one `D-NNN` |
@@ -60,7 +74,10 @@ One `## CR-NNN <title>` section per change request, with `- Key: value` entries,
    never deleted, whatever its outcome.
 3. After a decision only `Status` (to `implemented`), `Implemented on` and corrections of form change; a change of
    mind is a new request.
-4. No entry holds an email address or a phone number, and no entry judges a person.
+4. A request may be rejected at once, without an impact assessment, by whoever has the authority to reject it:
+   `Status: rejected`, `Recommendation: not assessed`, and `Decided by` and `Decided on` as for any decision.
+   Impacts may be left out; a later change of mind is a new request.
+5. No entry holds an email address or a phone number, and no entry judges a person.
 
 ## Validation
 

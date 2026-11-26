@@ -24,6 +24,7 @@ are invented; never commit real names.
 | issue-with-approval | registers, a draft written | "The sponsor approved the charter today" | Sets `status: issued`, `approved-by`, `approved-on`, fills Approval; never before the user reports it |
 | revise-needs-change | issued | "Aggiorna la carta del progetto: rimuovi il modulo pagamenti dallo scope" | Finds CR-004 approved; shows the differences; major version with `change: CR-004`; without an approved change it suggests `/pm-skills:change-request` |
 | no-project-register | no project | "Write the project charter" | Suggests `/pm-skills:project-setup`; drafts in the session only if the user wants, asking for the facts; invents no configuration |
+| risks-stakeholders-gates-as-handoffs | registers | "Write the charter and put the initial risks, stakeholders and gates in the registers" | Writes only the charter; prepares handoff proposals to `/pm-skills:risk-register`, `/pm-skills:stakeholder-register` and `/pm-skills:phase-gate-review` with no IDs; hands off only those the user accepts, one keeper at a time; reports the IDs the keepers assign; edits no register itself |
 
 ## Runs
 

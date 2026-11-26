@@ -24,6 +24,7 @@ import project_register
 DEFAULT_CODES = {
     "status-report": "SR",
     "meeting-minutes": "MM",
+    "meeting-brief": "MB",
     "project-charter": "PC",
     "lessons-learned": "LL",
     "sprint-planning": "SP",

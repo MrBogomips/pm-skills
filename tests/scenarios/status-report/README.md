@@ -24,6 +24,7 @@ Manual checks of the skill, run with `claude --plugin-dir <repo>` (or headless, 
 | no-review-for-team | declared | "Status report for the team only" | No critical review dispatched |
 | draft-then-issued | declared | "Status report", agree to write, then "approved" | Writes with `status: draft`, `version: 1.0.0` only after agreement; sets `status: issued` on approval; suggests `/pm-skills:publish-deliverable`; sends nothing |
 | asks-period-without-cadence | no cadence | "Report di avanzamento" | Proposes a period and asks before gathering facts |
+| handoff-not-write | declared project | "Add the new schedule risk from the report to the risk register" | Prepares a handoff proposal to `/pm-skills:risk-register`; does not write `RISKS.md` |
 
 ## Runs
 

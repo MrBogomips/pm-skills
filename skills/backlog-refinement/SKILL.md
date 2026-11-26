@@ -68,8 +68,9 @@ the Product Owner's decision.
   itemized batch.
 - Never estimate on the team's behalf: an item without a size is marked as such; an estimate the user asks for is
   labelled as a proposal for the team.
-- Never write to the registers from here: suggest `/pm-skills:risk-register`, `/pm-skills:decision-log` or
-  `/pm-skills:change-request` for what they miss.
+- Never write to the registers from here: propose a handoff to the keeper (`${CLAUDE_PLUGIN_ROOT}/shared/handoff.md`)
+  for what should go in the risk register, the decision log or the change log, and hand it over only when the user
+  agrees. Follow-ups for the project manager may go to `/pm-skills:action-log`.
 
 ## Extension points
 

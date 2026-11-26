@@ -110,10 +110,22 @@ knowledge, the skill names what matters instead of presuming it: for example the
 
 ### Skills compose through shared state, not calls
 
-A skill never invokes another skill. Skills share registers and agents, and may suggest another skill to the user
-("set up the project first: `/pm-skills:project-setup`"). Artifacts (visual, interactive pages for project managers)
+A skill never invokes another skill, with one exception: the handoff to the keeper of a register (below). Skills share
+registers and agents, and may suggest another skill to the user ("set up the project first:
+`/pm-skills:project-setup`"). Artifacts (visual, interactive pages for project managers)
 are built in the sibling `pm-artifacts` repository and plugin; see [Publishing and artifacts](#publishing-and-artifacts).
 A skill may suggest one, never depend on it.
+
+### One register, one keeper
+
+Every register has exactly one keeper skill, named on the `Kept by:` line of its format. Only the keeper writes the
+register. Any other skill that finds something a register should hold (a decision taken in a meeting, a risk in a
+charter, a change request in a transcript, a follow-up for the project manager) prepares a handoff proposal and, on
+the user's agreement, runs the keeper with it; the keeper checks the proposal against its own rules, computes the IDs,
+shows the change, writes and validates. `shared/handoff.md` holds the proposal format, the flow and the table of
+keepers. The routing is exact: a proposal goes to the keeper of that register and to no other skill, and
+`tests/validate.sh` checks that only the keeper's `SKILL.md` runs its register's validator. The one exception: a
+keeper adds the line that declares its own register in `PROJECT.md`.
 
 ## Patterns
 
@@ -197,14 +209,23 @@ reviews them when the project changes. Another skill that needs a missing key as
 ### Registers and documents
 
 A **register** keeps state that persists and that another skill or a later session reads again: project, tools,
-tailoring, team, capacity, risks, stakeholders, decisions, changes, schedule, budget, RACI, gates. There is one register per type, each with its own schema;
+tailoring, team, capacity, risks, stakeholders, decisions, changes, schedule, budget, RACI, gates, actions. There is one register per type, each with its own schema;
 a mixed register (a single RAID log) is not used. Every register has:
 
 - its format in `shared/registers/<register>.md`, the single source: skills and agents point to it as
   `${CLAUDE_PLUGIN_ROOT}/shared/...` and never restate it. Headings and column names are schema keys and stay in
   English;
+- its keeper, on the `Kept by:` line of the format (see [One register, one keeper](#one-register-one-keeper));
 - its validator in `shared/scripts/`, with unit tests;
 - one line in the Registers section of `PROJECT.md`.
+
+**One home per action.** Something to do lives in one place only. The action log (`ACTIONS.md`) holds the actions
+that have no other home: actions from meetings, follow-ups, next steps a skill recommends to the project manager,
+requests received. What already has a date and an owner elsewhere is not copied there: risk and stakeholder
+reviews, change requests to assess or implement, gate dates and conditions stay in their registers, delivery work in
+the issues tool or the schedule, retrospective actions in the retrospective. The project manager's backlog is a view
+that `action-log` computes from all of them; an action turned into a work item keeps the tool and the item key, and
+the tool holds its state.
 
 A **document** is a snapshot: a status report, meeting minutes, a charter, lessons learned. Its format lives in
 `shared/documents/<type>.md`, the single source: a common frontmatter (`type`, `project`, `date`, `version`,
@@ -310,7 +331,7 @@ Each agent pins its model in the frontmatter by class, and says why in its body:
 | Class | Model | What it does | Agents |
 |---|---|---|---|
 | Collector | `haiku` | gathers facts from the project's tools, read only, in a fixed output shape; no advice, no proposals | `project-activity-scout`, `flow-data-scout` |
-| Analyst | `sonnet` | turns facts from several sources into an analysis or a draft | none planned |
+| Analyst | `sonnet` | turns facts from several sources into an analysis or a draft | `register-reviewer` |
 | Critical reviewer | `opus` | challenges plans, estimates, risk responses, gate assessments and deliverables; finds what is missing | `pm-critical-reviewer` |
 
 Names in italics are planned. Collectors feed analysts and reviewers: an agent that reasons receives the facts, it
@@ -336,11 +357,11 @@ Every pull request that adds, renames or removes a skill updates this map.
 
 | Domain | Initiating | Planning | Executing | Monitoring and Controlling | Closing |
 |---|---|---|---|---|---|
-| Governance | `project-setup`, `project-charter` | `product-roadmap` | `decision-log` | `status-report`, `change-request`, `decision-log`, `retrospective`, `phase-gate-review` | `phase-gate-review`, `lessons-learned` |
+| Governance | `project-setup`, `project-charter` | `product-roadmap` | `decision-log`, `action-log`, `inbox-triage` | `status-report`, `change-request`, `decision-log`, `action-log`, `retrospective`, `phase-gate-review` | `phase-gate-review`, `lessons-learned` |
 | Scope | `project-charter` | `product-roadmap`, `wbs-builder`, `backlog-refinement`, `sprint-planning`, `release-plan` | | `change-request`, `sprint-review` | |
 | Schedule | | `estimate`, `sprint-planning`, `release-plan` | | `schedule-check`, `flow-metrics`, `delivery-forecast` | |
 | Finance | | `estimate` | | `budget-tracker`, `change-request` | |
-| Stakeholders | `stakeholder-register` | `communication-plan` | `meeting-minutes`, `publish-deliverable`, `actionable-message` | `stakeholder-register`, `status-report`, `sprint-review` | |
+| Stakeholders | `stakeholder-register` | `communication-plan` | `meeting-prep`, `meeting-minutes`, `publish-deliverable`, `actionable-message` | `stakeholder-register`, `status-report`, `sprint-review` | |
 | Resources | | `team-register`, `capacity-register`, `raci-matrix`, `team-charter` | `assignment-advisor` | `team-register`, `capacity-register` | |
 | Risk | | `risk-register` | | `risk-register`, `change-request` | |
 
@@ -399,8 +420,16 @@ ask, the deadline, the references and a contact, sent only through a declared `m
 **1.5.0.** Descriptions, READMEs and examples in English only; `shared/glossary/it.md` maps the plugin's terms to
 Italian and back, and every skill reads it when the user or the `Deliverable language` is Italian.
 
-**Next.** The open items are GitHub issues: the second wave of team skills (#3), a register reviewer agent (#7) and
-persona agents for simulated conversations (#8).
+**1.6.0.** Meetings and actions, and one keeper per register. `meeting-prep` with the `meeting-brief` document and
+`shared/documents/meetings.md` for what the brief and the minutes share; `meeting-minutes` reads the brief, hands
+decisions, risks, change requests and actions off to their keepers and keeps internal notes that are never
+published; `action-log` with the action log (`ACTIONS.md`) and the project manager's backlog; `inbox-triage` for
+incoming material; the `register-reviewer` agent (#7) for consistency between registers and alignment with the
+project. Every register names its keeper and `shared/handoff.md` routes changes to it; the change log accepts a
+request rejected without assessment. The user guide starts in `docs/`.
+
+**Next.** The open items are GitHub issues: the second wave of team skills (#3) and persona agents for simulated
+conversations (#8).
 
 ## Knowledge check
 

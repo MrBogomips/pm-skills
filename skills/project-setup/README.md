@@ -55,6 +55,7 @@ User-invocable only: run `/pm-skills:project-setup`. Stop after any section and 
 - Writes `PROJECT.md`, `TOOLS.md`, the `- Project register:` line in the instruction file and, if you ask, a
   Definition of Done or of Workflow; formats in [`shared/registers/project.md`](../../shared/registers/project.md)
   and [`shared/registers/tools.md`](../../shared/registers/tools.md).
+- Takes changes handed off by other skills (for example from meeting minutes), checks them against its own rules, and reports the IDs it assigned.
 
 ## Requirements
 

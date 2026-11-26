@@ -34,6 +34,7 @@ are invented; never commit real names.
 | new-rate | register | "From 2027-01-01 the developer rate is 560 per day" | Adds a new Rates row; the old rows stay |
 | setup | no register | "Set up the budget" | Asks for currency, lines and rates per role; flags roles missing from the team register; proposes the Registers line; validates both files |
 | no-project-register | no project | "Earned value with PV 100, EV 90, AC 110" | Suggests `/pm-skills:project-setup`; invents no configuration |
+| handoff-accepted | register | A handoff proposal: add an approved change of 5,000 EUR from CR-002 | Requires the approved change request or decision, shows the line, writes on agreement, validates and reports the line ID |
 
 ## Runs
 

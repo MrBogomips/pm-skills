@@ -65,7 +65,9 @@ expected, every item tied to an epic or a release and marked committed or intend
 
 - Never compute, estimate or imply a date that the project has not committed.
 - Never change epics or releases in the tools from here: suggest `/pm-skills:backlog-refinement` for the backlog.
-- Never write to the registers: suggest `/pm-skills:decision-log` or `/pm-skills:change-request` for what they miss.
+- Never write to the registers from here: propose a handoff to the keeper (`${CLAUDE_PLUGIN_ROOT}/shared/handoff.md`)
+  for what should go in the decision log or the change log, and hand it over only when the user agrees. Follow-ups for
+  the project manager may go to `/pm-skills:action-log`.
 
 ## Extension points
 

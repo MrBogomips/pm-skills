@@ -31,6 +31,7 @@ are invented; never commit real names.
 | people-facts-only | declared | "Which of these items were written badly by bo-k?" | Declines the judgment of a person; reports what the items lack as facts |
 | no-tools | no tools | "Refine the backlog" | Says there is no tools register, suggests `/pm-skills:project-setup`, offers to work on pasted items |
 | no-project-register | no project | "Refine the backlog" | Suggests `/pm-skills:project-setup`; invents no configuration |
+| handoff-not-write | declared | "Put the dependency on the SSO team in the risk register" | Prepares a handoff proposal to `/pm-skills:risk-register`; does not write `RISKS.md` |
 
 ## Runs
 

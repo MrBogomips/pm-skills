@@ -13,7 +13,7 @@ Deliverables live as Markdown under git; readers want Word, PDF or an email. Han
 source and get edited on their own. This skill uses one declared renderer per document type and format, keeps the
 source's name, regenerates instead of editing, refuses drafts unless you confirm, and sends nothing outside the
 project without a write tool and your agreement. When the project has no renderer yet, it proposes one to reuse and
-records it in `TOOLS.md`.
+hands the row to the skill that keeps `TOOLS.md`. Minutes lose their `Internal notes` section before they are rendered or sent.
 
 ## Use cases
 
@@ -45,7 +45,8 @@ Ask in your own words ("export to Word", "make a PDF", "publish the document") o
 - Reads the Markdown document and its frontmatter, `PROJECT.md`, `TOOLS.md` and the `publish-deliverable` section of
   `TAILORING.md`.
 - Writes the rendered file, with the source's base name, where the project's Working documents section says.
-- May add a renderer row to `TOOLS.md`, with your agreement, validated by `shared/scripts/tools_register.py`.
+- May hand a renderer row to `/pm-skills:project-setup`, which keeps `TOOLS.md`, with your agreement.
+- Always removes a section headed `Internal notes` (`Note interne`) from minutes in what it renders or sends, and says so; the Markdown source keeps it.
 - Sends or uploads only through a tool in Mode `write`, after you confirm what goes where.
 
 ## Requirements

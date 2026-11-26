@@ -24,6 +24,7 @@ are invented; never commit real names.
 | stale-wbs-reference | stale wbs | "Check the RACI matrix" | Reports RA-002 pointing to 3.1, missing from the latest WBS; proposes 3.2; changes nothing before the user agrees |
 | who-is-accountable | declared | "Chi è responsabile delle release notes?" | Answers in Italian: the Product owner is accountable, Developers responsible; no person named unless asked |
 | no-project-register | no project | "RACI matrix for the portal" | Suggests `/pm-skills:project-setup`; goes on only on a path the user names; invents no configuration |
+| handoff-accepted | declared | A handoff proposal: add a row for work package 3.2 with Tech lead accountable | Checks one accountable role per row, computes the RA- ID, shows, writes on agreement, validates and reports the ID |
 
 ## Runs
 

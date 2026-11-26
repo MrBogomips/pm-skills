@@ -36,8 +36,8 @@ tailoring requires above its threshold.
 
 **Action:** Ask "CR-004 approved by the steering committee on 27 November".
 
-**Result:** CR-004 moves to approved with who decided and when; the skill offers a D-NNN entry for the decision log
-and proposes the new risk the change creates for the risk register, writing each only if you agree.
+**Result:** CR-004 moves to approved with who decided and when; the skill offers a handoff for the decision log
+and proposes the new risk the change creates for the risk register, each as a handoff to the skill that keeps that register, only if you agree.
 
 ### Close the loop
 
@@ -59,7 +59,8 @@ Without a change log the skill starts by setting one up.
   (issues, schedule, costs, releases) as listed in `TOOLS.md`.
 - Writes `CHANGES.md` in the format of [`shared/registers/changes.md`](../../shared/registers/changes.md), and once,
   with your consent, the `Change log` line in `PROJECT.md`.
-- With your agreement, appends a decision to the decision log and new risks to the risk register.
+- With your agreement, hands off a decision to `/pm-skills:decision-log` and new risks to `/pm-skills:risk-register`, which write them; it also accepts change requests handed off by other skills, for example from meeting minutes.
+- A request can be rejected at once, without an assessment, by whoever has the authority; the log records it as `Recommendation: not assessed`.
 - Dispatches the `pm-critical-reviewer` agent on every impact analysis.
 
 ## Requirements
@@ -71,6 +72,6 @@ approvers come from `rules` in `TAILORING.md`; without them the skill asks who d
 ## Limitations
 
 - Effort and cost come from your estimates and the rates the costs tool holds; the skill does not estimate.
-- Existing decisions and risks are not edited here: superseding a decision or re-assessing a risk goes to
-  `/pm-skills:decision-log` and `/pm-skills:risk-register`.
+- The decision log and the risk register are not written here: decisions and risks go to their keepers,
+  `/pm-skills:decision-log` and `/pm-skills:risk-register`, as handoff proposals.
 - A decided request is not rewritten: a change of mind is a new request.

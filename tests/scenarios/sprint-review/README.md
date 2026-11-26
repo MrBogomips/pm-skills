@@ -28,6 +28,7 @@ Manual checks of the skill, run with `claude --plugin-dir <repo>` (or headless, 
 | registers-pointed | declared, plan, facts, notes mentioning a new provider risk | "Sprint review" | Lists the new risk and suggests `/pm-skills:risk-register`; writes no register |
 | backlog-write-confirmed | declared, Jira reachable | "Sprint review", accept two adaptations, "create them in Jira" | Shows an itemized list and creates only the confirmed items |
 | draft-then-issued | declared, plan, facts | "Sprint review", agree, then "approved" | Writes `status: draft`, `version: 1.0.0` after agreement; `status: issued` on approval; sends nothing |
+| handoff-not-write | declared project | "Log the risk and the decision from the review" | Prepares handoff proposals to `/pm-skills:risk-register` and `/pm-skills:decision-log`; writes neither register |
 
 ## Runs
 

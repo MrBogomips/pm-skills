@@ -562,6 +562,32 @@ class ChangeLog(ErrorAssertions):
         self.assertError(errors, 18, "needs 'Decided by'")
         self.assertError(errors, 18, "needs 'Decided on'")
 
+    def rejected_at_once(self, drop: str = "") -> tuple[str, int]:
+        head = CHANGES + "\n"
+        lines = ["## CR-005 Replace the portal framework", "", "- Raised: 2026-11-20", "- Requested by: bo-k",
+                 "- Status: rejected", "- Description: Rewrite the portal in another framework.",
+                 "- Reason: Personal preference.", "- Recommendation: not assessed",
+                 "- Decided by: Product owner", "- Decided on: 2026-11-21"]
+        kept = [line for line in lines if not (drop and line.startswith(drop))]
+        return head + "\n".join(kept) + "\n", head.count("\n") + 1
+
+    def test_rejected_at_once_needs_no_impacts(self):
+        self.assertEqual(ch.validate(self.rejected_at_once()[0]), [])
+
+    def test_rejected_without_impacts_needs_not_assessed(self):
+        text, line = self.rejected_at_once("- Recommendation")
+        self.assertError(ch.validate(text), line, "needs 'Scope impact'")
+
+    def test_rejected_at_once_still_needs_decision_keys(self):
+        text, line = self.rejected_at_once("- Decided")
+        errors = ch.validate(text)
+        self.assertError(errors, line, "needs 'Decided by'")
+        self.assertError(errors, line, "needs 'Decided on'")
+
+    def test_not_assessed_only_for_rejected(self):
+        text = replaced(CHANGES, "- Recommendation: Defer to the next release.", "- Recommendation: not assessed")
+        self.assertError(ch.validate(text), CHANGES.count("\n"), "not assessed")
+
     def test_undecided_must_not_have_decision_keys(self):
         text = replaced(CHANGES, "- Reason: Asked for", "- Decided by: Product owner\n- Reason: Asked for")
         self.assertError(ch.validate(text), 40, "only")
@@ -655,6 +681,12 @@ class DocumentNaming(unittest.TestCase):
             self.assertEqual(dn.next_name(project, base, "status-report", date(2026, 11, 24)), "ACME-SAL-008.md")
             self.assertEqual(dn.next_name(project, base, "meeting-minutes", date(2026, 11, 24), "Kick off!"),
                              "ACME-MM-003-kick-off.md")
+
+    def test_meeting_brief_code(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            project = self.project()
+            self.assertEqual(dn.next_name(project, Path(tmp), "meeting-brief", date(2026, 11, 24), "steering"),
+                             "ACME-MB-001-steering.md")
 
     def test_by_date_and_collision(self):
         with tempfile.TemporaryDirectory() as tmp:

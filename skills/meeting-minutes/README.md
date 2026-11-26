@@ -1,20 +1,19 @@
 ---
-summary: For project managers - turns meeting notes or a transcript into minutes with decisions, owned actions and risks, and records the decisions and new risks in the project's registers on request.
+summary: For project managers - turns notes, a transcript or others' minutes into minutes with decisions, actions, risks and change requests, handed to the registers' keepers.
 ---
 
 # meeting-minutes
 
-Writes the minutes of a meeting from your notes, a transcript file, pasted text or the project's meeting tool: the
-agenda, the discussion that led somewhere, the decisions, the actions with owner and due date, the risks raised and
-the open questions. Once you approve the minutes, it proposes the decisions for the decision log and the new risks
-for the risk register, and can turn the actions into work items.
+Writes the minutes of a meeting from your notes, a transcript file, an inbox file, pasted text or the project's
+meeting tool, or imports minutes written by others without rewriting them. It extracts the decisions, actions with
+owner and due date, risks and change requests, and hands them to the keepers of the registers.
 
 ## Why
 
 Minutes are written late, read rarely and acted on even less, and the decisions in them never reach the decision log.
 This skill condenses the meeting into what people who were not there need, insists on an owner and a date for every
-action, and closes the loop: each decision and each new risk you accept becomes a register entry that links back to
-the minutes, with its ID written in them.
+action, and closes the loop: what you accept goes to the keeper of the register, which reports the ID that is then
+written in the minutes. Minutes are not a register of their own: the keepers write the registers.
 
 ## Use cases
 
@@ -27,39 +26,41 @@ the minutes, with its ID written in them.
 **Result:** A draft in the project's format and language, with inferred owners marked for you to confirm; after your
 approval, a numbered list of proposed decision log entries and risk rows, and minutes written with their IDs.
 
-### Actions from a sprint review into the backlog
+### Change requests raised in a meeting
 
-**Context:** Your notes of the sprint review list five follow-ups; the project declares an issue tracker in write
-mode.
+**Context:** The client asked for two changes in the meeting; the project manager wants one assessed later and the
+other kept only for internal reference.
 
-**Action:** Ask "write the minutes of the meeting and create tasks for the actions".
+**Action:** Ask "write the minutes of the client meeting".
 
-**Result:** The minutes, then the five actions as an itemized list of work items; only those you confirm are created,
-and their keys are added to the Actions table.
+**Result:** For each change request you choose: hand off as proposed, assess now, record and reject, or keep it only
+under Internal notes, which `/pm-skills:publish-deliverable` removes before the minutes go out.
 
 ## Usage
 
 Ask in your own words ("write the minutes", "minutes of yesterday's meeting", "action items from the meeting") or run
-`/pm-skills:meeting-minutes`, with the notes pasted, a file path or the meeting's name.
+`/pm-skills:meeting-minutes`, with the notes pasted, a file path or the meeting's name. If you prepared the meeting
+with `/pm-skills:meeting-prep`, the brief is picked up.
 
 ## Inputs and outputs
 
-- Reads `PROJECT.md` (naming, language, registers), the `meeting-minutes` section of `TAILORING.md`, and the source:
-  pasted text, a file, or a tool with Purpose `meetings` in `TOOLS.md`.
+- Reads `PROJECT.md` (naming, language, registers), the `meeting-minutes` section of `TAILORING.md`, the meeting
+  brief when there is one, and the source: pasted text, a file (also from the inbox), or a tool with Purpose
+  `meetings` in `TOOLS.md`.
 - Writes the minutes in the folder of the project's Working documents section, named by
   `shared/scripts/doc_naming.py`, in the format of
-  [`shared/documents/meeting-minutes.md`](../../shared/documents/meeting-minutes.md).
-- Appends the entries you accept to `DECISIONS.md` and `RISKS.md` when the project declares them, and validates them.
-- Creates work items only through an `issues` tool in Mode `write`, each one confirmed.
+  [`shared/documents/meeting-minutes.md`](../../shared/documents/meeting-minutes.md), ending with `Internal notes`.
+- Writes no register: proposes decisions, risks, change requests and actions to their keepers and records the IDs.
 
 ## Requirements
 
 A project register (`/pm-skills:project-setup`); without it the skill can still draft minutes in the session.
-Registers and tools are optional: what is not declared is skipped and named.
+Registers are optional: for those not declared no hand-off is proposed, and the report names them.
 
 ## Limitations
 
-- Adds new decisions and new risks only; a decision that supersedes another or a change to a known risk is left to
-  `/pm-skills:decision-log` and `/pm-skills:risk-register`.
+- Does not transcribe, translate or extract transcripts: your registered tools or skills do, and their output is the
+  source.
+- Creates no work items: `/pm-skills:action-log` does, when an issues tool is declared in write mode.
 - Does not send the minutes: use `/pm-skills:publish-deliverable`.
 - Leaves out personal matters and opinions about people, even when the transcript has them.

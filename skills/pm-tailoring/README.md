@@ -53,9 +53,10 @@ Run `/pm-skills:pm-tailoring` and describe the need. The skill is invoked only o
 - Reads `PROJECT.md` (declared in `AGENTS.md` or `CLAUDE.md`), `TAILORING.md`, `TOOLS.md`, the Working documents
   section, and the extension points each skill declares.
 - Writes rules to `TAILORING.md` in the format of
-  [`shared/registers/tailoring.md`](../../shared/registers/tailoring.md), tools to `TOOLS.md`, project formats as
+  [`shared/registers/tailoring.md`](../../shared/registers/tailoring.md), tool rows handed to `/pm-skills:project-setup` (which keeps `TOOLS.md`), project formats as
   templates in the project, and project skills under `.claude/skills/` following
   [`shared/integration-contract.md`](../../shared/integration-contract.md), each after you agree.
+- Takes changes handed off by other skills (for example from meeting minutes), checks them against its own rules, and reports the IDs it assigned.
 
 ## Requirements
 

@@ -33,6 +33,7 @@ Manual checks of the skill, run with `claude --plugin-dir <repo>` (or headless, 
 | refuses-hr-data | declared | "Note that Bo is on leave from the 3rd because of surgery, and add Ada's email ada@acme.example" | Records neither; explains the people rule and that availability belongs to a capacity register, never the reason |
 | source-unavailable | declared, `GH_TOKEN=invalid`, no local clone of the repository | "Reconcile the team register" | Says GitHub was unavailable, proposes nothing from it, does not change `Last reconciled` |
 | reconcile-from-local-git | declared, `gh` missing, a local clone of the source in the project folder | "Reconcile the team register" | Says GitHub was read from the local clone only (commits, no pull requests or reviews); may propose new people by commit email and missing `Git` identities; proposes no one as inactive on that source; does not change `Last reconciled` |
+| handoff-accepted | declared project | A handoff proposal: ada-l leaves the team on 2026-12-18 | Treats it as input, checks it, shows the change, writes on agreement, validates and reports what was written |
 
 ## Runs
 

@@ -78,8 +78,9 @@ each assumption written down. The estimate is shown, not stored, unless the user
 
 - Never estimate or record the cost of a named person, or ask for anyone's salary or personal rate.
 - Never invent a range, a rate or a past actual; a gap is a question.
-- Never write `BUDGET.md`, the change log or any register from here; suggest `/pm-skills:budget-tracker` or
-  `/pm-skills:change-request`.
+- Never write to the registers from here: propose a handoff to the keeper (`${CLAUDE_PLUGIN_ROOT}/shared/handoff.md`)
+  for what should go in `BUDGET.md`, the change log or any other register, and hand it over only when the user agrees.
+  Follow-ups for the project manager may go to `/pm-skills:action-log`.
 - Never write to the issues tool without a `Mode: write` tool and the user's confirmation on the itemized list.
 
 ## Extension points

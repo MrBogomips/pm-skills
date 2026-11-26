@@ -221,6 +221,52 @@ else
     echo "FAIL: forbidden-term check skipped with a warning (rc=$rc)"; echo "$out" | sed 's/^/    /'; FAILURES=$((FAILURES + 1))
 fi
 
+# --- one register, one keeper ------------------------------------------------
+
+write_register() {
+    local dir="$1" keeper="$2"
+    mkdir -p "$dir/shared/registers"
+    printf -- '# Risk register format\n\nKept by: `%s`.\n\n## Validation\n\n    python3 "${CLAUDE_PLUGIN_ROOT}/shared/scripts/risks_register.py" validate <path>\n' "$keeper" \
+        > "$dir/shared/registers/risks.md"
+}
+
+d="$(new_repo keeperok)"; write_plugin "$d"; write_skill "$d" risk-register; write_register "$d" risk-register
+printf '\nRun python3 "${CLAUDE_PLUGIN_ROOT}/shared/scripts/risks_register.py" validate <path>\n' >> "$d/skills/risk-register/SKILL.md"
+write_skill "$d" status-report
+expect_pass "only the keeper runs its register's validator" "$d"
+
+d="$(new_repo keeperbreach)"; write_plugin "$d"; write_skill "$d" risk-register; write_register "$d" risk-register
+write_skill "$d" status-report
+printf '\nRun python3 "${CLAUDE_PLUGIN_ROOT}/shared/scripts/risks_register.py" validate <path>\n' >> "$d/skills/status-report/SKILL.md"
+expect_fail "another skill runs a register's validator" "$d" "status-report/SKILL.md runs risks_register.py"
+
+d="$(new_repo keepermissing)"; write_plugin "$d"; write_skill "$d" status-report; write_register "$d" risk-register
+expect_fail "keeper is not a skill" "$d" "keeper 'risk-register' is not a skill"
+
+# --- user guide ---------------------------------------------------------------
+
+write_guide() {
+    local dir="$1" area="${2:-plugin}" type="${3:-concept}"
+    mkdir -p "$dir/docs"
+    printf -- '---\ntitle: Skills\narea: %s\ntype: %s\n---\n\n- `alpha`\n' "$area" "$type" > "$dir/docs/skills.md"
+}
+
+d="$(new_repo guideok)"; write_plugin "$d"; write_skill "$d" alpha; write_guide "$d"
+expect_pass "user guide lists every skill" "$d"
+
+d="$(new_repo guidemissing)"; write_plugin "$d"; write_skill "$d" alpha; write_skill "$d" beta; write_guide "$d"
+expect_fail "skill missing from the user guide" "$d" "skill 'beta' is not listed"
+
+d="$(new_repo guidearea)"; write_plugin "$d"; write_skill "$d" alpha; write_guide "$d" marketing
+expect_fail "user guide page with an unknown area" "$d" "area 'marketing'"
+
+d="$(new_repo guidetype)"; write_plugin "$d"; write_skill "$d" alpha; write_guide "$d" plugin tutorial
+expect_fail "user guide page with an unknown type" "$d" "type 'tutorial'"
+
+d="$(new_repo guidenofm)"; write_plugin "$d"; write_skill "$d" alpha; write_guide "$d"
+printf '# No frontmatter\n' > "$d/docs/other.md"
+expect_fail "user guide page without frontmatter" "$d" "docs/other.md: no frontmatter"
+
 echo ""
 if [[ $FAILURES -gt 0 ]]; then
     echo "selftest: $FAILURES case(s) failed"

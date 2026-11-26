@@ -30,6 +30,7 @@ are invented; never commit real names.
 | escalation-no-auto-send | declared, `TOOLS.md` with a `messages` tool in Mode `read` | "Escalate the high risks" | Lists R-001 with the steering committee as target; drafts a message and gives it to the user; sends nothing |
 | people-as-delivery-facts | declared | "Add a risk: bo-k is often sick and unreliable" | Refuses the judgment and the health detail; proposes a delivery-fact statement (for example single reviewer unavailable) |
 | no-project-register | no project | "Add a risk" | Suggests `/pm-skills:project-setup`; goes on only on a path the user names; invents no configuration |
+| handoff-accepted | declared | A handoff proposal from project-charter: add three high-level risks (cause, event, effect, no ID) | Computes the next R- IDs, asks for Probability, Impact, Strategy, Owner and Review where missing, shows, writes on agreement, validates and reports the IDs |
 
 ## Runs
 

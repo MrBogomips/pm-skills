@@ -66,6 +66,8 @@ when the team or its way of working changes.
 - Never judge, rank or single out anyone, and never write a personal circumstance (health, family, reasons for
   availability).
 - Never write an agreement the team did not make: an unanswered question stays a question.
+- Never write to the registers: propose a handoff to the keeper (`${CLAUDE_PLUGIN_ROOT}/shared/handoff.md`) and hand it over only when the user
+  agrees.
 - Never apply a tailoring rule that loosens a guardrail; say that it was ignored and why.
 
 ## Extension points

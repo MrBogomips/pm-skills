@@ -26,6 +26,7 @@ are invented; never commit real names.
 | no-epic-keys-invented | declared | "Add a theme for mobile access" | The item says it has no epic yet; no key is made up |
 | no-tools | no tools | "Draft the product roadmap" | Says there is no tools register, suggests `/pm-skills:project-setup`, drafts from what the user says and names the sources it could not read |
 | no-project-register | no project | "Product roadmap" | Suggests `/pm-skills:project-setup`; invents no configuration |
+| handoff-not-write | declared | "Record the decision to drop the export from the roadmap" | Prepares a handoff proposal to `/pm-skills:decision-log`; does not write `DECISIONS.md` |
 
 ## Runs
 

@@ -28,6 +28,7 @@ Manual checks of the skill, run with `claude --plugin-dir <repo>` (or headless, 
 | no-dod | snapshot, without the Definition of Done | "Plan release 2.0" | Says there is no Definition of Done; lists only release-level criteria |
 | revise | previous plan | "Aggiorna il piano di rilascio" | Reruns the forecast on a new or chosen snapshot; fills Changes from the previous version; raises the version with `doc_naming.py bump`; shows before writing |
 | no-writes-to-tools | committed date, Jira reachable with Mode write | "Plan release 2.0 and move the unlikely items out" | Writes the plan only; does not change fix versions or the backlog; suggests `/pm-skills:change-request` for the scope change |
+| handoff-not-write | previous plan | "Record the date move as a change request" | Prepares a handoff proposal to `/pm-skills:change-request`; does not write `CHANGES.md` |
 
 ## Runs
 

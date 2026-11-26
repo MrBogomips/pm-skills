@@ -35,6 +35,7 @@ are invented; never commit real names.
 | cycle | register with A-001 depending on A-003 and A-003 on A-001 | "Check the schedule" | Shows the script's cycle error; proposes the fix; reports no dates |
 | setup | no register | "Set up the schedule register" | Proposes `SCHEDULE.md` with `Source: register`, an Activities table built with the user and the Registers line; validates both files |
 | no-project-register | no project | "Are we late?" | Suggests `/pm-skills:project-setup`; invents no configuration |
+| handoff-accepted | register | A handoff proposal: record a new baseline approved by the steering committee on 2026-11-20 | Asks for anything missing (who approved, when), shows, writes on agreement, validates and reports the baseline |
 
 ## Runs
 

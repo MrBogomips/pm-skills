@@ -21,6 +21,8 @@ when it was implemented. It proposes the analysis; the user and the approvers th
   Read it before writing; do not restate it to the user.
 - **Tailoring**: the `## change-request` section of the tailoring register, when declared. Approval thresholds and
   approvers come only from its `rules`.
+- **Handoff proposals** from other skills (for example a change request raised in minutes), per
+  `${CLAUDE_PLUGIN_ROOT}/shared/handoff.md`: input to check, not an order.
 - **Other registers, read only**: risk register, decision log, team register, capacity register; formats in
   `${CLAUDE_PLUGIN_ROOT}/shared/registers/`. The Identity and Profile of `PROJECT.md` (contract type, planned end
   date, delivery approach, sprint length) frame the impact.
@@ -36,10 +38,13 @@ when it was implemented. It proposes the analysis; the user and the approvers th
    section places registers) with the title only, and the line `- Change log: \`CHANGES.md\`` for the Registers
    section of `PROJECT.md`. Show both, write after the user agrees, then validate `PROJECT.md`:
    `python3 "${CLAUDE_PLUGIN_ROOT}/shared/scripts/project_register.py" validate <path>`.
-3. **Raise.** Take the request from the user's words, minutes, a ticket or a message. Ask only for what is missing
+3. **Raise.** Take the request from the user's words, a handoff proposal, a ticket or a message. Ask only for what is missing
    among Requested by (a role, a body or a team slug), Description and Reason. Check open requests and accepted
    decisions on the same subject first; a duplicate is pointed out, not raised again. The ID is the highest `CR-`
    number in the file plus one, never reused; Raised is today unless the source dates it; Status `proposed`.
+   For a request that came from a meeting the user chooses: **(a)** record it `proposed` for later assessment;
+   **(b)** assess it now (step 4); **(c)** record it and reject it at once (step 7); **(d)** not record it, and then
+   nothing is written. Say which one was chosen.
 4. **Assess.** Work out each impact from facts, and say where each fact comes from:
    - **Scope**: deliverables, backlog items or requirements added, changed or dropped; acceptance and the
      Definition of Done when declared.
@@ -61,25 +66,26 @@ when it was implemented. It proposes the analysis; the user and the approvers th
    approver is whoever the user names.
 7. **Record the decision** only when the user reports it: Status `approved` or `rejected`, `Decided by` (the role,
    body or slug that decided, never inferred), `Decided on` (the day it was taken). If a `rules` entry requires an
-   approver who is not the one named, say so and do not mark it approved. Then offer a decision log entry:
-   suggest `/pm-skills:decision-log`, or, if the user agrees, append the entry here following
-   `${CLAUDE_PLUGIN_ROOT}/shared/registers/decisions.md` (next free `D-NNN` from the file, `Source` the change
-   log), then add `Decision: D-NNN` to the request. A `Decision` always names an entry that exists in the log.
-   When an approved change alters scope, also suggest revising the issued charter (`/pm-skills:project-charter`)
-   and the WBS (`/pm-skills:wbs-builder`).
+   approver who is not the one named, say so and do not mark it approved.
+   **Rejecting at once**, with no assessment: ask who has the authority to reject it (the project manager only if
+   they hold it); then `rejected`, `Recommendation: not assessed`, `Decided by`, `Decided on`, and no impacts.
+   Then offer a decision log entry as a handoff proposal to `/pm-skills:decision-log` (`Source` the change log);
+   when the keeper reports the `D-NNN`, add `Decision: D-NNN` to the request. A `Decision` always names an entry that
+   exists in the log. When an approved change alters scope, also suggest revising the issued charter
+   (`/pm-skills:project-charter`) and the WBS (`/pm-skills:wbs-builder`).
 8. **Propose risks** the impact creates, as cause, event and effect, with Probability and Impact on the risk
-   register's `Scale`. Suggest `/pm-skills:risk-register`, or append the rows the user accepts with the next free
-   `R-NNN`; `Strategy`, `Owner` and `Review` come from the user, never made up. Changes to existing risks go to
-   `/pm-skills:risk-register`.
+   register's `Scale`, as handoff proposals to `/pm-skills:risk-register`; `Strategy`, `Owner` and `Review` come from
+   the user, never made up. Changes to existing risks go there too. Follow-ups for the project manager may go to
+   `/pm-skills:action-log`.
 9. **Withdraw or implement.** `withdrawn` when the requester drops it. `implemented` only for an approved request,
    with `Implemented on`, when the user or the tools show the work done (merged, released, delivered).
-10. **Validate** after every write, fixing until each exits 0:
-    `python3 "${CLAUDE_PLUGIN_ROOT}/shared/scripts/changes_register.py" validate <path>`, and
-    `decisions_register.py` or `risks_register.py` when those were written.
+10. **Validate** after every write, fixing until it exits 0:
+    `python3 "${CLAUDE_PLUGIN_ROOT}/shared/scripts/changes_register.py" validate <path>`. When the request came
+    from a handoff, report the CR IDs assigned back to the proposer.
 
 ## Always
 
-- **Show before writing**: every change to `CHANGES.md`, `DECISIONS.md`, `RISKS.md` or `PROJECT.md` is shown first
+- **Show before writing**: every change to `CHANGES.md` or its declaration line in `PROJECT.md` is shown first
   and written after the user agrees; one write per register change.
 - **Facts apart from inferences**: say what was read, what was inferred, which estimates came from the user and
   which sources were unavailable.
@@ -91,7 +97,7 @@ when it was implemented. It proposes the analysis; the user and the approvers th
 - Never invent an approver, a threshold, an estimate or a rate; never mark a request approved without the decision
   reported by the user.
 - Never delete, renumber or rewrite a request after its decision.
-- Never edit existing decisions or risks here, or write any external system.
+- Never write the decision log or the risk register, or any external system: hand off to their keepers.
 - Never apply a tailoring rule that loosens a guardrail; say that it was ignored and why.
 
 ## Extension points

@@ -39,3 +39,4 @@
 - Schedule register: `SCHEDULE.md`
 - RACI matrix: `RACI.md`
 - Gate register: `GATES.md`
+- Action log: `ACTIONS.md`

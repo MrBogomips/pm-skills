@@ -4,6 +4,9 @@ The risk register records the project's threats and opportunities, how likely an
 response chosen and who owns it. `risk-register` keeps it; `status-report` and `meeting-minutes` read it. It is
 declared in the Registers section of `PROJECT.md` as `` - Risk register: `RISKS.md` ``.
 
+Kept by: `risk-register`. Only this skill writes the register; any other skill hands its changes off to it, as
+`shared/handoff.md` says.
+
 ## Example
 
 ```markdown

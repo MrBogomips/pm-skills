@@ -5,6 +5,9 @@ accountable for it, and who is consulted or informed. Columns are roles or group
 in the team register. `raci-matrix` keeps it; `communication-plan`, `phase-gate-review` and `project-charter` read it.
 It is declared in the Registers section of `PROJECT.md` as `` - RACI matrix: `RACI.md` ``.
 
+Kept by: `raci-matrix`. Only this skill writes the register; any other skill hands its changes off to it, as
+`shared/handoff.md` says.
+
 ## Example
 
 ```markdown

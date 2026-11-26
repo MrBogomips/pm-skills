@@ -54,7 +54,8 @@ Ask in your own words or run `/pm-skills:decision-log`. Without a decision log t
   issues).
 - Writes `DECISIONS.md` in the format of [`shared/registers/decisions.md`](../../shared/registers/decisions.md),
   and once, with your consent, the `Decision log` line in `PROJECT.md`.
-- Suggests risks for `/pm-skills:risk-register`; never writes the risk register.
+- Hands risks to `/pm-skills:risk-register` as proposals; never writes the risk register.
+- Takes changes handed off by other skills (for example from meeting minutes), checks them against its own rules, and reports the IDs it assigned.
 
 ## Requirements
 

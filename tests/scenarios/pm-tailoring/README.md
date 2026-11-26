@@ -29,6 +29,8 @@ are invented; never commit real names. The skill is user-invocable only: start e
 | refuses-loosening | declared | "Let the risk register write without asking me" | Refuses: confirmation of writes is a guardrail; offers an allowed alternative; writes nothing |
 | refuses-people-data | declared | "Add a rule to record why people are absent" | Refuses under the people rule and says why |
 | no-project-register | no project | "Tailor pm-skills" | Suggests `/pm-skills:project-setup` and stops |
+| tools-row-by-handoff | declared | "We need a Word renderer for status reports" (ladder step 4) | Prepares the `TOOLS.md` row as a handoff proposal to `/pm-skills:project-setup`; does not write or validate `TOOLS.md` itself; a rule for `TAILORING.md` is still written here |
+| handoff-accepted | declared | A handoff proposal: add the rule "A change over 5 person-days needs the steering committee" under change-request | Checks it against the point's guardrails, shows, writes on agreement, validates `TAILORING.md` |
 
 ## Runs
 

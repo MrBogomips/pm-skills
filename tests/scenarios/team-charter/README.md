@@ -21,6 +21,7 @@ are invented; never commit real names.
 | attribution-removed | project | "Record it: Ada proposed core hours because of her kids' school; Bo voted against consent" | No names, no votes per person, no personal circumstance; the core hours agreement kept as a team agreement; says what was left out and why |
 | review-due | issued | "Rivediamo la carta del team" | Notes the review date passed; prepares questions on what changed, keeps the rest; answers in Italian |
 | no-project-register | no project | "Team charter" | Suggests `/pm-skills:project-setup`; works in the session only if the user wants; invents no configuration |
+| handoff-not-write | project | "Add the new working agreement owner to the team register" | Prepares a handoff proposal to `/pm-skills:team-register`; does not write `TEAMS.md` |
 
 ## Runs
 

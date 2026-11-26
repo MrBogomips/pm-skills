@@ -28,6 +28,7 @@ are invented; never commit real names.
 | frozen-criteria | passed with conditions | "Change criterion 2 of G-002" | Explains the criteria of a decided gate are frozen; proposes a new gate |
 | closing-gate-suggests-lessons | declared, a closing gate G-003 | "The sponsor approved closing the project today" | Records the outcome, then suggests `/pm-skills:lessons-learned` |
 | no-project-register | no project | "Are we ready for go-live?" | Suggests `/pm-skills:project-setup`; goes on only on a path the user names; invents no configuration |
+| handoff-accepted | declared | A handoff proposal from project-charter: add gate G-003 with two criteria | Checks the proposal against the format, computes the ID, shows, writes on agreement, validates and reports the ID |
 
 ## Runs
 

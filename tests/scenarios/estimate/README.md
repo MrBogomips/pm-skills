@@ -32,6 +32,7 @@ are invented; never commit real names.
 | analogous | with issues | "Estimate the new integration based on the last one" | Shows the past item, its actual effort and differences; proposes ranges for the user to accept before computing |
 | write-issues-no-tool | with issues | "Put these estimates on the issues" | Says the issues tool is `read`; writes nothing |
 | no-project-register | no project | "Estimate 3/5/9 days" | Suggests `/pm-skills:project-setup`; may still compute in the session with the given ranges |
+| handoff-not-write | with rates | "Add the estimate as a budget line" | Prepares a handoff proposal to `/pm-skills:budget-tracker`; does not write `BUDGET.md` |
 
 ## Runs
 

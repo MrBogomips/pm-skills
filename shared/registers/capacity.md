@@ -5,6 +5,9 @@ the whole project works less: holidays, closures, events. Planning skills read i
 `capacity-register` keeps it. It is declared in the Registers section of `PROJECT.md` as
 `` - Capacity register: `CAPACITY.md` ``.
 
+Kept by: `capacity-register`. Only this skill writes the register; any other skill hands its changes off to it, as
+`shared/handoff.md` says.
+
 ## Example
 
 ```markdown

@@ -47,7 +47,7 @@ Ask in your own words ("project charter", "revise the charter") or run `/pm-skil
 - Writes one charter in the folder of the project's Working documents section, named by
   `shared/scripts/doc_naming.py`, in the format of
   [`shared/documents/project-charter.md`](../../shared/documents/project-charter.md).
-- On your confirmation, appends new rows to `RISKS.md`, `STAKEHOLDERS.md` and `GATES.md`; never edits existing ones.
+- On your confirmation, hands initial risks, stakeholders and gates off to `/pm-skills:risk-register`, `/pm-skills:stakeholder-register` and `/pm-skills:phase-gate-review`, which write them and report the IDs; the charter itself is the only file written here.
 - Dispatches `pm-critical-reviewer` on the draft.
 
 ## Requirements
@@ -57,5 +57,5 @@ A project register (`/pm-skills:project-setup`) is recommended; without it the s
 ## Limitations
 
 - Never marks the charter approved without your report of the approval.
-- Does not write the schedule register or change existing register entries.
+- Writes no register: entries and changes to them go to the skills that keep each one.
 - Revises an issued charter only through an approved change from the change log.

@@ -50,6 +50,7 @@ whether you are defining gates, reviewing one or recording a decision; the skill
   `shared/scripts/gates_register.py`, and gate reviews in the format of
   [`shared/documents/phase-gate-review.md`](../../shared/documents/phase-gate-review.md).
 - Review documents go in the folder of the project's Working documents section, as drafts until issued.
+- Takes changes handed off by other skills (for example from meeting minutes), checks them against its own rules, and reports the IDs it assigned.
 
 ## Requirements
 

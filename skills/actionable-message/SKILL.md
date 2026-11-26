@@ -54,7 +54,8 @@ with which references and whom to ask. The message lives in the conversation; it
    When rewriting a draft, keep the user's voice and register; change what makes a request unclear.
 6. **People not in the registers.** When the message names someone who is in no register, list them with the role
    and organization the user gave, and suggest `/pm-skills:team-register` for a team member or
-   `/pm-skills:stakeholder-register` for someone outside the team. Do not edit any register.
+   `/pm-skills:stakeholder-register` for someone outside the team. Do not edit any register: a handoff to the keeper
+   (`${CLAUDE_PLUGIN_ROOT}/shared/handoff.md`) is proposed, and handed over only when the user agrees.
 7. **Show the message** with its recipients and the list of what you inferred, for the user to correct.
 8. **Send only on request**: through a tool with Purpose `messages` and Mode `write` whose Scope covers the
    destination. Show exactly what goes where (channel or recipients, subject, text) and send after the user

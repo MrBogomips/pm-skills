@@ -12,6 +12,9 @@ It is declared in the Registers section of the project register (`shared/registe
 The path is relative to the project root; the default location is `TEAMS.md` at the root. The systems the team's
 activity is read from are the project's tools (`shared/registers/tools.md`), not part of this register.
 
+Kept by: `team-register`. Only this skill writes the register; any other skill hands its changes off to it, as
+`shared/handoff.md` says.
+
 ## Example
 
 ```markdown

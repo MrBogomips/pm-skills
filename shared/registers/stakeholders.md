@@ -6,6 +6,9 @@ An entry is a role or a group first ("Sponsor", "End users"); the organization a
 `stakeholder-register` keeps it; other skills read it. It is declared in the Registers section of `PROJECT.md` as
 `` - Stakeholder register: `STAKEHOLDERS.md` ``.
 
+Kept by: `stakeholder-register`. Only this skill writes the register; any other skill hands its changes off to it, as
+`shared/handoff.md` says.
+
 ## Example
 
 ```markdown

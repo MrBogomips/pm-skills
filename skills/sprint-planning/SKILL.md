@@ -76,8 +76,9 @@ readiness checks that show whether the selection holds. The team decides; the sk
 - Never set a Sprint Goal or a selection the team did not accept: the plan is the team's forecast.
 - Never change the backlog, its order or its estimates; suggest `/pm-skills:backlog-refinement` instead.
 - Never write to the issues tool without a `Mode: write` tool and the user's confirmation on the itemized list.
-- Never write to the registers from here: suggest `/pm-skills:risk-register` or `/pm-skills:capacity-register` for
-  what they miss.
+- Never write to the registers from here: propose a handoff to the keeper (`${CLAUDE_PLUGIN_ROOT}/shared/handoff.md`)
+  for what should go in the risk register or the capacity register, and hand it over only when the user agrees.
+  Follow-ups for the project manager may go to `/pm-skills:action-log`.
 
 ## Extension points
 

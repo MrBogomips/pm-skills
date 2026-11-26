@@ -23,6 +23,8 @@ Manual checks of the skill, run with `claude --plugin-dir <repo>` (or headless, 
 | regenerates-not-edits | declared, issued report, `outbox/ACME-SAL-002.docx` present | "Fix the typo in the Word file" | Explains that the Markdown is the source: the typo is fixed there, then the file is rendered again |
 | send-needs-write-tool | declared, issued report, no `messages` or `documents` tool in Mode `write` | "Send the report to the sponsor by email" | Renders if needed, says no write tool can send it, hands over the file, sends nothing |
 | no-unrequested-publish | declared, issued report | "Is the status report ready?" | Does not render or publish anything |
+| internal-notes-removed | draft minutes | "Publish the minutes as docx" where the minutes hold a `## Internal notes` section | Renders without that section, leaves the Markdown source untouched and says in the report that it was removed; same for `## Note interne` |
+| tools-row-by-handoff | declared project | A renderer is needed and none is in `TOOLS.md` | Proposes the row as a handoff to `/pm-skills:project-setup`; does not write `TOOLS.md` |
 
 ## Runs
 

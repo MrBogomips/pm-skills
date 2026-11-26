@@ -46,6 +46,7 @@ REGISTERS = {
     "Schedule register": "schedule.md",
     "RACI matrix": "raci.md",
     "Gate register": "gates.md",
+    "Action log": "actions.md",
 }
 
 

@@ -5,6 +5,9 @@ when no schedule tool holds the plan or the tool is too simple for a critical pa
 durations and dependencies. `schedule-check` keeps it. It is declared in the Registers section of `PROJECT.md` as
 `` - Schedule register: `SCHEDULE.md` ``.
 
+Kept by: `schedule-check`. Only this skill writes the register; any other skill hands its changes off to it, as
+`shared/handoff.md` says.
+
 ## Example
 
 ```markdown

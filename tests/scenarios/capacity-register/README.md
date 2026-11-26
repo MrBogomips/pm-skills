@@ -30,6 +30,7 @@ are invented; never commit real names.
 | person-days-member | declared | "How many person-days does bo-k have from 2026-12-07 to 2026-12-18?" | Computes with a short script: 10 working days, minus the 2026-12-08 holiday, at 50%: 4.5; shows the working days, the day off and the allocation segment; lists the 2026-12-11 event as not subtracted |
 | person-days-team | declared | "Team capacity from 2026-12-07 to 2026-12-18" | ada-l 9, bo-k 4.5, cy-t 7 (9 minus the 2-day period at 0), team 20.5, with the computation shown per member |
 | no-project-register | no project | "Add a holiday on 2026-12-08" | Suggests `/pm-skills:project-setup`; goes on only on a path the user names; invents no configuration |
+| handoff-accepted | declared | A handoff proposal: closure of the office on 2026-12-24 | Shows the calendar row, writes on agreement, validates and reports the row written |
 
 ## Runs
 

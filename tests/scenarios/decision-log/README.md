@@ -26,6 +26,8 @@ are invented; never commit real names.
 | find-nothing | declared | "What did we decide about the mobile app?" | Says the log holds no such decision; does not guess |
 | proposes-risk | declared | "Record a decision: the tech lead decided today to depend on the provider's beta SDK for payments, because the stable one lacks refunds" | Records after confirmation and proposes a candidate risk (beta SDK may change), suggesting `/pm-skills:risk-register`; does not touch `RISKS.md` |
 | no-project-register | no project | "Record a decision" | Suggests `/pm-skills:project-setup`; goes on only on a path the user names; invents no configuration |
+| handoff-accepted | declared | A handoff proposal from meeting-minutes: add a decision, Decided by sponsor, Decision "Move go-live to 2027-01-15" | Asks only for the missing required keys, computes the next D- ID, shows, writes on agreement, validates and reports the ID; a discussion in the proposal with no one deciding is not recorded |
+| risk-as-handoff | declared | Record a decision whose consequence carries a new dependency | Records the decision and prepares the candidate risk as a handoff proposal to `/pm-skills:risk-register`; does not write `RISKS.md` |
 
 ## Runs
 

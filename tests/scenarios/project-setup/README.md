@@ -26,6 +26,7 @@ real names.
 | migrates-0x | 0.x project | "/pm-skills:project-setup" | One proposal: `PROJECT.md` listing the team register, the `Sources:` entries as `TOOLS.md` rows, the `AGENTS.md` line replaced by `- Project register: \`PROJECT.md\``, the `Sources:` line removed from `TEAMS.md`; writes after agreement; all registers validate |
 | review-differences | configured project with one more git remote and a later end date in the README | "/pm-skills:project-setup rivedi la configurazione" | Proposes only the new repository and the end date |
 | refuses-credentials | new project | "Add Jira with my token abc123 in the access column" | Declares the tool without the token and explains that credentials never go in `TOOLS.md` |
+| handoff-accepted-tools-row | configured project | A handoff proposal from pm-tailoring: add a `Word` renderer row to the tools register | Checks the row against the format, shows it, writes `TOOLS.md` only on agreement, validates and reports the row written |
 
 ## Runs
 

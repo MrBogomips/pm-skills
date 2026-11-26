@@ -59,6 +59,7 @@ Ask in your own words ("add a risk: the payment provider may slip", "review the 
 - Writes `RISKS.md` in the format of [`shared/registers/risks.md`](../../shared/registers/risks.md), and once, with
   your consent, the `Risk register` line in `PROJECT.md`.
 - Sends an escalation message only through a messaging tool declared with Mode `write`, after you agree.
+- Takes changes handed off by other skills (for example from meeting minutes), checks them against its own rules, and reports the IDs it assigned.
 
 ## Requirements
 

@@ -74,7 +74,7 @@ the warning on absences possible.
 
 - Writes one message at a time; it may hold several requests for several owners.
 - Does not keep contacts: an address appears in the message only when you give it.
-- Does not edit any register: for someone the registers do not know, it suggests `/pm-skills:team-register` or
+- Does not edit any register: for someone the registers do not know, it proposes a handoff to `/pm-skills:team-register` or
   `/pm-skills:stakeholder-register`.
 - Does not track replies: write a reminder with the skill when you need one.
 - Does not send documents: to distribute a report or minutes, use `/pm-skills:publish-deliverable`.

@@ -25,6 +25,7 @@ registers and seeds the empty ones.
   `${CLAUDE_PLUGIN_ROOT}/shared/documents/common.md`; for the registers it seeds,
   `${CLAUDE_PLUGIN_ROOT}/shared/registers/risks.md`, `stakeholders.md` and `gates.md`.
 - **Agent**: `pm-critical-reviewer`, before the charter is issued.
+- **Handoff**: `${CLAUDE_PLUGIN_ROOT}/shared/handoff.md`, the format of the proposals this skill prepares.
 
 ## Steps
 
@@ -43,14 +44,13 @@ registers and seeds the empty ones.
    `python3 "${CLAUDE_PLUGIN_ROOT}/shared/scripts/doc_naming.py" next --project <PROJECT.md> --dir <folder> --type project-charter --date <today>`.
    Show the draft, the path and the review's open points; write it with `status: draft`, `version: 1.0.0`, after the
    user agrees.
-5. **Propose register entries**, only for registers declared in `PROJECT.md`, as one numbered list: the high-level
-   risks not already in the risk register, the stakeholders not already in the stakeholder register, the phases'
-   gates and their criteria not already in the gate register, each as a new row with the next free ID computed from
-   the file and the values its format requires; a required value the charter does not give is asked, never made up.
-   A register declared but missing is created with its format's empty structure (title, sections, headers), shown
-   with the entries. Write only the entries the user accepts, one register at a time, and validate each with its script in
-   `${CLAUDE_PLUGIN_ROOT}/shared/scripts/` (`risks_register.py`, `stakeholders_register.py`, `gates_register.py`)
-   until it exits 0. A change to an existing entry is listed with the skill that owns it; never edit it here.
+5. **Propose register entries** as handoff proposals (`handoff.md`), one numbered list, never written here: the
+   high-level risks for `/pm-skills:risk-register`, the stakeholders for `/pm-skills:stakeholder-register`, the
+   phases' gates and their criteria for `/pm-skills:phase-gate-review`, each only if not already in its register,
+   with the fields its format requires; a required value the charter does not give is left out for the keeper to
+   ask, never made up. Hand off the ones the user accepts, one keeper at a time; each keeper creates a missing
+   register, assigns the IDs, writes and validates. A change to an existing entry is a proposal to its keeper too.
+   Report the IDs the keepers assigned.
 6. **Issue** when the user reports the approval: set `status: issued`, `approved-by` and `approved-on` as the user
    states them, and fill the Approval heading. Suggest `/pm-skills:publish-deliverable` to share it.
 7. **Revise** an issued charter only for an approved change: read it in the change log, name its ID in `change`,
@@ -62,14 +62,14 @@ registers and seeds the empty ones.
 ## Always
 
 - Keep the registers authoritative: the charter summarizes them and says so.
-- Show every write first and make it only after the user agrees; one write per register change.
+- Show every write first and make it only after the user agrees; the charter is the only file written here.
 - People appear as roles; no contacts and no evaluations.
 
 ## Never
 
 - Never declare the charter approved, or fill `approved-by`, without the user's report of the approval.
-- Never edit or delete an existing register entry, and never write the schedule register: its baselines belong to
-  `schedule-check`.
+- Never write, edit or delete a register entry: hand off to the keeper. The schedule register's baselines belong
+  to `schedule-check`.
 - Never revise an issued charter without an approved change.
 - Never propose changing the criteria of a gate that has an outcome: a changed criterion goes in a new gate.
 - Never apply a tailoring rule that loosens a guardrail; say that it was ignored and why.

@@ -58,6 +58,7 @@ Ask in your own words ("earned value", "how much have we spent", "forecast at co
 - Writes `BUDGET.md` in the format of [`shared/registers/budget.md`](../../shared/registers/budget.md), and once,
   with your consent, the `Budget register` line in `PROJECT.md`.
 - Never writes to the costs tool.
+- Takes changes handed off by other skills (for example from meeting minutes), checks them against its own rules, and reports the IDs it assigned.
 
 ## Requirements
 

@@ -30,6 +30,7 @@ OPEN = ("proposed", "assessed")
 DECIDED = ("approved", "rejected", "implemented")
 ASSESSED = ("assessed",) + DECIDED
 DECISION_REF_RE = re.compile(r"^D-[0-9]{3,}$")
+NOT_ASSESSED = "not assessed"
 SKILL = "/pm-skills:change-request"
 
 
@@ -141,7 +142,11 @@ def _checks(change: ChangeRequest, errors: list[str]) -> None:
     if status and status not in STATUSES:
         errors.append(f"line {change.field_lines['Status']}: Status '{status}' must be one of: {', '.join(STATUSES)}")
         return
-    if status in ASSESSED:
+    not_assessed = change.fields.get("Recommendation") == NOT_ASSESSED
+    if not_assessed and status != "rejected":
+        errors.append(f"line {change.field_lines['Recommendation']}: '{NOT_ASSESSED}' is only for a request "
+                      "rejected at once")
+    if status in ASSESSED and not (status == "rejected" and not_assessed):
         _require(change, IMPACTS, errors)
     if status in DECIDED:
         _require(change, DECISION_KEYS, errors)
