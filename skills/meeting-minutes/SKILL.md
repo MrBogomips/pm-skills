@@ -38,9 +38,9 @@ risks, change requests and actions to the keepers of the registers, and links th
    to its path and start from its agenda. Condense: per agenda item, what led to a decision or an action. Every
    action needs an owner and a due date: when the source gives neither, ask, or move it to Open questions. Mark what
    you inferred and ask the user to confirm it.
-4. **Change requests raised.** For each, the user decides: hand off as `proposed` (assessed later); assess now
-   (`/pm-skills:change-request`); record and reject at once (that skill handles the authority); or do not record it,
-   and then it is noted only under Internal notes.
+4. **Change requests raised.** For each, ask one question offering all four options, as written: hand off as
+   `proposed` (assessed later); assess now (`/pm-skills:change-request`); record and reject at once (that skill
+   handles the authority); or do not record it, and then it is noted only under Internal notes.
 5. **Name the file**: the folder from the Working documents section (ask once if none), the name from
    `python3 "${CLAUDE_PLUGIN_ROOT}/shared/scripts/doc_naming.py" next --project <PROJECT.md> --dir <folder> --type meeting-minutes --date <meeting date> [--slug <slug>]`.
    Exit status 3: propose a slug, or revise the existing minutes.

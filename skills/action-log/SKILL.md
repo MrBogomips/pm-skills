@@ -57,8 +57,8 @@ manager's backlog: those actions plus what the other registers say is due, by da
    reason in `Outcome`. Never delete a row. A new `Due` or `Owner` is shown and agreed first.
 7. **The backlog** ("PM backlog", "my to-do", "what do I have to do", "open actions"). Run, with the owner the user
    means (default the project manager) and a horizon if asked:
-   `python3 "${CLAUDE_PLUGIN_ROOT}/shared/scripts/pm_backlog.py" <path to PROJECT.md> [--owner NAME] [--days N]`
-   and present the table as printed: do not reorder it, recompute days or add rows. Group by what is overdue, due
+   `python3 "${CLAUDE_PLUGIN_ROOT}/shared/scripts/pm_backlog.py" <path to PROJECT.md> [--owner NAME] [--days N] [--today YYYY-MM-DD]`
+   (`--today` when the user gives the date) and present the table as printed: do not reorder it, recompute days or add rows. Group by what is overdue, due
    this week and later or undated when the user wants a summary. Name what the script could not read. For an item
    that is not an `AC-` action, say which skill keeps it (`R-` risk-register, `S-` stakeholder-register, `CR-`
    change-request, `G-` phase-gate-review): offer to run it, never edit that register from here.

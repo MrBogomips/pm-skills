@@ -47,7 +47,9 @@ item must decide, what to send beforehand. Produces a meeting brief; changes no 
 7. **Show the brief and the path**; write it, `status: draft`, only after the user agrees.
 8. **Hand off** what you found that a register should hold (a risk, a decision to record, a change request) and the
    preparation tasks for the project manager ("send the pre-read by Friday") as proposals to the keeper, the
-   tasks to `/pm-skills:action-log`, as `shared/handoff.md` says.
+   tasks to `/pm-skills:action-log` (not `publish-deliverable`, which only renders and sends), as
+   `shared/handoff.md` says. When the request already names such a task or a risk, say at once that it will be
+   proposed here.
 9. **Report** what you read, inferred and could not read, and what was handed off; suggest
    `/pm-skills:meeting-minutes` after the meeting, with the brief as input.
 

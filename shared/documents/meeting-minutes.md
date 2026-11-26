@@ -50,5 +50,6 @@ The headings below, in this order, translated into the document's language (in I
 - Change requests raised are listed under Decisions (when decided) or Open questions, with their `CR-NNN` ID once
   its keeper reports it; one the project manager chose not to record appears only under Internal notes.
 - Internal notes stay the last heading. Everything above it is written so that it can be distributed; what must not
-  be distributed goes under Internal notes.
+  be distributed goes under Internal notes. A judgment about a person goes nowhere, not even there: leave it out
+  and tell the user it was left out.
 - A decision, a risk, a change request or an action recorded in a register links back to the minutes by their path.

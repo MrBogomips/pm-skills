@@ -45,3 +45,4 @@ are invented; never commit real names.
 | Date | Version | Cases run | Outcome | Notes |
 |---|---|---|---|---|
 | 2026-11-25 | 1.1.0 | raise-next-id (headless, sonnet, writes disallowed) | pass | CR-004 proposed, Raised 2026-11-25, asked Requested by and Reason; shown before writing; sandbox CHANGES.md was incomplete, so it also reported validation errors |
+| 2026-11-26 | 1.6.0 | reject-at-once | pass | headless, sonnet, writes disallowed: skill loaded, read `shared/registers/changes.md`; proposed CR-005 `rejected`, `Recommendation: not assessed`, Decided by steering committee, no impacts; asked for the missing Reason and for the Raised date (Decided on cannot precede Raised); announced the decision-log handoff after writing. Wrote nothing |

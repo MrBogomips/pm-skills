@@ -29,3 +29,5 @@ Manual checks of the skill, run with `claude --plugin-dir <repo>` (or headless, 
 
 | Date | Version | Cases run | Outcome | Notes |
 |---|---|---|---|---|
+| 2026-11-26 | 1.6.0 | reviews-open-items, writes-no-register | partial | headless, sonnet, writes disallowed: the skill loaded both times. Open items listed by register with IDs (overdue actions, G-002, R-001, CR-003/004, open question) and the unreadable registers named; first of the one-at-a-time questions asked; no file written. With the pre-read and R-003 request no hand-off proposal yet (deferred to after the brief) and the pre-read was pointed at `publish-deliverable` instead of `action-log` |
+| 2026-11-26 | 1.6.0 | writes-no-register (re-run after fixes) | pass | headless, sonnet: skill loaded; acknowledged both tasks at once; handoff proposals shown for later (`action-log`: send the pre-read by 2026-11-27; `risk-register`: review R-003); no register edited; asked step 2 first |
