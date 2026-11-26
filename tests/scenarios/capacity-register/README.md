@@ -37,3 +37,5 @@ are invented; never commit real names.
 | Date | Version | Cases run | Outcome | Notes |
 |---|---|---|---|---|
 | 2026-11-25 | 1.1.0 | person-days-member (headless, sonnet, writes disallowed) | pass | 4.5 with 9 counted days, 12-08 off, 50% segment; 12-11 event listed as not subtracted |
+| 2026-11-26 | 1.6.0 | handoff-accepted | partial | headless, sonnet, declared: skill loaded; attempted the write (a Python edit) before showing it, blocked by the permission classifier; then showed the row, sorted the calendar, found no clash and offered the validator; fixture adapted (2026-11-30 instead of 2026-12-24, which the fixture already holds) |
+| 2026-11-26 | 1.6.0 | handoff-accepted (re-run after fixes) | pass | headless, sonnet: skill loaded; said accepting the handoff is not agreement to write, showed the sorted calendar row, found no duplicate, asked "Shall I write it?"; no write attempted |

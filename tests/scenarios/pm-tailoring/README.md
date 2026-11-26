@@ -38,3 +38,5 @@ are invented; never commit real names. The skill is user-invocable only: start e
 |---|---|---|---|---|
 | 2026-11-25 | 1.1.0 | approval-rule (headless, sonnet, writes disallowed) | pass | Proposed rules entry under change-request, asked the scope of 10 days before writing |
 | 2026-11-25 | 1.1.0 | refuses-loosening (headless, sonnet, writes disallowed) | pass | Refused, cited the write-confirmation guardrail, offered batched-confirmation alternatives |
+| 2026-11-26 | 1.6.0 | handoff-accepted | partial | headless, sonnet, declared: through the Skill tool the call is refused (`disable-model-invocation: true`) and nothing is done; started as a slash command it loaded, corrected the Point (`rules`, not `approval`), showed the change and waited for agreement; validation after writing not exercised |
+| 2026-11-26 | 1.6.0 | handoff-accepted (re-run after fixes) | pass | headless, sonnet, slash command: ran the ladder, moved the rule from the non-existent point `approval` to `rules`, showed the change, announced validation, waited for agreement; nothing written |

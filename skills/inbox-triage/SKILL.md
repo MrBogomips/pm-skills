@@ -1,6 +1,6 @@
 ---
 name: inbox-triage
-description: Triages the project's inbox folder - classifies each incoming file (minutes, transcript, change request, decision, risk, action, document), proposes the skill that should process it, and on confirmation files it and hands off. Routes only. Use for "triage the inbox", "process the inbox", "what's in the inbox", "sort incoming documents".
+description: Triages the project's inbox folder - classifies each incoming file (minutes, transcript, change request, decision, risk, action, document), proposes the skill that should process it, and on confirmation files it and hands off. Routes only. Use for "triage the inbox", "process the inbox", "what's in the inbox", "sort incoming documents"; not for minutes from a known file (meeting-minutes).
 ---
 
 # Inbox triage

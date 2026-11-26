@@ -34,3 +34,4 @@ are invented; never commit real names.
 | Date | Version | Cases run | Outcome | Notes |
 |---|---|---|---|---|
 | 2026-11-25 | 1.1.0 | remark-left-out (headless, sonnet, writes disallowed) | pass | Offered reactivating S-003, left out the remark and said why, proposed actions only, asked for levels |
+| 2026-11-26 | 1.6.0 | handoff-accepted | pass | headless, sonnet, no register (fixture has no STAKEHOLDERS.md): skill loaded; proposed creating the register and the Registers line, S-001 Sponsor and S-002 End users, asked for the six levels, owner and review; nothing written |

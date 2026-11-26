@@ -41,3 +41,4 @@ are invented; never commit real names.
 | Date | Version | Cases run | Outcome | Notes |
 |---|---|---|---|---|
 | 2026-11-25 | 1.2.0 | evm-figures, already-recorded, unapproved-cr | 3/3 pass | All EVM figures and reserves as expected; CR-002 duplicate and CR-004 unapproved both stopped before any write. |
+| 2026-11-26 | 1.6.0 | handoff-accepted | pass | headless, sonnet, register: skill loaded; checked CR-002 is approved, found it already funded (+8100.00 on B-001 = 15 days x 540) and refused a second entry of 5000.00 without an approved reference; the fixture already holds CR-002, so the case is better run with a new approved CR |

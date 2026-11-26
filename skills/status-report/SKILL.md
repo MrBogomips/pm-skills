@@ -55,6 +55,8 @@ what the reader has to decide, every claim backed by a register or a tool.
    open points. Write it with `status: draft`, `version: 1.0.0`, only after the user agrees.
 8. **Issue.** When the user approves, set `status: issued`. A later change to an issued report raises the version
    (`doc_naming.py bump <version> major|minor|patch`). Suggest `/pm-skills:publish-deliverable` to share it.
+9. **Hand off.** For each new risk, decision or change the report found, show a proposal block in the format of
+   `shared/handoff.md`, with no ID (never a computed one), and hand off to its keeper only when the user agrees.
 
 ## Always
 
@@ -67,9 +69,10 @@ what the reader has to decide, every claim backed by a register or a tool.
 
 - Never fill a gap with an estimate made while writing, and never write a color without its reason.
 - Never send, upload or publish the report: that is `/pm-skills:publish-deliverable`'s job, on the user's request.
-- Never write to the registers from here: propose a handoff to the keeper (`${CLAUDE_PLUGIN_ROOT}/shared/handoff.md`)
-  for what should go in the risk register or the decision log, and hand it over only when the user agrees. Follow-ups
-  for the project manager may go to `/pm-skills:action-log`.
+- Never write to the registers from here: for what should go in the risk register or the decision log, show a
+  proposal block in the format of `${CLAUDE_PLUGIN_ROOT}/shared/handoff.md` (Register, Source, Raised by, Fields, no
+  ID) and hand it over only when the user agrees. Follow-ups for the project manager may go to
+  `/pm-skills:action-log`.
 
 ## Extension points
 

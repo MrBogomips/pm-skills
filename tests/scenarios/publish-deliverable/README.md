@@ -30,3 +30,6 @@ Manual checks of the skill, run with `claude --plugin-dir <repo>` (or headless, 
 
 | Date | Version | Cases run | Outcome | Notes |
 |---|---|---|---|---|
+| 2026-11-26 | 1.6.0 | internal-notes-removed | pass | headless, sonnet, draft minutes: skill loaded; rendered with Pandoc to outbox/ without the `## Internal notes` section, converted the docx back to check it, left the Markdown source untouched and said the section was removed; the Italian heading not run |
+| 2026-11-26 | 1.6.0 | tools-row-by-handoff (re-run after fixes) | partial | headless, sonnet, issued report as pdf with only a Pandoc docx row: proposed the row and asked before rendering, did not write TOOLS.md; but it offers to hand the row to project-setup and prints no ready-to-paste `/pm-skills:project-setup` command (SKILL.md:40-43 not updated) |
+| 2026-11-26 | 1.6.0 | tools-row-by-handoff (re-run after fixes) | pass | headless, sonnet, issued report as pdf, only a Pandoc docx row: offered renderer options, asked for the output path before rendering, wrote nothing, and printed the ready-to-paste `/pm-skills:project-setup add tool: \| Pandoc-PDF \| publish \| cli:pandoc \| status-report → pdf \| read \|` (or widen the Pandoc row) |

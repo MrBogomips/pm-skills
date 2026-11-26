@@ -66,9 +66,11 @@ The flow:
 
 1. The skill shows its proposals, numbered, and asks which to hand off. You can accept all, some or none.
 2. For each accepted one it says it is handing off to the keeper and runs that skill with the proposals, one keeper
-   at a time.
+   at a time. `project-setup` and `pm-tailoring` only start when you run them yourself: for those, the skill prints
+   the proposals with the `/pm-skills:<keeper>` command ready to paste.
 3. The keeper treats a proposal as input, not an order: it applies its own rules, asks for what is missing, shows
-   you the change, writes it once you agree and validates the register.
+   you the change, writes it once you agree and validates the register. Accepting a proposal in step 1 is not
+   agreement to the write: the keeper always shows the change first.
 4. The keeper reports the IDs it assigned (such as `D-004`), and the first skill records them where it links to
    them, for example in the minutes.
 

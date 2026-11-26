@@ -1,6 +1,6 @@
 ---
 name: action-log
-description: Keeps the action log (ACTIONS.md) - actions, follow-ups and next steps with owner and due date, linked to work items - and shows the project manager's backlog, sorted by due date, across the registers. Use for "PM backlog", "my to-do", "what do I have to do", "open actions", "action items", "follow-ups", "add an action".
+description: Keeps the action log (ACTIONS.md) - actions, follow-ups and next steps with owner and due date, linked to work items - and shows the project manager's backlog, sorted by due date, across the registers. Use for "PM backlog", "my to-do", "what do I have to do", "open actions", "follow-ups", "add an action"; not the product backlog (backlog-refinement) or a meeting's minutes.
 ---
 
 # Action log
@@ -21,7 +21,8 @@ manager's backlog: those actions plus what the other registers say is due, by da
   what does not belong in the log. Read it before writing; do not restate it to the user.
 - **Tailoring**: the `## action-log` section of the tailoring register, when declared.
 - **Handoff proposals** from other skills (minutes, meeting preparation, inbox triage, status reports), per
-  `${CLAUDE_PLUGIN_ROOT}/shared/handoff.md`: input to check, not an order.
+  `${CLAUDE_PLUGIN_ROOT}/shared/handoff.md`: input to check, not an order. Accepting a proposal is not agreement to
+  write: show the change and wait for it.
 - **Team register**, read only: slugs for `Owner` and `Raised by`.
 - **Other registers, read only**, through the backlog script: risks, stakeholders, changes, gates.
 - **Tools** (from the tools register, by capability): `issues`, to read the state of a linked work item and, only
@@ -58,9 +59,9 @@ manager's backlog: those actions plus what the other registers say is due, by da
 7. **The backlog** ("PM backlog", "my to-do", "what do I have to do", "open actions"). Run, with the owner the user
    means (default the project manager) and a horizon if asked:
    `python3 "${CLAUDE_PLUGIN_ROOT}/shared/scripts/pm_backlog.py" <path to PROJECT.md> [--owner NAME] [--days N] [--today YYYY-MM-DD]`
-   (`--today` when the user gives the date) and present the table as printed: do not reorder it, recompute days or add rows. Group by what is overdue, due
-   this week and later or undated when the user wants a summary. Name what the script could not read. For an item
-   that is not an `AC-` action, say which skill keeps it (`R-` risk-register, `S-` stakeholder-register, `CR-`
+   (`--today` when the user gives the date) and present the table as printed: do not reorder it, recompute days or
+   add rows. Group by what is overdue, due this week and later or undated when the user wants a summary. Name what
+   the script could not read. For an item that is not an `AC-` action, say which skill keeps it (`R-` risk-register, `S-` stakeholder-register, `CR-`
    change-request, `G-` phase-gate-review): offer to run it, never edit that register from here.
 8. **Validate** after every write, fixing until it exits 0:
    `python3 "${CLAUDE_PLUGIN_ROOT}/shared/scripts/actions_register.py" validate <path>`.

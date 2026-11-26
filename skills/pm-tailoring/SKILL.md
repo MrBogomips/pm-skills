@@ -27,6 +27,7 @@ highlight report") into the lightest change that meets it, shows the change, and
 - **Registers**: `TAILORING.md` (kept here) and `TOOLS.md` (kept by `project-setup`) when declared; the Working
   documents section of the instruction file.
 - **Handoff proposals** per `${CLAUDE_PLUGIN_ROOT}/shared/handoff.md`, for `TAILORING.md`: input to check, not an order.
+  Accepting a proposal is not agreement to write: show the change and wait for it.
 
 ## Steps
 
@@ -50,8 +51,8 @@ highlight report") into the lightest change that meets it, shows the change, and
       rule ("Use the template `<path>`"). Only for a skill that declares `format`.
    4. **Tool or renderer** in `TOOLS.md`: when the need is a system to read or write, or a distribution format.
       Prepare the row (Purpose from the vocabulary, Access, Scope, Mode `read` unless the user wants skills to write
-      there) after checking the tool can be reached with a harmless read; it goes to `/pm-skills:project-setup` as a
-      handoff proposal, which keeps `TOOLS.md`.
+      there) after checking the tool can be reached with a harmless read; it goes to `project-setup`, which keeps
+      `TOOLS.md`, as a handoff proposal (step 5).
    5. **Project skill**: only when no step above meets the need and a tool must be made easier or safer to use. Walk
       the reuse ladder first and say what each step offers: a skill of this plugin; a skill already in the session
       (the user's or the organization's, including templates); an MCP server or a CLI; a script of the project, the
@@ -63,7 +64,8 @@ highlight report") into the lightest change that meets it, shows the change, and
    register, propose `TAILORING.md` with its title and the line `- Tailoring register: \`TAILORING.md\`` in the
    Registers section of `PROJECT.md`, both shown together.
 5. **Write** `TAILORING.md` only after the user agrees, then validate until exit status 0; hand a `TOOLS.md` row
-   to `/pm-skills:project-setup` (`handoff.md`) and report the result:
+   to `project-setup` as a proposal printed with the command `/pm-skills:project-setup` ready to paste (that skill
+   only starts when the user runs it, `handoff.md`), and report the result:
 
    ```bash
    python3 "${CLAUDE_PLUGIN_ROOT}/shared/scripts/tailoring_register.py" validate <TAILORING.md>

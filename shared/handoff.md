@@ -59,9 +59,13 @@ One block per entry, shown to the user with the rest of the skill's output, numb
 
 1. The proposing skill shows its proposals and asks which ones to hand off. The user may accept all, some or none.
 2. For the accepted ones it says "Handing off to `/pm-skills:<keeper>`" and runs that skill with the proposals as
-   its input, one keeper at a time.
+   its input, one keeper at a time. A keeper the user starts on purpose only (`project-setup`, `pm-tailoring`: their
+   `disable-model-invocation` stops another skill from running them) is not run: print the proposals with the
+   command `/pm-skills:<keeper>` ready to paste, and ask the user to run it.
 3. The keeper treats a proposal as input, not as an order: it applies its own rules and steps, asks for what is
-   missing, shows the change, writes on the user's agreement and validates. It reports the IDs it assigned.
+   missing, shows the change, writes on the user's agreement and validates. It reports the IDs it assigned. The
+   user's acceptance in step 1 covers sending the proposal, not the change: the keeper always shows the change and
+   waits for agreement before it writes.
 4. The proposing skill resumes: it records those IDs where it links to them (the minutes, the charter) and reports
    what was handed off, what was written and what was declined.
 

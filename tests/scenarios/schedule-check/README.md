@@ -42,3 +42,4 @@ are invented; never commit real names.
 | Date | Version | Cases run | Outcome | Notes |
 |---|---|---|---|---|
 | 2026-11-25 | 1.2.0 | check-register, baseline-edit-refused, baseline-unapproved-cr | 3/3 pass | Finish 2027-02-16, +22 days, deadline missed (float -12); B-02 refused edit; CR-004 not cited, nothing written. |
+| 2026-11-26 | 1.6.0 | handoff-accepted | pass | headless, sonnet, register: skill loaded; validated and ran the schedule script, asked for the dates' source, the baseline name, a CR and the approver, computed B-03; nothing written |

@@ -33,3 +33,5 @@ real names.
 | Date | Version | Cases run | Outcome | Notes |
 |---|---|---|---|---|
 | 2026-11-24 | 1.0.0 | migrates-0x, checklist-first | pass | headless, sonnet, writes not allowed: one proposal with PROJECT.md, TOOLS.md rows from `Sources:` (read) and the AGENTS.md line; asked for Identity and Profile in one round. It asked whether to remove `Sources:` from TEAMS.md: step 2 now says to remove it |
+| 2026-11-26 | 1.6.0 | handoff-accepted-tools-row | fail | headless, sonnet, configured project: with the Skill tool the call is refused (`disable-model-invocation: true`), so a proposer cannot run the keeper; started as a slash command the skill loaded but appended the row with a Bash `printf >>` before showing it (blocked by the permission classifier); prompt wording "I accept it" may have invited it; see the report |
+| 2026-11-26 | 1.6.0 | handoff-accepted-tools-row (re-run after fixes) | pass | headless, sonnet, slash command, no "I accept it": showed the row, validated it on a scratch copy only, asked about the Access name and Mode `read` vs `write`, waited for agreement; TOOLS.md untouched |

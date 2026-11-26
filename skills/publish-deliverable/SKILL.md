@@ -39,7 +39,8 @@ it only where and when the user says. The Markdown stays the source; the output 
    Never build a new skill or script here; if nothing fits, suggest `/pm-skills:pm-tailoring` (planned) and stop.
    Prepare the `TOOLS.md` row for the chosen renderer (`| <name> | publish | <kind>:<target> | <type> → <format> | read |`,
    or `write` when it delivers outside the project) as a handoff proposal (`${CLAUDE_PLUGIN_ROOT}/shared/handoff.md`)
-   and, when the user agrees, hand it to `/pm-skills:project-setup`, which writes and validates it. With no tools
+   and print it with the command `/pm-skills:project-setup` ready to paste: that skill only starts when the user runs
+   it, then writes and validates the row. With no tools
    register, render with the chosen renderer for this session only and suggest `/pm-skills:project-setup`.
 5. **Remove internal notes.** A `meeting-minutes` document may hold a level-2 section headed `Internal notes`
    (`Note interne` in Italian): notes for internal use only. Always take it out of what is rendered or sent, never

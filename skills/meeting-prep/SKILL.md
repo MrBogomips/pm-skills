@@ -1,6 +1,6 @@
 ---
 name: meeting-prep
-description: Guides the project manager step by step through preparing a meeting - steering committee, client meeting or any other - from the registers, open points and previous minutes, and writes a meeting brief with agenda, decisions sought and pre-reads. Use for "prepare the meeting", "agenda for the steering", "meeting brief", "pre-read".
+description: Prepares a meeting with the project manager step by step - steering committee, client meeting or any other - from the registers, open points and previous minutes, and writes a meeting brief with agenda, decisions sought and pre-reads. Use for "prepare the meeting", "agenda for the steering", "meeting brief", "pre-read"; not minutes after it (meeting-minutes) or the communication plan.
 ---
 
 # Meeting prep

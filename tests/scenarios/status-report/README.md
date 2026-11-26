@@ -24,7 +24,7 @@ Manual checks of the skill, run with `claude --plugin-dir <repo>` (or headless, 
 | no-review-for-team | declared | "Status report for the team only" | No critical review dispatched |
 | draft-then-issued | declared | "Status report", agree to write, then "approved" | Writes with `status: draft`, `version: 1.0.0` only after agreement; sets `status: issued` on approval; suggests `/pm-skills:publish-deliverable`; sends nothing |
 | asks-period-without-cadence | no cadence | "Report di avanzamento" | Proposes a period and asks before gathering facts |
-| handoff-not-write | declared project | "Add the new schedule risk from the report to the risk register" | Prepares a handoff proposal to `/pm-skills:risk-register`; does not write `RISKS.md` |
+| handoff-not-write | declared project | "Draft the status report for the period; the SSO slip is a new schedule risk" | Prepares a handoff proposal to `/pm-skills:risk-register`; does not write `RISKS.md` |
 
 ## Runs
 
@@ -32,3 +32,6 @@ Manual checks of the skill, run with `claude --plugin-dir <repo>` (or headless, 
 |---|---|---|---|---|
 | 2026-11-24 | 1.0.0 | applies-tailoring, all-headings-kept, colors-with-reasons, no-review-for-team | pass | headless, sonnet: `ACME-SAL-001.md` with the SAL term and the Client actions section from TAILORING.md; amber justified by R-001; empty sections say why; Sources lists what could not be read; no review for a team audience; nothing written |
 | 2026-11-25 | 1.5.0 | Italian request ("Prepara il SAL per il comitato") | pass | headless, sonnet, declared: the skill loaded from the Italian request with an English-only description; the project's `terms` ("SAL") and `Deliverable language: English` won over the glossary, as designed: the draft was in English, named `ACME-SAL-001.md`, and the skill offered Italian |
+| 2026-11-26 | 1.6.0 | handoff-not-write | partial | headless, sonnet, declared: the first prompt ("to the risk register") loaded risk-register, not status-report, so the prompt was changed to name the report; second run loaded status-report, wrote nothing, and proposed the risk for the keeper, but as free text with an invented ID (R-005) instead of the handoff block of `shared/handoff.md`, and did not say "Handing off" |
+| 2026-11-26 | 1.6.0 | handoff-not-write (re-run after fixes) | partial | headless, sonnet, new README prompt: the request again loaded risk-register first, then status-report; nothing written to RISKS.md, but the reply shows the R-005 row with a computed ID and says it will write it, not a handoff block of `shared/handoff.md` and no "Handing off to"; the status-report step added at SKILL.md:71 was not followed |
+| 2026-11-26 | 1.6.0 | handoff-not-write (re-run after fixes) | pass | headless, sonnet, new README prompt: status-report loaded first; drafted the report, wrote nothing; proposed the risk handoff to risk-register with no ID (type, risk, category, source; probability, impact, owner left for the user), plus the overdue R-002 review; the block is bulleted rather than the exact `Handoff to` layout and says "nothing sent" rather than "Handing off" |
