@@ -18,7 +18,7 @@ item must decide, what to send beforehand. Produces a meeting brief; changes no 
   `/pm-skills:project-setup`; you may still prepare in the session, inventing no configuration.
 - **Registers**, those declared, read only: actions (`ACTIONS.md`), decisions, risks, changes, gates, stakeholders
   (roles and levels, never contacts). For the open actions you may run
-  `python3 "${CLAUDE_PLUGIN_ROOT}/shared/scripts/pm_backlog.py" --project <PROJECT.md>`: the PM backlog view of
+  `python3 "${CLAUDE_PLUGIN_ROOT}/shared/scripts/pm_backlog.py" <path to PROJECT.md> --owner all`: the PM backlog view of
   `action-log`.
 - **Documents**: the previous minutes of the same kind of meeting (their Actions and Open questions), and the
   communication plan, when it exists: the meeting's row gives its kind, cadence, participants and record.
