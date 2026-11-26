@@ -24,6 +24,7 @@ are invented; never commit real names.
 | stale-wbs-reference | stale wbs | "Check the RACI matrix" | Reports RA-002 pointing to 3.1, missing from the latest WBS; proposes 3.2; changes nothing before the user agrees |
 | who-is-accountable | declared | "Chi è responsabile delle release notes?" | Answers in Italian: the Product owner is accountable, Developers responsible; no person named unless asked |
 | no-project-register | no project | "RACI matrix for the portal" | Suggests `/pm-skills:project-setup`; goes on only on a path the user names; invents no configuration |
+| handoff-accepted | declared | A handoff proposal: add a row for work package 3.2 with Tech lead accountable | Checks one accountable role per row, computes the RA- ID, shows, writes on agreement, validates and reports the ID |
 
 ## Runs
 
@@ -33,3 +34,4 @@ are invented; never commit real names.
 | 2026-11-25 | 1.3.1 | setup-from-wbs, role-not-in-registers, person-as-column-refused, two-accountable-rejected, stale-wbs-reference, who-is-accountable (re-run), no-project-register (headless, writes disallowed) | setup-from-wbs pass; role-not-in-registers pass; person-as-column-refused partial; two-accountable-rejected pass; stale-wbs-reference pass; who-is-accountable pass; no-project-register pass | person-as-column-refused: did not ask which role Ada holds; offered an option to add an 'Ada L.' column (person name in the matrix) next to the role columns, wrote nothing. who-is-accountable: Italian, roles only, and offered the names only on request (the earlier gap is closed) |
 | 2026-11-25 | 1.3.1 | person-as-column-refused (re-run after fixes, headless, writes disallowed) | partial | No person column offered any more and nothing written, but it did not ask which role Ada holds; asked 'which file or table do you mean' instead |
 | 2026-11-25 | 1.3.1 | person-as-column-refused, prompt naming the RACI matrix (headless, writes disallowed) | pass | Wrote nothing; offered no person column; asked which role to use (Developers already a column, Reviewer missing) with empty letters until the user decides |
+| 2026-11-26 | 1.6.0 | handoff-accepted | pass | headless, sonnet, stale wbs: skill loaded; computed RA-004, checked one A and one R, found 3.1 stale in RA-002 and Tech lead in no register, asked to confirm the A and the empty cells; nothing written |

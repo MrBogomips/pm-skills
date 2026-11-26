@@ -59,6 +59,7 @@ Without a register the skill starts by setting one up and warns that the file ma
 - Writes `STAKEHOLDERS.md` in the format of
   [`shared/registers/stakeholders.md`](../../shared/registers/stakeholders.md), and once, with your consent, the
   `Stakeholder register` line in `PROJECT.md`.
+- Takes changes handed off by other skills (for example from meeting minutes), checks them against its own rules, and reports the IDs it assigned.
 
 ## Requirements
 

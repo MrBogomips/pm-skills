@@ -35,6 +35,7 @@ requests.
 | schedule | cronoprogramma, pianificazione temporale | `SCHEDULE.md` |
 | tailoring register | registro di tailoring | `TAILORING.md`; "tailoring" kept in English |
 | tools register | registro degli strumenti | `TOOLS.md` |
+| action log | registro delle azioni | `ACTIONS.md` |
 
 ## Documents
 
@@ -43,6 +44,7 @@ requests.
 | project charter | project charter, carta del progetto, atto costitutivo del progetto | the English name is the most common in Italian practice |
 | status report | report di avanzamento, stato avanzamento lavori (SAL) | "SAL" also names a progress statement tied to a payment in a contract: ask when it is unclear |
 | meeting minutes | verbale di riunione, verbale | to write the minutes: "verbalizzare" |
+| meeting brief | scheda di preparazione della riunione, brief della riunione | `meeting-prep`; "brief" kept in English as a synonym |
 | action item | azione, punto d'azione | |
 | lessons learned | lezioni apprese, lessons learned | "post-mortem" kept in English |
 | communication plan | piano di comunicazione, piano delle comunicazioni | |
@@ -58,6 +60,25 @@ requests.
 | retrospective | retrospettiva, retro | |
 | sprint review | Sprint Review, revisione dello Sprint, esito dello Sprint | Scrum event, kept in English |
 | phase gate review | revisione di fase, passaggio di fase, gate di fase | "go/no-go" kept in English |
+
+## Meetings, actions and intake
+
+| English | Italian | Note |
+|---|---|---|
+| PM backlog | backlog del PM, cose da fare del PM | `action-log` |
+| keeper (of a register) | custode del registro, skill custode | |
+| handoff | handoff, passaggio alla skill custode | "handoff" kept in English |
+| inbox | inbox, cartella dei materiali in arrivo | the folder, kept in English |
+| triage | smistamento, triage | `inbox-triage` |
+| to route | instradare | |
+| transcript | trascrizione, transcript | |
+| pre-read | materiale preliminare, pre-read | |
+| decision sought | decisione richiesta | |
+| imported minutes | verbale importato | minutes written by others |
+| finding | rilievo | `register-reviewer` |
+| consistency (between registers) | coerenza | |
+| alignment (with the project) | allineamento | |
+| not assessed | non valutata | a change request rejected at once |
 
 ## Planning, cost and control
 
@@ -157,6 +178,7 @@ Schedule, Sprint Goal, Working agreements) use that row.
 | Approved changes | Modifiche approvate | |
 | Assessment | Valutazione | |
 | Assumptions | Ipotesi | |
+| Attendees | Partecipanti | |
 | Audiences | Destinatari | |
 | Authority | Autorità | |
 | Budget summary | Sintesi del budget | |
@@ -164,6 +186,7 @@ Schedule, Sprint Goal, Working agreements) use that row.
 | Changes from the previous version | Modifiche rispetto alla versione precedente | |
 | Communications | Comunicazioni | |
 | Constraints and assumptions | Vincoli e ipotesi | |
+| Content brief | Sintesi dei contenuti | |
 | Context | Contesto | |
 | Dates | Date | |
 | Decisions | Decisioni | |
@@ -179,18 +202,22 @@ Schedule, Sprint Goal, Working agreements) use that row.
 | Gate and criteria | Gate e criteri | |
 | Handling disagreements | Gestione dei disaccordi | |
 | High-level risks | Rischi di alto livello | |
+| Internal notes | Note interne | removed before publishing |
 | Keep | Da mantenere | |
 | Meetings | Riunioni | |
 | Next period | Prossimo periodo | |
 | Not delivered | Non consegnato | |
 | Now, Next, Later | Ora, Prossimamente, Più avanti | |
+| Objective | Obiettivo | |
 | Objectives and success criteria | Obiettivi e criteri di successo | |
 | Open conditions | Condizioni aperte | |
+| Open items | Punti aperti | |
 | Open points | Punti aperti | |
 | Open questions | Questioni aperte | |
 | Out of scope | Fuori ambito | |
 | Outcomes | Risultati | |
 | Phases and gates | Fasi e gate | |
+| Pre-reads | Materiali preliminari | |
 | Previous actions | Azioni precedenti | |
 | Product Backlog adaptations | Adattamenti del Product Backlog | |
 | Purpose | Scopo | |

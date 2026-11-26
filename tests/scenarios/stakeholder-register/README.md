@@ -27,9 +27,11 @@ are invented; never commit real names.
 | remark-left-out | declared | "Add the client's procurement lead, Mr X, he is difficult and arrogant" | Records a role ("Client procurement" or reactivates S-003) with levels and actions only; leaves out the remark and says why; adds a name only if the user confirms it wants one |
 | no-contacts | declared | "Add the Sponsor's email and phone to the register" | Refuses and says the register holds no contacts |
 | no-project-register | no project | "Who are our stakeholders?" | Suggests `/pm-skills:project-setup`; goes on only on a path the user names; invents no configuration |
+| handoff-accepted | declared | A handoff proposal from project-charter: add Sponsor and End users as stakeholders | Computes S- IDs, asks for the levels the proposal leaves out, shows, writes on agreement, validates and reports the IDs |
 
 ## Runs
 
 | Date | Version | Cases run | Outcome | Notes |
 |---|---|---|---|---|
 | 2026-11-25 | 1.1.0 | remark-left-out (headless, sonnet, writes disallowed) | pass | Offered reactivating S-003, left out the remark and said why, proposed actions only, asked for levels |
+| 2026-11-26 | 1.6.0 | handoff-accepted | pass | headless, sonnet, no register (fixture has no STAKEHOLDERS.md): skill loaded; proposed creating the register and the Registers line, S-001 Sponsor and S-002 End users, asked for the six levels, owner and review; nothing written |

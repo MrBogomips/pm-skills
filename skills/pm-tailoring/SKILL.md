@@ -24,7 +24,10 @@ highlight report") into the lightest change that meets it, shows the change, and
 - **The extension points** each skill declares:
   `python3 "${CLAUDE_PLUGIN_ROOT}/shared/scripts/tailoring_register.py" points` (one line per skill,
   `<skill>: <points>` or `none`), and the skill's own **Extension points** section for what each point covers.
-- **Registers**: `TAILORING.md` and `TOOLS.md` when declared; the Working documents section of the instruction file.
+- **Registers**: `TAILORING.md` (kept here) and `TOOLS.md` (kept by `project-setup`) when declared; the Working
+  documents section of the instruction file.
+- **Handoff proposals** per `${CLAUDE_PLUGIN_ROOT}/shared/handoff.md`, for `TAILORING.md`: input to check, not an order.
+  Accepting a proposal is not agreement to write: show the change and wait for it.
 
 ## Steps
 
@@ -47,8 +50,9 @@ highlight report") into the lightest change that meets it, shows the change, and
       templates (else ask), keeping the common frontmatter of `common.md`; it is tied to the skill by a `format`
       rule ("Use the template `<path>`"). Only for a skill that declares `format`.
    4. **Tool or renderer** in `TOOLS.md`: when the need is a system to read or write, or a distribution format.
-      Propose the row (Purpose from the vocabulary, Access, Scope, Mode `read` unless the user wants skills to write
-      there) after checking the tool can be reached with a harmless read.
+      Prepare the row (Purpose from the vocabulary, Access, Scope, Mode `read` unless the user wants skills to write
+      there) after checking the tool can be reached with a harmless read; it goes to `project-setup`, which keeps
+      `TOOLS.md`, as a handoff proposal (step 5).
    5. **Project skill**: only when no step above meets the need and a tool must be made easier or safer to use. Walk
       the reuse ladder first and say what each step offers: a skill of this plugin; a skill already in the session
       (the user's or the organization's, including templates); an MCP server or a CLI; a script of the project, the
@@ -59,15 +63,17 @@ highlight report") into the lightest change that meets it, shows the change, and
 4. **Show the change**: the exact lines and the file, with the ladder step and the reason. With no tailoring
    register, propose `TAILORING.md` with its title and the line `- Tailoring register: \`TAILORING.md\`` in the
    Registers section of `PROJECT.md`, both shown together.
-5. **Write** only after the user agrees, then validate until exit status 0:
+5. **Write** `TAILORING.md` only after the user agrees, then validate until exit status 0; hand a `TOOLS.md` row
+   to `project-setup` as a proposal printed with the command `/pm-skills:project-setup` ready to paste (that skill
+   only starts when the user runs it, `handoff.md`), and report the result:
 
    ```bash
    python3 "${CLAUDE_PLUGIN_ROOT}/shared/scripts/tailoring_register.py" validate <TAILORING.md>
-   python3 "${CLAUDE_PLUGIN_ROOT}/shared/scripts/tools_register.py" validate <TOOLS.md>
    python3 "${CLAUDE_PLUGIN_ROOT}/shared/scripts/project_register.py" validate <PROJECT.md>
    ```
 
-   Run the ones for the files you changed. A project skill is recorded in `TOOLS.md` with Access `skill:<name>`.
+   Run the second one only when you added the `Tailoring register` line. A project skill is recorded in
+   `TOOLS.md` with Access `skill:<name>`, through the same handoff.
 6. **Report** what changed, where, which skill will apply it and from when (its next run), and what was refused and
    why.
 
@@ -84,6 +90,7 @@ highlight report") into the lightest change that meets it, shows the change, and
   contract.
 - Never write a secret or a contact into `TAILORING.md` or `TOOLS.md`.
 - Never edit the plugin's own files: tailoring lives in the project.
+- Never write `TOOLS.md` or any register but `TAILORING.md`: hand off to the keeper.
 
 ## Extension points
 

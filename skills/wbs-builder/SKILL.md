@@ -61,8 +61,9 @@ schedule.
 
 ## Never
 
-- Never write `RACI.md`, `SCHEDULE.md` or any other register: report what they need and suggest the skill that owns
-  them.
+- Never write to the registers from here: propose a handoff to the keeper (`${CLAUDE_PLUGIN_ROOT}/shared/handoff.md`)
+  for what should go in `RACI.md`, `SCHEDULE.md` or any other register, and hand it over only when the user agrees.
+  Follow-ups for the project manager may go to `/pm-skills:action-log`.
 - Never create or change work items without a `Mode: write` tool and the user's confirmation on the itemized list.
 - Never add scope the sources do not hold: an item the user wants that the scope source excludes is a change, so
   suggest `/pm-skills:change-request`.

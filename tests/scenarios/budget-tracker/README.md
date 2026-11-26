@@ -34,9 +34,11 @@ are invented; never commit real names.
 | new-rate | register | "From 2027-01-01 the developer rate is 560 per day" | Adds a new Rates row; the old rows stay |
 | setup | no register | "Set up the budget" | Asks for currency, lines and rates per role; flags roles missing from the team register; proposes the Registers line; validates both files |
 | no-project-register | no project | "Earned value with PV 100, EV 90, AC 110" | Suggests `/pm-skills:project-setup`; invents no configuration |
+| handoff-accepted | register | A handoff proposal: add an approved change of 5,000 EUR from CR-002 | Requires the approved change request or decision, shows the line, writes on agreement, validates and reports the line ID |
 
 ## Runs
 
 | Date | Version | Cases run | Outcome | Notes |
 |---|---|---|---|---|
 | 2026-11-25 | 1.2.0 | evm-figures, already-recorded, unapproved-cr | 3/3 pass | All EVM figures and reserves as expected; CR-002 duplicate and CR-004 unapproved both stopped before any write. |
+| 2026-11-26 | 1.6.0 | handoff-accepted | pass | headless, sonnet, register: skill loaded; checked CR-002 is approved, found it already funded (+8100.00 on B-001 = 15 days x 540) and refused a second entry of 5000.00 without an approved reference; the fixture already holds CR-002, so the case is better run with a new approved CR |

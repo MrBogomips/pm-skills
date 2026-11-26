@@ -11,6 +11,7 @@ from pathlib import Path
 from types import ModuleType
 from typing import Optional
 
+import actions_register
 import budget_register
 import capacity_register
 import changes_register
@@ -40,6 +41,7 @@ MODULES: dict[str, ModuleType] = {
     "Schedule register": schedule_register,
     "RACI matrix": raci_register,
     "Gate register": gates_register,
+    "Action log": actions_register,
 }
 
 

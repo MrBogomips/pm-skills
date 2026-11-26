@@ -5,6 +5,9 @@ took them, so that later work can rely on them and later readers know why. `deci
 `meeting-minutes` proposes entries for it. It is declared in the Registers section of `PROJECT.md` as
 `` - Decision log: `DECISIONS.md` ``.
 
+Kept by: `decision-log`. Only this skill writes the register; any other skill hands its changes off to it, as
+`shared/handoff.md` says.
+
 ## Example
 
 ```markdown

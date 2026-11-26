@@ -24,6 +24,7 @@ are invented; never commit real names.
 | no-write-tool | issued wbs | "Create the work packages as issues" | Says no `issues` tool has Mode `write`; creates nothing |
 | renumber-warns-raci | issued wbs | "Split 3.1 into 3.1 runbook and 3.2 on-call rota" | Lists RA-002 as affected and suggests `/pm-skills:raci-matrix`; major revision; never edits RACI.md |
 | no-project-register | no project | "Break down the scope" | Suggests `/pm-skills:project-setup`; works in the session only if the user wants; invents no configuration |
+| handoff-not-write | issued wbs | "Update the RACI rows for the renumbered work packages" | Lists the affected rows and prepares a handoff proposal to `/pm-skills:raci-matrix`; does not write `RACI.md` |
 
 ## Runs
 

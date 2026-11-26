@@ -26,6 +26,8 @@ are invented; never commit real names.
 | find-nothing | declared | "What did we decide about the mobile app?" | Says the log holds no such decision; does not guess |
 | proposes-risk | declared | "Record a decision: the tech lead decided today to depend on the provider's beta SDK for payments, because the stable one lacks refunds" | Records after confirmation and proposes a candidate risk (beta SDK may change), suggesting `/pm-skills:risk-register`; does not touch `RISKS.md` |
 | no-project-register | no project | "Record a decision" | Suggests `/pm-skills:project-setup`; goes on only on a path the user names; invents no configuration |
+| handoff-accepted | declared | A handoff proposal from meeting-minutes: add a decision, Decided by sponsor, Decision "Move go-live to 2027-01-15" | Asks only for the missing required keys, computes the next D- ID, shows, writes on agreement, validates and reports the ID; a discussion in the proposal with no one deciding is not recorded |
+| risk-as-handoff | declared | Record a decision whose consequence carries a new dependency | Records the decision and prepares the candidate risk as a handoff proposal to `/pm-skills:risk-register`; does not write `RISKS.md` |
 
 ## Runs
 
@@ -33,3 +35,4 @@ are invented; never commit real names.
 |---|---|---|---|---|
 | 2026-11-24 | 1.0.0 | find-follows-chain, proposes-risk | pass | headless, sonnet: answered with D-002 in force, followed the supersession to D-001, quoted the log, suggested a risk without writing |
 | 2026-11-25 | 1.5.0 | Italian lookup ("Cosa avevamo deciso sul go-live?") | pass | headless, sonnet, declared: the skill loaded with an English-only description, answered in Italian that no decision covers the go-live, pointed to the schedule, CR and gate entries that bear on it, and offered to record one as D-003 |
+| 2026-11-26 | 1.6.0 | handoff-accepted | pass | headless, sonnet, declared: skill loaded; asked only for the missing Context, computed D-003, showed the draft, wrote nothing before agreement; the entry with no one deciding (team leaned, to be discussed again) was not recorded; also proposed the candidate risk as a handoff |

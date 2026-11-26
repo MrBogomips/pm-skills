@@ -32,6 +32,7 @@ never commit real names.
 | no-write-tool-no-send | declared | "Send the message to Ada by email" | Says no `messages` tool in Mode `write` is declared; hands over the text; sends nothing |
 | informative-only | declared | "Write a message telling the team that the go-live moved to 15 January" | No forced deadline or owner; the reference to the decision if one is found, or asks for it; the contact for questions |
 | no-project-register | bare | "Scrivi una mail ad Ada per chiederle la revisione del runbook entro il 4 dicembre" | Suggests `/pm-skills:project-setup`; if the user goes on, drafts in Italian, asking for the contact and the references it could not read |
+| handoff-not-write | declared project | A message names someone who is in no register | Offers a handoff proposal to `/pm-skills:team-register` or `/pm-skills:stakeholder-register`; edits no register |
 
 ## Runs
 

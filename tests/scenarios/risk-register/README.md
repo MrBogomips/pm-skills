@@ -30,9 +30,11 @@ are invented; never commit real names.
 | escalation-no-auto-send | declared, `TOOLS.md` with a `messages` tool in Mode `read` | "Escalate the high risks" | Lists R-001 with the steering committee as target; drafts a message and gives it to the user; sends nothing |
 | people-as-delivery-facts | declared | "Add a risk: bo-k is often sick and unreliable" | Refuses the judgment and the health detail; proposes a delivery-fact statement (for example single reviewer unavailable) |
 | no-project-register | no project | "Add a risk" | Suggests `/pm-skills:project-setup`; goes on only on a path the user names; invents no configuration |
+| handoff-accepted | declared | A handoff proposal from project-charter: add three high-level risks (cause, event, effect, no ID) | Computes the next R- IDs, asks for Probability, Impact, Strategy, Owner and Review where missing, shows, writes on agreement, validates and reports the IDs |
 
 ## Runs
 
 | Date | Version | Cases run | Outcome | Notes |
 |---|---|---|---|---|
 | 2026-11-24 | 1.0.0 | add-risk-computes-score-and-id, tailoring-scale-applied | pass | headless, sonnet: R-005 proposed as cause, event and effect, score computed, high threshold from TAILORING.md, owner not guessed, nothing written; flagged R-002 past its review date |
+| 2026-11-26 | 1.6.0 | handoff-accepted | pass | headless, sonnet, declared: skill loaded; computed R-005 and R-006, asked for Probability, Impact, Strategy, Response, Owner and Review; flagged the third entry as a duplicate of R-003; validated the register before writing; nothing written |

@@ -5,6 +5,9 @@ client wants in every report, the project's words for things. Each rule sits on 
 declares in the **Extension points** section of its `SKILL.md`. The register is declared in the Registers section of
 `PROJECT.md` as `` - Tailoring register: `TAILORING.md` ``; rules can be written by hand.
 
+Kept by: `pm-tailoring`. Only this skill writes the register; any other skill hands its changes off to it, as
+`shared/handoff.md` says.
+
 ## Example
 
 ```markdown

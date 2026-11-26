@@ -61,5 +61,5 @@ A project register (`/pm-skills:project-setup`) and a tools register with an `is
 ## Limitations
 
 - Done-ness is judged on what the tools show; a missing Definition of Done file narrows it to the tracker's state.
-- Never records risks or decisions itself: it suggests `/pm-skills:risk-register` and `/pm-skills:decision-log`.
+- Never records risks or decisions itself: it hands proposals to `/pm-skills:risk-register` and `/pm-skills:decision-log`.
 - Never sends the review: use `/pm-skills:publish-deliverable`.

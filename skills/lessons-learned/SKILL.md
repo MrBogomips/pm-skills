@@ -57,7 +57,10 @@ differently, each point backed by a fact. It can be written at any gate, not onl
 
 - Never record who said what, attribute a point to a person, or judge, rank or appraise anyone.
 - Never write a follow-up action without an owner and a due date.
-- Never write to a register or a tool.
+- Never write to the registers from here: propose a handoff to the keeper (`${CLAUDE_PLUGIN_ROOT}/shared/handoff.md`)
+  for what should go in a register, and hand it over only when the user agrees. Follow-ups for the project manager may
+  go to `/pm-skills:action-log`.
+- Never write to a tool.
 - Never apply a tailoring rule that loosens a guardrail; say that it was ignored and why.
 
 ## Extension points

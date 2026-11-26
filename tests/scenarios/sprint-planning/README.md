@@ -30,6 +30,7 @@ Manual checks of the skill, run with `claude --plugin-dir <repo>` (or headless, 
 | no-capacity-register | no capacity | "Plan the sprint" | Says there is no capacity register, asks for availability or plans without it, suggests `/pm-skills:capacity-register` |
 | write-sprint-confirmed | declared, Jira reachable | "Plan the sprint", agree, then "create it in Jira" | Shows an itemized list (sprint, goal, dates, each item) and writes only what is confirmed; the plan written with `status: draft` only after agreement |
 | kanban-replenishment | kanban | "Sprint planning" | Says in two lines there is no sprint; proposes the items to pull against the WIP limit; writes nothing |
+| handoff-not-write | declared project | "Record the over-commitment as a risk" | Prepares a handoff proposal to `/pm-skills:risk-register`; does not write `RISKS.md` |
 
 ## Runs
 

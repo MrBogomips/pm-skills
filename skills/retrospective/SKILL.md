@@ -56,8 +56,9 @@ change and try, with actions that have an owner and a date and are followed up a
 7. **Actions as work items**, only when the user asks and only through an `issues` tool with `Mode: write`: show the
    itemized list (title, owner, due date, a link to the retrospective) and create only those the user confirms;
    add the item keys to the Actions table as a patch revision.
-8. **Report** what you read, what you inferred and what you could not read; suggest `/pm-skills:risk-register` or
-   `/pm-skills:decision-log` when a point is a risk or a decision rather than an improvement.
+8. **Report** what you read, what you inferred and what you could not read; propose a handoff to `/pm-skills:risk-register` or
+   `/pm-skills:decision-log` when a point is a risk or a decision rather than an improvement; follow-ups for the
+   project manager may go to `/pm-skills:action-log`.
 
 ## Always
 
@@ -70,6 +71,7 @@ change and try, with actions that have an owner and a date and are followed up a
 - Never record who said what, attribute a point to a person, or count votes per person.
 - Never judge, rank or appraise anyone, and never write a fact about one person's work here.
 - Never write an action without an owner and a due date.
+- Never write to the registers: hand off per `${CLAUDE_PLUGIN_ROOT}/shared/handoff.md`.
 - Never create or change work items without a `Mode: write` tool and the user's confirmation on the itemized list.
 
 ## Extension points

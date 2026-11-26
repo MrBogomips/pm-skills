@@ -54,4 +54,4 @@ document says.
 ## Limitations
 
 - Never attributes a point to a person and drops or rephrases any point about one.
-- Writes no register and no tool; risks and decisions it finds are suggested to the skills that own them.
+- Writes no register and no tool; risks and decisions it finds are handed off as proposals to the skills that own them.

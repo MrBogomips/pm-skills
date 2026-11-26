@@ -71,8 +71,9 @@ when it is likely to ship, and what it has to meet before it goes out, every dat
 
 - Never change the release, the items, their order or their fix versions in the issues tool.
 - Never choose between cutting scope and moving the date: the plan shows the options, the user decides.
-- Never write to the registers from here: suggest `/pm-skills:change-request`, `/pm-skills:risk-register` or
-  `/pm-skills:decision-log` for what they miss.
+- Never write to the registers from here: propose a handoff to the keeper (`${CLAUDE_PLUGIN_ROOT}/shared/handoff.md`)
+  for what should go in the change log, the risk register or the decision log, and hand it over only when the user
+  agrees. Follow-ups for the project manager may go to `/pm-skills:action-log`.
 
 ## Extension points
 

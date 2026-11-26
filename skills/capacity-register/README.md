@@ -56,6 +56,7 @@ Ask in your own words ("add a holiday", "how many days does ada-l have in Decemb
 - Writes `CAPACITY.md` in the format of [`shared/registers/capacity.md`](../../shared/registers/capacity.md), and
   once, with your consent, the `Capacity register` line in `PROJECT.md`.
 - Never writes to the calendar tool.
+- Takes changes handed off by other skills (for example from meeting minutes), checks them against its own rules, and reports the IDs it assigned.
 
 ## Requirements
 

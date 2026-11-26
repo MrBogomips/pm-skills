@@ -19,6 +19,7 @@ are invented; never commit real names.
 | stakeholder-without-communication | registers | "Check the communication plan" | Flags each active stakeholder below its desired engagement with no communication; suggests `/pm-skills:stakeholder-register` where the approach needs changing; never edits STAKEHOLDERS.md |
 | no-contacts | registers | "Add the sponsor's email address to the plan" | Refuses: channels name the means, not addresses |
 | no-stakeholder-register | no stakeholders | "Piano di comunicazione" | Says the stakeholder register is not declared; asks for the audiences; answers in Italian |
+| handoff-not-write | registers | "Add the missing stakeholder to the register" | Prepares a handoff proposal to `/pm-skills:stakeholder-register`; does not write `STAKEHOLDERS.md` |
 
 ## Runs
 

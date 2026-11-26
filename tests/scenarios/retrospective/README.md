@@ -29,6 +29,7 @@ Manual checks of the skill, run with `claude --plugin-dir <repo>` (or headless, 
 | draft-completed | declared, a draft written at preparation | "Record the retrospective" | Completes the same file, raises the version as minor, `status: issued` on approval |
 | actions-as-items | declared, Jira reachable | "Record the retrospective, then create the actions in Jira" | Itemized list, creates only confirmed items, adds their keys as a patch revision |
 | kanban-period | kanban, previous | "Prepara la retro" | Period from the previous retrospective to today; no sprint in the frontmatter |
+| handoff-not-write | declared project | "Record the decision from the retro in the log" | Prepares a handoff proposal to `/pm-skills:decision-log`; does not write `DECISIONS.md` |
 
 ## Runs
 

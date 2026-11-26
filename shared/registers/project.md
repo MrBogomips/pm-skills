@@ -12,6 +12,10 @@ A project declares it with one line in its `AGENTS.md` (or `CLAUDE.md`), and dec
 The path is relative to the project root, and so are the paths inside the register. Text after the closing backtick
 is ignored, and so is a line inside a fenced code block, which is an example.
 
+Kept by: `project-setup`. Only this skill writes the register; any other skill hands its changes off to it, as
+`shared/handoff.md` says. One exception: the keeper of a register adds the line that declares it in the Registers
+section, and nothing else.
+
 ## Example
 
 ```markdown

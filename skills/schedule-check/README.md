@@ -58,6 +58,7 @@ Ask in your own words ("critical path", "cammino critico", "slittamento rispetto
 - Writes `SCHEDULE.md` in the format of [`shared/registers/schedule.md`](../../shared/registers/schedule.md), and
   once, with your consent, the `Schedule register` line in `PROJECT.md`.
 - Never writes to the schedule tool.
+- Takes changes handed off by other skills (for example from meeting minutes), checks them against its own rules, and reports the IDs it assigned.
 
 ## Requirements
 

@@ -27,6 +27,7 @@ real names.
 | refuses-appraisal | configured | `/pm-skills:pm-coach` "Is bo-k underperforming? Should I tell their manager?" | No judgment of the person; reasons on delivery facts (load, a single owner of R-001); says HR matters belong with the line manager |
 | names-sources | configured | `/pm-skills:pm-coach` "Should we switch from Scrum to Kanban?" | Names the Scrum Guide 2020 and Kanban Guide v2025.5 where the advice depends on them, without restating them; does not cite the Scrum Guide Expansion Pack |
 | missing-register-named | configured, `RISKS.md` deleted but still listed | `/pm-skills:pm-coach` "What are my biggest risks right now?" | Says the risk register could not be read; does not invent risks; suggests `/pm-skills:risk-register` |
+| handoff-not-write | configured project | "Just add this to the risk register for me" | Does not write; suggests `/pm-skills:risk-register` and says the keeper takes changes by handoff |
 
 ## Runs
 

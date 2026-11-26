@@ -6,6 +6,9 @@ history of a gate are in one file. `phase-gate-review` keeps it; `project-charte
 `lessons-learned` reads it. It is declared in the Registers section of `PROJECT.md` as
 `` - Gate register: `GATES.md` ``.
 
+Kept by: `phase-gate-review`. Only this skill writes the register; any other skill hands its changes off to it, as
+`shared/handoff.md` says.
+
 ## Example
 
 ```markdown

@@ -25,7 +25,10 @@ evaluations of people.
 | [`assignment-advisor`](skills/assignment-advisor/README.md) | Resources | Suggests up to three people for a task or a review, with the reasons. |
 | [`risk-register`](skills/risk-register/README.md) | Risk | Identifies, assesses, plans responses to and reviews risks in `RISKS.md`. |
 | [`decision-log`](skills/decision-log/README.md) | Governance | Records decisions in `DECISIONS.md` and answers what was decided and why. |
-| [`meeting-minutes`](skills/meeting-minutes/README.md) | Stakeholders | Minutes with decisions, actions and risks, proposed for the registers. |
+| [`meeting-prep`](skills/meeting-prep/README.md) | Stakeholders | Guides the preparation of a meeting from the registers: objective, attendees, agenda, content brief, pre-reads. |
+| [`meeting-minutes`](skills/meeting-minutes/README.md) | Stakeholders | Minutes with decisions, actions, risks and change requests, handed off to the registers' keepers. |
+| [`action-log`](skills/action-log/README.md) | Governance | Keeps `ACTIONS.md` and shows the project manager's backlog, with what is due in the other registers. |
+| [`inbox-triage`](skills/inbox-triage/README.md) | Governance | Classifies the material in the project's inbox and routes each file to the skill that processes it. |
 | [`status-report`](skills/status-report/README.md) | Governance, Stakeholders | The status report for the reporting period, outcomes first. |
 | [`publish-deliverable`](skills/publish-deliverable/README.md) | Stakeholders | Renders a Markdown deliverable into Word, PDF, slides, email or an artifact. |
 | [`actionable-message`](skills/actionable-message/README.md) | Stakeholders | Emails and chat messages where every request has an owner, a deadline, references and a contact. |
@@ -53,6 +56,9 @@ evaluations of people.
 | [`pm-tailoring`](skills/pm-tailoring/README.md) | All | Adapts the plugin to the project with the lightest change that works. User-invocable only. |
 | [`pm-coach`](skills/pm-coach/README.md) | All | Reasoned advice grounded in your registers. User-invocable only. |
 
+Every register has one keeper skill: the others hand their changes off to it, so each register is written in one
+place. The [user guide](docs/index.md) explains the principles, the registers, the project folders and the practices.
+
 Domains are the performance domains of the PMBOK Guide, Eighth Edition. Agile skills follow the Scrum Guide 2020
 and the Kanban Guide; more are planned (see `DESIGN.md`).
 
@@ -64,6 +70,8 @@ and the Kanban Guide; more are planned (see `DESIGN.md`).
   assessments and deliverables before they go out, read only.
 - `flow-data-scout`: collects the transition history of work items from the issues tool as a flow snapshot,
   with no assignees, read only.
+- `register-reviewer`: checks the declared registers for consistency with each other and, with facts a collector
+  gathered, for alignment with the real state of the project, read only.
 
 ## Hooks
 

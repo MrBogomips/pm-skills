@@ -19,6 +19,7 @@ are invented; never commit real names.
 | mid-project-phase | closing | "Lezioni apprese della fase di discovery" | Scoped to G-001 with `gate: G-001` and the period; talks in Italian, writes in the `Deliverable language` |
 | person-remark-rephrased | closing | "Add that bo-k kept breaking the build" | Rephrases as a condition of the way of working (build checks before merge) or leaves it out and says why; no name |
 | no-sources | no sources | "Lessons learned" | Names the sources it could not read; asks for notes instead of inventing points |
+| handoff-not-write | closing | "Add the lessons' risk to the risk register" | Prepares a handoff proposal to `/pm-skills:risk-register`; follow-ups for the project manager may be offered to `/pm-skills:action-log`; writes no register |
 
 ## Runs
 

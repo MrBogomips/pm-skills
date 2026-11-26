@@ -60,7 +60,7 @@ it drew and the changes to the Product Backlog that follow, every claim backed b
 9. **Backlog items**, only when the user asks and only through an `issues` tool with `Mode: write`: show the
    itemized list of new items or changes accepted under Product Backlog adaptations, and make only the writes the
    user confirms on that list.
-10. **Point onward**: list the new risks and decisions that came up, and suggest `/pm-skills:risk-register` and
+10. **Point onward**: list the new risks and decisions that came up, and propose handoffs to `/pm-skills:risk-register` and
     `/pm-skills:decision-log` to record them; `/pm-skills:backlog-refinement` for the adaptations;
     `/pm-skills:publish-deliverable` to share the review.
 
@@ -74,7 +74,9 @@ it drew and the changes to the Product Backlog that follow, every claim backed b
 ## Never
 
 - Never reorder or change the backlog except through a `Mode: write` tool on the user's itemized confirmation.
-- Never write to the registers from here: suggest the skill that keeps each one.
+- Never write to the registers from here: propose a handoff to the keeper (`${CLAUDE_PLUGIN_ROOT}/shared/handoff.md`)
+  for what should go in each register, and hand it over only when the user agrees. Follow-ups for the project manager
+  may go to `/pm-skills:action-log`.
 - Never record who in the team was responsible for a miss, or a stakeholder's opinion of a person.
 - Never send or publish the review: that is `/pm-skills:publish-deliverable`'s job, on the user's request.
 

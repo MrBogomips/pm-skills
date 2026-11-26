@@ -46,6 +46,7 @@ Ask in your own words ("RACI", "responsibility matrix", "who is accountable for"
 - Writes `RACI.md` in the format of [`shared/registers/raci.md`](../../shared/registers/raci.md), validated by
   `shared/scripts/raci_register.py`; the plugin's hooks validate it after every edit.
 - At set-up, adds the `- RACI matrix:` line to `PROJECT.md`.
+- Takes changes handed off by other skills (for example from meeting minutes), checks them against its own rules, and reports the IDs it assigned.
 
 ## Requirements
 

@@ -4,6 +4,9 @@ The budget register holds the project's approved budget, line by line, with its 
 cost effort, and the approved changes to the budget. `budget-tracker` keeps it, and `estimate` reads its rates. It is
 declared in the Registers section of `PROJECT.md` as `` - Budget register: `BUDGET.md` ``.
 
+Kept by: `budget-tracker`. Only this skill writes the register; any other skill hands its changes off to it, as
+`shared/handoff.md` says.
+
 ## Example
 
 ```markdown

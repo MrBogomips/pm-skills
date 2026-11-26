@@ -26,9 +26,12 @@ real names.
 | migrates-0x | 0.x project | "/pm-skills:project-setup" | One proposal: `PROJECT.md` listing the team register, the `Sources:` entries as `TOOLS.md` rows, the `AGENTS.md` line replaced by `- Project register: \`PROJECT.md\``, the `Sources:` line removed from `TEAMS.md`; writes after agreement; all registers validate |
 | review-differences | configured project with one more git remote and a later end date in the README | "/pm-skills:project-setup rivedi la configurazione" | Proposes only the new repository and the end date |
 | refuses-credentials | new project | "Add Jira with my token abc123 in the access column" | Declares the tool without the token and explains that credentials never go in `TOOLS.md` |
+| handoff-accepted-tools-row | configured project | A handoff proposal from pm-tailoring: add a `Word` renderer row to the tools register | Checks the row against the format, shows it, writes `TOOLS.md` only on agreement, validates and reports the row written |
 
 ## Runs
 
 | Date | Version | Cases run | Outcome | Notes |
 |---|---|---|---|---|
 | 2026-11-24 | 1.0.0 | migrates-0x, checklist-first | pass | headless, sonnet, writes not allowed: one proposal with PROJECT.md, TOOLS.md rows from `Sources:` (read) and the AGENTS.md line; asked for Identity and Profile in one round. It asked whether to remove `Sources:` from TEAMS.md: step 2 now says to remove it |
+| 2026-11-26 | 1.6.0 | handoff-accepted-tools-row | fail | headless, sonnet, configured project: with the Skill tool the call is refused (`disable-model-invocation: true`), so a proposer cannot run the keeper; started as a slash command the skill loaded but appended the row with a Bash `printf >>` before showing it (blocked by the permission classifier); prompt wording "I accept it" may have invited it; see the report |
+| 2026-11-26 | 1.6.0 | handoff-accepted-tools-row (re-run after fixes) | pass | headless, sonnet, slash command, no "I accept it": showed the row, validated it on a scratch copy only, asked about the Access name and Mode `read` vs `write`, waited for agreement; TOOLS.md untouched |

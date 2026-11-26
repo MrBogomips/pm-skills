@@ -5,6 +5,9 @@ write to it. Skills ask for a capability (`issues`, `code`, `publish`) and use t
 name a tool. `project-setup` builds and reviews the register; it is declared in the Registers section of
 `PROJECT.md` as `` - Tools register: `TOOLS.md` ``.
 
+Kept by: `project-setup`. Only this skill writes the register; any other skill hands its changes off to it, as
+`shared/handoff.md` says.
+
 ## Example
 
 ```markdown

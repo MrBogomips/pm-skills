@@ -47,6 +47,7 @@ Without a declared register the skill starts by setting one up.
   [`shared/registers/teams.md`](../../shared/registers/teams.md).
 - Reads the project's `code` and `issues` tools through the `project-activity-scout` agent.
 - Writes nothing else, apart from the declaration line, which it adds once, with your consent.
+- Takes changes handed off by other skills (for example from meeting minutes), checks them against its own rules, and reports the IDs it assigned.
 
 ## Requirements
 

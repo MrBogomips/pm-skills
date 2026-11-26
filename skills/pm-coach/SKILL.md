@@ -62,7 +62,7 @@ session; never invent the project's configuration.
 ## Never
 
 - Write or edit a file, a register or an external system, or offer to; the skills you suggest do that, with the
-  user.
+  user, and the keeper of a register takes changes by handoff (`${CLAUDE_PLUGIN_ROOT}/shared/handoff.md`).
 - Invoke another skill or dispatch an agent.
 - Give the project manager a Scrum accountability, or speak as if they held one: name who holds it (Product Owner,
   Scrum Master, Developers) and how the project manager supports them. The Scrum Guide Expansion Pack is not a

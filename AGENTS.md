@@ -38,10 +38,44 @@ shared/registers/<register>.md      the format of each project register: the sin
 shared/documents/<type>.md          the format of each document type, and common.md for what they share
 shared/tools/<tool>.md              known pitfalls of a tool reached by several skills or agents
 shared/glossary/<language>.md       the plugin's terms in another language and back (it.md for Italian)
+shared/handoff.md                   the keeper of each register and how other skills hand changes off to it
 shared/integration-contract.md      what a project skill must respect to work with the plugin
 shared/scripts/                     Python stdlib scripts shared by skills and hooks
 tests/                              validate.sh, selftest.sh, Python unit tests, fixtures/, scenarios/
+docs/                               the user guide: principles, patterns and practices of the plugin
+.claude/agents/, .claude/skills/    the repository harness: not part of the plugin (below)
 ```
+
+## Repository harness
+
+Two kinds of skills and agents live in this repository, and they never mix:
+
+- **The plugin**: `skills/`, `agents/` and `hooks/`, distributed to users. Nothing there serves the maintenance of
+  this repository.
+- **The harness**: `.claude/agents/` and `.claude/skills/`, which help maintain and evolve the plugin. Claude Code
+  loads them in sessions opened in this repository; the plugin never loads them and users never receive them. They
+  follow the writing rules below, but are not listed in `README.md`, the coverage map or the user guide.
+
+| Harness component | What it does |
+|---|---|
+| `.claude/agents/user-docs-reviewer.md` | reviews the user guide in `docs/` against a pull request's changes, read only |
+
+## User guide
+
+`docs/` holds the user guide: the principles, patterns and practices of the plugin, for the people who use it. Each
+page starts with a frontmatter that `tests/validate.sh` checks:
+
+```yaml
+---
+title: Registers and their keepers
+area: plugin            # plugin, or a performance domain: governance, scope, schedule, finance, stakeholders, resources, risk
+type: concept           # concept (why and how it works) or operational (how to do a job)
+---
+```
+
+`docs/skills.md` lists every skill of the plugin; the validator checks that none is missing. Every pull request that
+adds or changes a skill, agent, hook, register or document format updates the guide in the same pull request, and
+has it reviewed by the `user-docs-reviewer` agent before the pull request is opened.
 
 ## Writing rules
 
@@ -67,7 +101,7 @@ From the repository root (requires `jq`):
 ```bash
 bash tests/selftest.sh                                  # the validator's own tests
 PM_SKILLS_FORBIDDEN_TERMS=<local file> bash tests/validate.sh   # plugin structure and confidentiality
-python3 -m unittest discover -s tests -p 'test_*.py'    # shared scripts and hooks
+python3 -m unittest discover -s tests -p 'test_*.py'    # shared scripts and hooks (also with /usr/bin/python3)
 claude plugin validate . --strict                       # manifest schema
 ```
 
@@ -76,7 +110,8 @@ installing it: `claude --plugin-dir .`.
 
 ## Working documents
 
-- **Authoritative**: `DESIGN.md`, `skills/`, `agents/`, `hooks/`, `shared/` and `.claude-plugin/plugin.json`.
+- **Authoritative**: `DESIGN.md`, `skills/`, `agents/`, `hooks/`, `shared/`, `docs/` and
+  `.claude-plugin/plugin.json`.
 - **AI working material** (brainstorms, plans, decision logs) stays in the session scratchpad; nothing is written to
   the repository for it. Tool defaults such as `docs/superpowers/...` follow this rule too.
 
