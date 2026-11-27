@@ -70,11 +70,9 @@ with which references and whom to ask. It is sent only when the user says so.
      recipients, subject, text) and send after the user confirms. With no such tool, hand over and say it was not sent.
    - By hand, hand the rendering over the way the user asks; by default `html` with `--out` to a file in the temporary
      folder, never in the project, to open in a browser and copy from, and `plain` printed in the conversation; subject
-     and recipients apart, as plain text. The script can also put it on the clipboard (`--copy`, rich text for `html`):
-     only when the user asks.
+     and recipients apart, as plain text. Copy it to the clipboard only when the user asks.
    - Exit 1 (a link not `http`, `https` or `mailto`, a table row not matching its header, an empty draft; stderr names
-     the line): fix it and show the draft again before rendering. Exit 2 (usage or file error): fix the command. Exit 3
-     (no clipboard): hand over as above.
+     the line): fix it and show the draft again before rendering. Exit 2 (usage or file error): fix the command.
    - Save the message to a file only when the user asks, where the user says; a copy saved inside the project keeps
      names, roles and channels, and leaves out the addresses the user gave, saying so.
 9. **Report** what you read, what you inferred and what you could not read or check.
