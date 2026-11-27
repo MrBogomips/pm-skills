@@ -59,29 +59,22 @@ with which references and whom to ask. It is sent only when the user says so.
    organization the user gave, and suggest `/pm-skills:team-register` for a team member or
    `/pm-skills:stakeholder-register` for someone outside the team. A handoff to the keeper
    (`${CLAUDE_PLUGIN_ROOT}/shared/handoff.md`) is proposed, and handed over only when the user agrees.
-7. **Show the message**: check it first with one render (`--to html`, no `--copy`, output discarded) and fix what
-   exit 1 names. Show the Markdown draft with its recipients, the format and options chosen and why in one line, the
-   references left without a link and what you inferred: the user approves the draft to hand over.
+7. **Show the message**: the Markdown draft with its recipients, the format and options chosen and why in one line,
+   the references left without a link and what you inferred, for the user to approve.
 8. **Hand over or send, only on request** and after the user approves the draft. Render it with `python3
-   "${CLAUDE_PLUGIN_ROOT}/shared/scripts/message_render.py" --to html|slack|plain [--copy] [--out FILE] <<'EOF'`, the
-   draft in the quoted heredoc, so `$` and backticks stay literal:
-
-   | Destination | What to do |
-   |---|---|
-   | a `messages` tool in Mode `write`, chat | send the `slack` rendering when the tool is Slack; otherwise what the tool accepts, `plain` when in doubt |
-   | a `messages` tool in Mode `write`, email | send the `html` rendering when the tool takes HTML, else `plain` |
-   | by hand, an email client (Outlook web, Outlook for Mac, Mail) | `--to html --copy`; tell the user to paste, and give subject and recipients apart as plain text |
-   | by hand, Slack, Teams or another chat | `--to plain --copy`: links stay full URLs, which chats turn into links; say that the emphasis is lost |
-
-   - To send, take the rendering from stdout, without `--copy`, to a tool with Purpose `messages`, Mode `write` and a
-     Scope that covers the destination; show exactly what goes where (channel or recipients, subject, text) and send
-     after the user confirms. With no such tool, hand over and say it was not sent.
-   - Say when the clipboard was overwritten.
-   - Exit 1 (a link not `http`, `https` or `mailto`, a table row not matching the header, an empty message; stderr
-     names the line) follows only a change made after approval: fix it, show the draft again, then render; never
-     hand over unrendered Markdown. Exit 2 (usage or file error): fix the command, not the draft.
-   - Exit 3 (no clipboard): render with `--out` to a file in the temporary folder and say to open it in a browser and
-     copy it; for `plain`, print the text in the conversation instead.
+   "${CLAUDE_PLUGIN_ROOT}/shared/scripts/message_render.py" --to html|plain|slack [--out FILE] <<'EOF'`, the draft in
+   the quoted heredoc, so `$` and backticks stay literal: `html` for an email client, `plain` for a chat pasted by
+   hand, `slack` only to send through a Slack tool.
+   - To send, take the rendering the tool accepts (`plain` when in doubt) from stdout to a tool with Purpose
+     `messages`, Mode `write` and a Scope that covers the destination; show exactly what goes where (channel or
+     recipients, subject, text) and send after the user confirms. With no such tool, hand over and say it was not sent.
+   - By hand, hand the rendering over the way the user asks; by default `html` with `--out` to a file in the temporary
+     folder, never in the project, to open in a browser and copy from, and `plain` printed in the conversation; subject
+     and recipients apart, as plain text. The script can also put it on the clipboard (`--copy`, rich text for `html`):
+     only when the user asks.
+   - Exit 1 (a link not `http`, `https` or `mailto`, a table row not matching its header, an empty draft; stderr names
+     the line): fix it and show the draft again before rendering. Exit 2 (usage or file error): fix the command. Exit 3
+     (no clipboard): hand over as above.
    - Save the message to a file only when the user asks, where the user says; a copy saved inside the project keeps
      names, roles and channels, and leaves out the addresses the user gave, saying so.
 9. **Report** what you read, what you inferred and what you could not read or check.
@@ -102,7 +95,7 @@ with which references and whom to ask. It is sent only when the user says so.
 - Never edit a register: suggest the skill that owns it.
 - Never send through a tool that is not declared `write`, or without the user's confirmation.
 - Never build a URL by guess.
-- Never write the rendered message or the fallback file inside the project.
+- Never write the rendered message inside the project.
 
 ## Extension points
 

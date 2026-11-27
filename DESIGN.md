@@ -433,9 +433,9 @@ request rejected without assessment. The user guide starts in `docs/`.
 
 **1.7.0.** Message formats. `actionable-message` drafts in a `strong` or a `friendly` format, chosen by audience and
 overridden by the options `strong`, `friendly`, `+emoji` and `-formatting` or by a `format` rule in `TAILORING.md`;
-emphasis and links follow fixed rules, and `shared/scripts/message_render.py` renders the approved draft: HTML on
-the clipboard for an email client, plain text on the clipboard for a chat pasted by hand, and Slack only for sending
-through a declared `messages` tool. The user guide gains `docs/messages.md`.
+emphasis and links follow fixed rules, and `shared/scripts/message_render.py` renders the approved draft: an HTML page to
+copy from for an email client, plain text for a chat pasted by hand, the clipboard only on request, and Slack only
+for sending through a declared `messages` tool. The user guide gains `docs/messages.md`.
 
 **Next.** The open items are GitHub issues: the second wave of team skills (#3) and persona agents for simulated
 conversations (#8).

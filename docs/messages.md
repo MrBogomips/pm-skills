@@ -77,15 +77,12 @@ plain text, and the skill names it in its report.
 
 ## Pasting into an email client
 
-Ask "give it to me for Outlook" (or Mail). Once you approve the draft, the plugin renders it and puts it on the
-clipboard; the skill says the clipboard was overwritten and gives you the subject and the recipients apart, as plain
-text, to fill in the client's own fields.
+Ask "give it to me for Outlook" (or Mail). Once you approve the draft, the plugin renders it for the email client:
+you get a page in the temporary folder, never in the project, to open in the browser and copy from, and the subject
+and the recipients apart, as plain text, to fill in the client's own fields. If you prefer the clipboard, ask for it.
 
 Pasted into Outlook on the web, Outlook for Mac or Mail, these survive: tables, bold, italic, links, one-level
 lists and emoji. The font is the client's: it applies its own to the pasted message.
-
-With no clipboard (on Linux without `xclip` or `wl-copy`, for example) the skill writes the HTML to a file in the
-temporary folder, never in the project, and tells you to open it in a browser and copy from there.
 
 ## Slack and plain text
 
@@ -96,9 +93,9 @@ There are two cases:
   sends after you confirm. A Slack tool gets the `slack` rendering, with Slack's own bold, italic and links; another
   chat tool gets what its description says it accepts, `plain` when in doubt; an email tool gets HTML when it takes
   it, else `plain`.
-- **Pasted by hand** into Slack, Teams or another chat. The skill copies the `plain` rendering, not the `slack`
-  one: links stay full URLs, which chats turn into links, and the emphasis is lost; the skill says so. With no
-  clipboard, the plain text is printed in the conversation for you to copy.
+- **Pasted by hand** into Slack, Teams or another chat. You get the `plain` rendering in the conversation, not the
+  `slack` one, which goes only through a declared tool: links stay full URLs, which chats turn into links, and the
+  emphasis is lost.
 
 With no declared tool the skill hands the message over and says it was not sent.
 
@@ -119,7 +116,7 @@ register and `/pm-skills:pm-tailoring` to change it.
 ## What the skill never does
 
 - Send without your confirmation, or through a tool not declared `write`.
-- Overwrite the clipboard before you approve the draft.
+- Write to the clipboard unless you ask, or before you approve the draft.
 - Write an email address or phone number into a register or a project file: an address appears in the message only
   when you give it in the session.
 - Edit a register: for someone the registers do not know, it proposes a handoff to `team-register` or

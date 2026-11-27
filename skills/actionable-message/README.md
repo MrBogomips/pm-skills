@@ -66,15 +66,18 @@ friendly; links stay):
 
 A project can set the default format per audience, and turn emoji on, with a `format` rule in `TAILORING.md`.
 
+Once you approve the draft, ask for it "for Outlook" or "for the chat": you get it rendered for that destination. Ask
+for the clipboard if you prefer it to a file.
+
 ## Inputs and outputs
 
 - Reads `PROJECT.md` and the registers it declares (team, RACI, stakeholders, capacity, decisions, changes, risks,
   tailoring); checks work item and pull request references through the `issues` and `code` tools.
 - Writes no project file: the message is a Markdown draft in the conversation, with references as links. Saved on
   request where you say; a copy inside the project leaves out any address you gave.
-- Once you approve the draft, renders it: HTML on the clipboard for an email client (Outlook, Mail), plain text for
-  a chat pasted by hand. With no clipboard, an HTML file in the temporary folder for an email client, to open in a
-  browser and copy; for a chat, the text printed in the conversation.
+- Once you approve the draft, renders it for the destination: for an email client (Outlook, Mail), an HTML file in
+  the temporary folder to open in a browser and copy from; for a chat, plain text in the conversation. On request,
+  the rendering goes to the clipboard instead.
 - Sends only through a tool declared with Purpose `messages`, Mode `write` and a Scope that covers the destination,
   after you confirm.
 
@@ -84,8 +87,8 @@ A project register (`/pm-skills:project-setup`) is recommended; without it the s
 contacts. The team register and the RACI matrix make owners and Cc proposals possible; the capacity register makes
 the warning on absences possible.
 
-Python 3 renders the message. Copying to the clipboard uses `osascript` and `pbcopy` on macOS (built in), or
-`xclip` or `wl-copy` on Linux; nothing else needs them.
+Python 3 renders the message. The clipboard, optional and only on request, uses `osascript` and `pbcopy` on macOS
+(built in), or `xclip` or `wl-copy` on Linux.
 
 ## Limitations
 
@@ -96,5 +99,6 @@ Python 3 renders the message. Copying to the clipboard uses `osascript` and `pbc
 - Does not track replies: write a reminder with the skill when you need one.
 - Does not send documents: to distribute a report or minutes, use `/pm-skills:publish-deliverable`.
 - The email client applies its own font to the pasted message; lists are one level only, never nested.
-- On Linux the rich copy carries no plain-text twin: an application that only takes plain text gets nothing to paste.
+- On Linux a rich-text copy to the clipboard carries no plain-text twin: an application that only takes plain text
+  gets nothing to paste.
 - In a chat pasted by hand, bold and italic are lost; links stay full URLs.
