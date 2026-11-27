@@ -54,21 +54,35 @@ skill with what you want, or with a draft pasted or given as a file:
 /pm-skills:actionable-message write a message asking Ada to review the go-live runbook by 2026-11-30, per D-002
 ```
 
+The skill picks a format: `friendly`, a few sentences of prose for a colleague with one simple request, or `strong`,
+with Requests and Context sections, for several owners, a client or a formal reminder. You can choose it, add emoji
+markers with `+emoji`, or drop bold, italic, lists and tables with `-formatting`:
+
+```text
+/pm-skills:actionable-message strong +emoji remind Ada, Bo and Cy of their go-live tasks for 2026-12-05
+/pm-skills:actionable-message friendly ask Bo to book the rollback window by 2026-12-01
+```
+
+A project can set the default format per audience, and turn emoji on, with a `format` rule in `TAILORING.md`.
+
 ## Inputs and outputs
 
-- Reads `PROJECT.md` and, when its Registers section declares them, the team, RACI, stakeholder, capacity,
-  decision, change, risk and tailoring registers; checks work item and pull request references through the
-  project's `issues` and `code` tools.
-- Writes no project file: the message lives in the conversation. When you ask to save it, it goes where you say; a
-  copy saved inside the project keeps names, roles and channels and leaves out any address you gave.
-- Sends only through a tool declared with Purpose `messages`, Mode `write` and a Scope that covers the destination,
-  after you confirm.
+- Reads `PROJECT.md` and the registers it declares (team, RACI, stakeholders, capacity, decisions, changes, risks,
+  tailoring); checks work item and pull request references through the `issues` and `code` tools.
+- Writes no project file: the message is a Markdown draft in the conversation, with references as links. Saved on
+  request where you say; a copy inside the project leaves out any address you gave.
+- Once you approve the draft, renders it: HTML on the clipboard for an email client (Outlook, Mail), plain text for
+  a chat pasted by hand. With no clipboard, an HTML file in the temporary folder, to open in a browser and copy.
+- Sends only through a tool declared with Purpose `messages` and Mode `write`, after you confirm.
 
 ## Requirements
 
 A project register (`/pm-skills:project-setup`) is recommended; without it the skill asks for owners, references and
 contacts. The team register and the RACI matrix make owners and Cc proposals possible; the capacity register makes
 the warning on absences possible.
+
+Python 3 renders the message. Copying to the clipboard uses `osascript` and `pbcopy` on macOS (built in), or
+`xclip` or `wl-copy` on Linux; nothing else needs them.
 
 ## Limitations
 
@@ -78,3 +92,6 @@ the warning on absences possible.
   `/pm-skills:stakeholder-register`.
 - Does not track replies: write a reminder with the skill when you need one.
 - Does not send documents: to distribute a report or minutes, use `/pm-skills:publish-deliverable`.
+- The email client applies its own font to the pasted message; lists are one level only, never nested.
+- On Linux the rich copy carries no plain-text twin: an application that only takes plain text gets nothing to paste.
+- In a chat pasted by hand, bold and italic are lost; links stay full URLs.

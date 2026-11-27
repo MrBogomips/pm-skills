@@ -182,10 +182,12 @@ Schedule, Sprint Goal, Working agreements) use that row.
 | Audiences | Destinatari | |
 | Authority | Autorità | |
 | Budget summary | Sintesi del budget | |
+| By | Entro | `actionable-message`, the deadline label |
 | Change | Modifica | |
 | Changes from the previous version | Modifiche rispetto alla versione precedente | |
 | Communications | Comunicazioni | |
 | Constraints and assumptions | Vincoli e ipotesi | |
+| Contact | Contatto | `actionable-message` |
 | Content brief | Sintesi dei contenuti | |
 | Context | Contesto | |
 | Dates | Date | |
@@ -196,6 +198,7 @@ Schedule, Sprint Goal, Working agreements) use that row.
 | Dependencies and risks | Dipendenze e rischi | |
 | Dictionary | Dizionario | |
 | Discussion | Discussione | |
+| Done when | Fatto quando | `actionable-message` |
 | Facts | Fatti | |
 | Feedback | Feedback | |
 | Follow-up | Azioni conseguenti | |
@@ -224,9 +227,11 @@ Schedule, Sprint Goal, Working agreements) use that row.
 | Purpose of the team | Scopo del team | |
 | Recommendation | Raccomandazione | |
 | Recommendations | Raccomandazioni | |
+| References | Riferimenti | `actionable-message` |
 | Release criteria | Criteri di rilascio | |
 | Release goal | Obiettivo del rilascio | |
 | Releases | Rilasci | |
+| Requests | Richieste | `actionable-message` |
 | Risks and decisions | Rischi e decisioni | |
 | Risks and dependencies | Rischi e dipendenze | |
 | Risks and issues | Rischi e problemi | |
@@ -242,8 +247,10 @@ Schedule, Sprint Goal, Working agreements) use that row.
 | Themes | Temi | |
 | Try | Da provare | |
 | Values | Valori | |
+| What | Cosa | `actionable-message` |
 | What did not work | Cosa non ha funzionato | |
 | What worked | Cosa ha funzionato | |
+| Who | Chi | `actionable-message` |
 
 ## Messages and everyday requests
 

@@ -1,6 +1,7 @@
 ---
 name: actionable-message
 description: Writes or rewrites an email or chat message so that every request names its owner, the ask and when it is done, the deadline, the references and whom to contact; sends it only on confirmation through a declared tool. Use for "write an email asking", "follow-up message", "send a reminder", "make this message actionable"; not to send a document.
+argument-hint: "[strong|friendly] [+emoji] [-formatting] <what to ask, or a draft>"
 ---
 
 # Actionable message
@@ -24,6 +25,8 @@ with which references and whom to ask. The message lives in the conversation; it
   register (IDs to cite as references), the tailoring register.
 - **Tools register**: `issues` and `code` tools, to check the links and keys the message cites; a `messages` tool in
   Mode `write` to send it. Format: `${CLAUDE_PLUGIN_ROOT}/shared/registers/tools.md`.
+- **Formats**: `${CLAUDE_PLUGIN_ROOT}/skills/actionable-message/references/formats.md`, read before drafting: the
+  `strong` and `friendly` formats, the options `+emoji` and `-formatting`, emphasis, links and examples.
 
 ## Steps
 
@@ -44,10 +47,10 @@ with which references and whom to ask. The message lives in the conversation; it
    allocation before the deadline, say so, with no reason, and ask whether to move the date or the owner.
 4. **Check the references** you can reach: keys and IDs exist in the registers or tools; say which you could not
    check.
-5. **Draft one message**, however many requests and owners it holds, in the language of the request, else the `Deliverable language`, in a register that fits
-   the audience (formal for a client):
+5. **Draft one message**, however many requests and owners it holds, in the language of the request, else the
+   `Deliverable language`, in a register that fits the audience (formal for a client). First read the formats
+   reference; choose the format and options as it says, and draft in Markdown within its subset:
    - the subject (for an email) names the action and the date;
-   - the requests come first, one block per owner, then the context;
    - recipients: To the owners; Cc proposed from the RACI matrix (accountable and informed roles for the
      deliverables concerned), for the user to confirm.
 
@@ -56,12 +59,30 @@ with which references and whom to ask. The message lives in the conversation; it
    and organization the user gave, and suggest `/pm-skills:team-register` for a team member or
    `/pm-skills:stakeholder-register` for someone outside the team. Do not edit any register: a handoff to the keeper
    (`${CLAUDE_PLUGIN_ROOT}/shared/handoff.md`) is proposed, and handed over only when the user agrees.
-7. **Show the message** with its recipients and the list of what you inferred, for the user to correct.
-8. **Send only on request**: through a tool with Purpose `messages` and Mode `write` whose Scope covers the
-   destination. Show exactly what goes where (channel or recipients, subject, text) and send after the user
-   confirms. With no such tool, hand over the text and say it was not sent. Save the message to a file only when
-   the user asks, where the user says; a copy saved inside the project keeps names, roles and channels, and leaves
-   out the addresses the user gave, saying so.
+7. **Show the message**: the Markdown draft with its recipients, the format and options chosen, the references left
+   without a link and the list of what you inferred, for the user to correct.
+8. **Hand over or send, only on request** and after the user approves the draft. Render it with
+   `python3 "${CLAUDE_PLUGIN_ROOT}/shared/scripts/message_render.py" --to html|slack|plain [--copy] [--out FILE]`,
+   the draft on stdin:
+
+   | Destination | What to do |
+   |---|---|
+   | a `messages` tool in Mode `write`, chat | send the `slack` rendering when the tool is Slack; otherwise what the tool's own description says it accepts, `plain` when in doubt |
+   | a `messages` tool in Mode `write`, email | send the `html` rendering when the tool takes HTML, else `plain` |
+   | by hand, an email client (Outlook web, Outlook for Mac, Mail) | `--to html --copy`; tell the user to paste, and give subject and recipients apart as plain text |
+   | by hand, Slack, Teams or another chat | `--to plain --copy`: links stay full URLs, which chats turn into links; say that the emphasis is lost |
+
+   - To send through a tool, take the rendering from stdout, without `--copy`: use only a tool with Purpose
+     `messages`, Mode `write` and a Scope that covers the destination; show exactly what goes where (channel or
+     recipients, subject, text) and send after the user confirms. With no such tool, hand over and say it was not
+     sent.
+   - The clipboard is overwritten only after the user approves the draft; say that it was.
+   - Exit 1: the draft is outside the subset or holds a refused link; fix the draft and render again. Never hand
+     over unrendered Markdown as if it were formatted.
+   - Exit 3 (no clipboard): render with `--out` to a file in the temporary folder, never in the project, and say to
+     open it in a browser and copy from there; for `plain`, print the text in the conversation instead.
+   - Save the message to a file only when the user asks, where the user says; a copy saved inside the project keeps
+     names, roles and channels, and leaves out the addresses the user gave, saying so.
 9. **Report** what you read, what you inferred and what you could not read or check.
 
 ## Always
@@ -69,6 +90,7 @@ with which references and whom to ask. The message lives in the conversation; it
 - Every request names its owner, the ask with what "done" means, the deadline, the references and a contact.
 - Name people as the team calls them; cite registers by ID.
 - Show before sending; send only after the user confirms.
+- Every reference with a URL is a clickable link.
 
 ## Never
 
@@ -78,10 +100,12 @@ with which references and whom to ask. The message lives in the conversation; it
 - Never mention the reason for someone's absence, or judge a person, in the message.
 - Never edit a register: suggest the skill that owns it.
 - Never send through a tool that is not declared `write`, or without the user's confirmation.
+- Never build a URL by guess.
+- Never write the rendered message or the fallback file inside the project.
 
 ## Extension points
 
-- `format`: the structure of the message, such as a fixed subject prefix or a signature block.
+- `format`: the default format per audience, emoji on or off, a fixed subject prefix or a signature block.
 - `rules`: extra checks, such as who is always in Cc for messages to the client, or a minimum notice before a
   deadline.
 - `steps`: extra steps before drafting or before sending.
