@@ -203,7 +203,7 @@ def copy_rich(html: str, plain: str, platform: str = sys.platform, run=subproces
         if not which("osascript"):
             raise ClipboardUnavailable("osascript not found")
         script = MAC_RICH_SCRIPT % html.encode("utf-8").hex()
-        _invoke(run, ["osascript", "-e", script, plain])
+        _invoke(run, ["osascript", "-e", script, "--", plain])
     elif platform.startswith("linux"):
         _invoke(run, _linux_tool(which, True), html.encode("utf-8"))
     else:

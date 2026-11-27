@@ -175,6 +175,13 @@ class CliTest(unittest.TestCase):
         self.assertEqual(args[-1], 'say "hi"')
         self.assertNotIn('say "hi"', args[2])
 
+    def test_copy_rich_macos_plain_starting_with_dash_follows_separator(self):
+        calls = []
+        mr.copy_rich("<b>x</b>", "- Ada", platform="darwin",
+                     run=lambda a, **k: calls.append((a, k)) or _ok(), which=lambda n: "/usr/bin/" + n)
+        args = calls[0][0]
+        self.assertEqual(args[-2:], ["--", "- Ada"])
+
     def test_copy_text_macos_uses_pbcopy_stdin(self):
         calls = []
         mr.copy_text("héllo", platform="darwin",
