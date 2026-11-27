@@ -56,7 +56,8 @@ skill with what you want, or with a draft pasted or given as a file:
 
 The skill picks a format: `friendly`, a few sentences of prose for a colleague with one simple request, or `strong`,
 with Requests and Context sections, for several owners, a client or a formal reminder. You can choose it, add emoji
-markers with `+emoji`, or drop bold, italic, lists and tables with `-formatting`:
+markers with `+emoji`, or drop the formatting with `-formatting` (bold, italic, lists and tables in strong, bold in
+friendly; links stay):
 
 ```text
 /pm-skills:actionable-message strong +emoji remind Ada, Bo and Cy of their go-live tasks for 2026-12-05

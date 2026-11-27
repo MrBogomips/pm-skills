@@ -77,8 +77,9 @@ with which references and whom to ask. The message lives in the conversation; it
      recipients, subject, text) and send after the user confirms. With no such tool, hand over and say it was not
      sent.
    - The clipboard is overwritten only after the user approves the draft; say that it was.
-   - Exit 1: the draft is outside the subset or holds a refused link; fix the draft and render again. Never hand
-     over unrendered Markdown as if it were formatted.
+   - Exit 1: a link that is not `http`, `https` or `mailto`, a table row whose cells do not match the header, or an
+     empty message; stderr names the line. Fix the draft and render again; never hand over unrendered Markdown as
+     if it were formatted.
    - Exit 3 (no clipboard): render with `--out` to a file in the temporary folder, never in the project, and say to
      open it in a browser and copy from there; for `plain`, print the text in the conversation instead.
    - Save the message to a file only when the user asks, where the user says; a copy saved inside the project keeps

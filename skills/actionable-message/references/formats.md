@@ -3,8 +3,9 @@
 Read when drafting. The draft is Markdown limited to the subset that
 `${CLAUDE_PLUGIN_ROOT}/shared/scripts/message_render.py` accepts: `#` and `##` headings, paragraphs, one-level `- `
 and `1. ` lists, pipe tables, `**bold**`, `*italic*` and `[text](url)` with `http`, `https` or `mailto` only.
-Anything else (nested lists, quotes, code, images, underline, HTML) is out: the script stops with exit 1 or shows it
-as literal text. Consecutive lines are joined into one paragraph, a sign-off too: a blank line separates paragraphs. Subject and
+Anything else (nested lists, quotes, code, images, underline, HTML) is out: the script prints it as literal text.
+It stops with exit 1 only for a link that is not `http`, `https` or `mailto`, a table row whose cells do not match
+the header, or an empty message. Consecutive lines are joined into one paragraph, a sign-off too: a blank line separates paragraphs. Subject and
 recipients stay outside the draft.
 
 ## Choosing the format
@@ -14,7 +15,8 @@ An option the user gives, as an argument or in words, wins; then a `format` rule
 - **friendly** for a colleague on the team, with one request or a short, simple content;
 - **strong** for several owners, a client, a steering committee or a formal reminder.
 
-Say which format was chosen and why, in one line. The options: `+emoji` (below) and `-formatting` (strong only).
+Say which format was chosen and why, in one line. The options: `+emoji` (below) and `-formatting`, which drops the emphasis in both formats: strong as below,
+friendly with no bold. References with a URL stay links in both.
 
 ## Strong
 
