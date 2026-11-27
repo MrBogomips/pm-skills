@@ -114,8 +114,27 @@ class RenderTest(unittest.TestCase):
         out = mr.render_slack(mm.parse(SAMPLE))
         self.assertIn("*Requests*", out)
         self.assertIn("• *Ada L.* — What: *Review the go-live runbook*; _done when the PR is approved_ — By: *2026-11-30* — References: <https://example.com/acme/pull/42|PR 42 · Go-live runbook>", out)
-        self.assertIn("R&D says a < b.", out)
+        self.assertIn("R&amp;D says a &lt; b.", out)
         self.assertNotIn("|---", out)
+
+    def test_slack_escapes_mentions_and_url_breakers(self):
+        out = mr.render_slack(mm.parse("<!channel> and <@U123>\n\n[x](https://example.com/a|b>c)"))
+        self.assertIn("&lt;!channel&gt; and &lt;@U123&gt;", out)
+        self.assertNotIn("<!channel>", out)
+        self.assertIn("<https://example.com/a%7Cb%3Ec|x>", out)
+
+    def test_slack_heading_is_one_bold_pair(self):
+        out = mr.render_slack(mm.parse("## **Hi** there\n\n| **What** | B |\n|---|---|\n| a | b |\n"))
+        self.assertIn("*Hi there*", out)
+        self.assertIn("• a — B: b", out)
+        self.assertNotIn("**", out)
+
+    def test_empty_cells_and_empty_tables(self):
+        text = "| A | B |\n|---|---|\n|  | **x** |\n\n| H |\n|---|\n\ntail"
+        for out, bullet in ((mr.render_slack(mm.parse(text)), "•"), (mr.render_plain(mm.parse(text)), "-")):
+            self.assertNotIn("\n\n\n", out)
+            self.assertIn("%s B: " % bullet, out)
+            self.assertNotIn("%s  " % bullet, out)
 
     def test_plain(self):
         out = mr.render_plain(mm.parse(SAMPLE))

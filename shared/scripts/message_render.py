@@ -9,6 +9,7 @@ Python 3 standard library only. The input is the block tuple of `message_markdow
 from __future__ import annotations
 
 import html as htmllib
+from dataclasses import replace
 from typing import Callable, List, Tuple
 
 from message_markdown import Block, Heading, ListBlock, Paragraph, Spans, Table
@@ -72,12 +73,20 @@ def render_html(blocks: Tuple[Block, ...]) -> str:
 
 # Slack
 
+def _slack_escape(text: str) -> str:
+    return text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+
+
+def _unbold(spans: Spans) -> Spans:
+    return tuple(replace(sp, bold=False) for sp in spans)
+
+
 def _inline_slack(spans: Spans) -> str:
     out = []
     for span in spans:
-        piece = span.text
+        piece = _slack_escape(span.text)
         if span.href is not None:
-            piece = "<%s|%s>" % (span.href, piece)
+            piece = "<%s|%s>" % (span.href.replace("|", "%7C").replace(">", "%3E"), piece)
         if span.italic:
             piece = "_%s_" % piece
         if span.bold:
@@ -98,31 +107,45 @@ def _inline_plain(spans: Spans) -> str:
     return "".join(out)
 
 
-def _table_lines(table: Table, inline: Callable[[Spans], str], bullet: str) -> List[str]:
-    heads = [inline(h) for h in table.header]
+def _table_lines(table: Table, inline: Callable[[Spans], str], bullet: str,
+                 label: Callable[[Spans], str]) -> List[str]:
+    heads = [label(h) for h in table.header]
     lines = []
     for row in table.rows:
-        cells = [inline(c) for c in row]
-        extra = ["%s%s: %s" % (SEPARATOR, heads[i], cells[i]) for i in range(1, len(cells))]
-        lines.append(bullet + " " + cells[0] + "".join(extra))
+        parts = []
+        for index, cell in enumerate(row):
+            text = inline(cell)
+            if not text:
+                continue
+            first = not parts
+            if index == 0 or not heads[index]:
+                parts.append(text if first else SEPARATOR + text)
+            else:
+                parts.append(("" if first else SEPARATOR) + "%s: %s" % (heads[index], text))
+        if parts:
+            lines.append(bullet + " " + "".join(parts))
     return lines
 
 
 def _text_block(block: Block, inline: Callable[[Spans], str], bullet: str, bold: bool) -> str:
     if isinstance(block, Heading):
-        text = inline(block.spans)
-        return "*%s*" % text if bold else text
+        text = inline(_unbold(block.spans) if bold else block.spans)
+        return "*%s*" % text if bold and text else text
     if isinstance(block, Paragraph):
         return inline(block.spans)
     if isinstance(block, ListBlock):
         return "\n".join(("%d. %s" % (n, inline(i))) if block.ordered else "%s %s" % (bullet, inline(i))
                          for n, i in enumerate(block.items, 1))
-    return "\n".join(_table_lines(block, inline, bullet))
+    return "\n".join(_table_lines(block, inline, bullet, (lambda h: inline(_unbold(h))) if bold else inline))
+
+
+def _join(texts) -> str:
+    return "\n\n".join(t for t in texts if t) + "\n"
 
 
 def render_slack(blocks: Tuple[Block, ...]) -> str:
-    return "\n\n".join(_text_block(b, _inline_slack, "•", True) for b in blocks) + "\n"
+    return _join(_text_block(b, _inline_slack, "•", True) for b in blocks)
 
 
 def render_plain(blocks: Tuple[Block, ...]) -> str:
-    return "\n\n".join(_text_block(b, _inline_plain, "-", False) for b in blocks) + "\n"
+    return _join(_text_block(b, _inline_plain, "-", False) for b in blocks)
