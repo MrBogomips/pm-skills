@@ -133,6 +133,9 @@ keeper adds the line that declares its own register in `PROJECT.md`.
 
 - **Frontmatter**: `name` equal to the directory; `description` of at most 400 characters (the validator checks it), saying what the skill
   does and when to use it, with specific trigger phrases in English only.
+- **Options**: a skill that takes options declares them in the frontmatter with `argument-hint`, since the plugin is
+  Claude Code-only; the user passes them as arguments or in words, and the body says what the skill does when none is
+  given. Applied to `actionable-message` first; the other skills follow (issue #29).
 - **User-invocable only**: a skill the user starts on purpose, and that would only crowd the context otherwise, sets
   `disable-model-invocation: true`: `pm-coach`, `project-setup` and `pm-tailoring`.
 - **Body**: the purpose in two lines, the **Italian.** line (see Glossary below), then **Inputs** (including the registers, project register keys and tool
@@ -427,6 +430,12 @@ published; `action-log` with the action log (`ACTIONS.md`) and the project manag
 incoming material; the `register-reviewer` agent (#7) for consistency between registers and alignment with the
 project. Every register names its keeper and `shared/handoff.md` routes changes to it; the change log accepts a
 request rejected without assessment. The user guide starts in `docs/`.
+
+**1.7.0.** Message formats. `actionable-message` drafts in a `strong` or a `friendly` format, chosen by audience and
+overridden by the options `strong`, `friendly`, `+emoji` and `-formatting` or by a `format` rule in `TAILORING.md`;
+emphasis and links follow fixed rules, and `shared/scripts/message_render.py` renders the approved draft: an HTML page to
+copy from for an email client, plain text for a chat pasted by hand, and Slack only for sending through a declared
+`messages` tool; the assistant copies to the clipboard only on request. The user guide gains `docs/messages.md`.
 
 **Next.** The open items are GitHub issues: the second wave of team skills (#3) and persona agents for simulated
 conversations (#8).
