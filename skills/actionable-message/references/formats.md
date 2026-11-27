@@ -41,7 +41,8 @@ when it is the sender.
 - **Italic**: the "done" condition, a caveat, a quoted term.
 - At most one bold per sentence (in a list or table, per field or cell); never a whole sentence; no capitals, no
   underline. In the context, only the key fact of a paragraph.
-- **Friendly**: bold only, on the deadline and the action.
+- **Friendly**: bold only, on the deadline and the action; these two may both be bold in the request sentence.
+  Everywhere else, at most one bold per sentence stands.
 
 ## Emoji
 

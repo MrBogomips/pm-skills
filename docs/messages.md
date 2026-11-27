@@ -41,7 +41,8 @@ In `strong`, one or two requests become one block per owner with the labeled fie
 References and Contact. Three or more become a table with the columns Who, What (the "done when" in italic after
 it), By and References, and the contact once below it.
 
-The skill says which format it chose and why, in one line. A client gets a formal register in either format.
+The skill says which format it chose and why, in one line. A client gets a formal register in either format. In
+`friendly`, the contact may be left implied when it is the sender.
 
 ## Options
 
@@ -63,12 +64,14 @@ An option you give wins over a `format` rule in `TAILORING.md`, and that rule wi
 ## Emphasis and links
 
 - **Bold** marks the owner, the deadline and the action (verb and object), at most once per sentence, field or
-  cell, never a whole sentence. In `friendly`, only the deadline and the action are bold.
+  cell, never a whole sentence. In `friendly`, only the deadline and the action are bold, and both may be in the
+  request sentence.
 - **Italic** marks the "done" condition, a caveat or a quoted term.
 - No capitals and no underline for emphasis.
 
 Every reference with a URL is a link, written as `<key> · <short title>`, for example
-[ACME-142 · Go-live runbook](https://example.com/acme/pull/142). The URL comes from the `issues` or `code` tool
+[ACME-142 · Go-live runbook](https://example.com/acme/pull/142); a pull request with no issue key is linked as
+`#<number> · <title>`. The URL comes from the `issues` or `code` tool
 declared in `TOOLS.md`, or from you; the skill never composes one by guess. A reference with no URL in reach, such
 as a register ID like `D-002`, stays plain text, and the skill names it in its report.
 
@@ -95,7 +98,7 @@ There are two cases:
   it, else `plain`.
 - **Pasted by hand** into Slack, Teams or another chat. The skill copies the `plain` rendering (`--to plain --copy`),
   not the `slack` one: links stay full URLs, which chats turn into links, and the emphasis is lost; the skill says
-  so.
+  so. With no clipboard, the plain text is printed in the conversation for you to copy.
 
 With no declared tool the skill hands the message over and says it was not sent.
 
