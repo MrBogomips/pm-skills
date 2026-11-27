@@ -1,18 +1,30 @@
-"""Renderers of a parsed message: Outlook-safe HTML, Slack syntax and plain text.
+#!/usr/bin/env python3
+"""Renders a message (the Markdown subset of `message_markdown`) to Outlook-safe HTML, Slack or plain text.
 
-Python 3 standard library only. The input is the block tuple of `message_markdown.parse`.
+Python 3 standard library only.
 
     render_html(blocks)   whole HTML document, inline styles only (no <style>, no classes)
     render_slack(blocks)  Slack mrkdwn: *bold*, _italic_, <url|text>
     render_plain(blocks)  text without markers: `text (url)` for links
+
+Usage:
+    message_render.py --to html|slack|plain [--in FILE] [--out FILE] [--copy]
+        reads the message from --in, or from stdin; writes the rendering to --out, or to stdout
+        (with --copy and no --out, nothing is printed but a one-line confirmation on stderr)
+        --copy  html: rich text on the clipboard with the plain rendering as its text twin; slack, plain: text
+    exit 0 ok, 1 invalid message, 2 usage or I/O error, 3 clipboard unavailable
 """
 from __future__ import annotations
 
+import argparse
 import html as htmllib
+import shutil
+import subprocess
+import sys
 from dataclasses import replace
-from typing import Callable, List, Tuple
+from typing import Callable, List, Optional, Tuple
 
-from message_markdown import Block, Heading, ListBlock, Paragraph, Spans, Table
+from message_markdown import Block, Heading, ListBlock, MessageError, Paragraph, Spans, Table, parse
 
 FONT = "font-family:Calibri,Arial,sans-serif;font-size:11pt;color:#1f1f1f"
 CELL = "border:1px solid #bfbfbf;padding:4px 8px;" + FONT
@@ -149,3 +161,128 @@ def render_slack(blocks: Tuple[Block, ...]) -> str:
 
 def render_plain(blocks: Tuple[Block, ...]) -> str:
     return _join(_text_block(b, _inline_plain, "-", False) for b in blocks)
+
+
+# Clipboard
+
+class ClipboardUnavailable(RuntimeError):
+    """No clipboard tool for this platform, or the tool failed."""
+
+
+MAC_RICH_SCRIPT = (
+    "on run argv\n"
+    "set the clipboard to {\u00abclass HTML\u00bb:\u00abdata HTML%s\u00bb, string:(item 1 of argv)}\n"
+    "end run"
+)
+LINUX_TOOLS = (
+    ("wl-copy", ["wl-copy"], ["wl-copy", "--type", "text/html"]),
+    ("xclip", ["xclip", "-selection", "clipboard"], ["xclip", "-selection", "clipboard", "-t", "text/html"]),
+)
+
+
+def _invoke(run, args: List[str], data: Optional[bytes] = None) -> None:
+    try:
+        done = run(args, input=data, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=False)
+    except OSError as exc:
+        raise ClipboardUnavailable("%s could not run: %s" % (args[0], exc))
+    if done.returncode != 0:
+        raise ClipboardUnavailable("%s exited with status %d" % (args[0], done.returncode))
+
+
+def _linux_tool(which, rich: bool) -> List[str]:
+    for name, text_cmd, rich_cmd in LINUX_TOOLS:
+        if which(name):
+            return list(rich_cmd if rich else text_cmd)
+    raise ClipboardUnavailable("no clipboard tool found (wl-copy or xclip)")
+
+
+def copy_rich(html: str, plain: str, platform: str = sys.platform, run=subprocess.run,
+              which=shutil.which) -> None:
+    """Put `html` on the clipboard as rich text; on macOS `plain` rides along as its text twin."""
+    if platform == "darwin":
+        if not which("osascript"):
+            raise ClipboardUnavailable("osascript not found")
+        script = MAC_RICH_SCRIPT % html.encode("utf-8").hex()
+        _invoke(run, ["osascript", "-e", script, plain])
+    elif platform.startswith("linux"):
+        _invoke(run, _linux_tool(which, True), html.encode("utf-8"))
+    else:
+        raise ClipboardUnavailable("no clipboard support on %s" % platform)
+
+
+def copy_text(text: str, platform: str = sys.platform, run=subprocess.run, which=shutil.which) -> None:
+    if platform == "darwin":
+        if not which("pbcopy"):
+            raise ClipboardUnavailable("pbcopy not found")
+        _invoke(run, ["pbcopy"], text.encode("utf-8"))
+    elif platform.startswith("linux"):
+        _invoke(run, _linux_tool(which, False), text.encode("utf-8"))
+    else:
+        raise ClipboardUnavailable("no clipboard support on %s" % platform)
+
+
+# Command line
+
+RENDERERS = {"html": render_html, "slack": render_slack, "plain": render_plain}
+
+
+def _parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(prog="message_render.py", description=__doc__.splitlines()[0])
+    parser.add_argument("--to", required=True, choices=sorted(RENDERERS))
+    parser.add_argument("--in", dest="source", help="message file (default: stdin)")
+    parser.add_argument("--out", help="output file (default: stdout)")
+    parser.add_argument("--copy", action="store_true", help="put the rendering on the clipboard")
+    return parser
+
+
+def _read(path: Optional[str]) -> str:
+    if path is None:
+        return sys.stdin.read()
+    with open(path, encoding="utf-8") as handle:
+        return handle.read()
+
+
+def _write(path: Optional[str], text: str) -> None:
+    if path is None:
+        sys.stdout.write(text)
+    else:
+        with open(path, "w", encoding="utf-8") as handle:
+            handle.write(text)
+
+
+def main(argv: Optional[List[str]] = None) -> int:
+    try:
+        args = _parser().parse_args(argv)
+    except SystemExit as exc:
+        return 0 if exc.code in (0, None) else 2
+    try:
+        blocks = parse(_read(args.source))
+    except MessageError as exc:
+        print("invalid message: %s" % exc, file=sys.stderr)
+        return 1
+    except (OSError, UnicodeError) as exc:
+        print("cannot read the message: %s" % exc, file=sys.stderr)
+        return 2
+    rendered = RENDERERS[args.to](blocks)
+    try:
+        if args.out or not args.copy:
+            _write(args.out, rendered)
+    except OSError as exc:
+        print("cannot write the output: %s" % exc, file=sys.stderr)
+        return 2
+    if not args.copy:
+        return 0
+    try:
+        if args.to == "html":
+            copy_rich(rendered, render_plain(blocks))
+        else:
+            copy_text(rendered)
+    except ClipboardUnavailable as exc:
+        print("clipboard unavailable: %s" % exc, file=sys.stderr)
+        return 3
+    print("copied to the clipboard (%s)" % args.to, file=sys.stderr)
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

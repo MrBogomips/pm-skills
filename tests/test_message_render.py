@@ -1,7 +1,12 @@
 """Tests of the message Markdown subset parser."""
 from __future__ import annotations
 
+import contextlib
+import io
+import os
+import tempfile
 import unittest
+from unittest import mock
 
 from _support import SCRIPTS  # noqa: F401  (puts shared/scripts on sys.path)
 
@@ -141,6 +146,94 @@ class RenderTest(unittest.TestCase):
         self.assertIn("- Ada L. — What: Review the go-live runbook; done when the PR is approved — By: 2026-11-30 — References: PR 42 · Go-live runbook (https://example.com/acme/pull/42)", out)
         self.assertNotIn("*", out)
         self.assertIn("1. Dry run: 2026-12-09", out)
+
+
+class _Done:
+    returncode = 0
+
+
+def _ok():
+    return _Done()
+
+
+def _run(argv, stdin_text=""):
+    out, err = io.StringIO(), io.StringIO()
+    with mock.patch("sys.stdin", io.StringIO(stdin_text)), \
+            contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
+        code = mr.main(argv)
+    return code, out.getvalue(), err.getvalue()
+
+
+class CliTest(unittest.TestCase):
+    def test_copy_rich_macos_passes_hex_and_plain_as_argument(self):
+        calls = []
+        mr.copy_rich("<b>è</b>", 'say "hi"', platform="darwin",
+                     run=lambda a, **k: calls.append((a, k)) or _ok(), which=lambda n: "/usr/bin/" + n)
+        args = calls[0][0]
+        self.assertEqual(args[0], "osascript")
+        self.assertIn("<b>è</b>".encode("utf-8").hex(), " ".join(args))
+        self.assertEqual(args[-1], 'say "hi"')
+        self.assertNotIn('say "hi"', args[2])
+
+    def test_copy_text_macos_uses_pbcopy_stdin(self):
+        calls = []
+        mr.copy_text("héllo", platform="darwin",
+                     run=lambda a, **k: calls.append((a, k)) or _ok(), which=lambda n: "/usr/bin/" + n)
+        self.assertEqual(calls[0][0], ["pbcopy"])
+        self.assertEqual(calls[0][1]["input"], "héllo".encode("utf-8"))
+
+    def test_copy_linux_picks_first_tool_found(self):
+        calls = []
+        run = lambda a, **k: calls.append((a, k)) or _ok()  # noqa: E731
+        mr.copy_rich("<b>x</b>", "x", platform="linux", run=run,
+                     which=lambda n: "/usr/bin/xclip" if n == "xclip" else None)
+        self.assertEqual(calls[0][0], ["xclip", "-selection", "clipboard", "-t", "text/html"])
+        mr.copy_text("x", platform="linux", run=run, which=lambda n: "/usr/bin/" + n)
+        self.assertEqual(calls[1][0], ["wl-copy"])
+
+    def test_copy_unavailable(self):
+        with self.assertRaises(mr.ClipboardUnavailable):
+            mr.copy_rich("<b>x</b>", "x", platform="linux", run=None, which=lambda n: None)
+        with self.assertRaises(mr.ClipboardUnavailable):
+            mr.copy_text("x", platform="win32", run=None, which=lambda n: None)
+
+    def test_copy_tool_failure_is_unavailable(self):
+        class Bad:
+            returncode = 1
+        with self.assertRaises(mr.ClipboardUnavailable):
+            mr.copy_text("x", platform="darwin", run=lambda a, **k: Bad(), which=lambda n: "/x")
+
+    def test_main_exit_codes(self):
+        self.assertEqual(_run(["--to", "plain"], "Hi **Ada**")[:2], (0, "Hi Ada\n"))
+        self.assertEqual(_run(["--to", "html"], "see [x](javascript:1)")[0], 1)
+        self.assertEqual(_run(["--to", "pdf"], "x")[0], 2)
+        self.assertEqual(_run(["--to", "plain", "--in", "/nonexistent/file"], "")[0], 2)
+
+    def test_main_copy_html_sends_plain_twin(self):
+        with mock.patch.object(mr, "copy_rich") as rich:
+            code, out, err = _run(["--to", "html", "--copy"], "Hi **Ada**")
+        self.assertEqual(code, 0)
+        self.assertEqual(out, "")
+        self.assertIn("clipboard", err)
+        html, plain = rich.call_args[0]
+        self.assertIn("<b>Ada</b>", html)
+        self.assertEqual(plain, "Hi Ada\n")
+
+    def test_main_copy_slack_uses_text(self):
+        with mock.patch.object(mr, "copy_text") as text:
+            code = _run(["--to", "slack", "--copy"], "Hi **Ada**")[0]
+        self.assertEqual(code, 0)
+        self.assertEqual(text.call_args[0][0], "Hi *Ada*\n")
+
+    def test_main_copy_unavailable_still_writes_out(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            target = os.path.join(tmp, "m.html")
+            with mock.patch.object(mr, "copy_rich", side_effect=mr.ClipboardUnavailable("no tool")):
+                code, _out, err = _run(["--to", "html", "--copy", "--out", target], "Hi **Ada**")
+            self.assertEqual(code, 3)
+            self.assertIn("clipboard", err)
+            with open(target, encoding="utf-8") as handle:
+                self.assertIn("<b>Ada</b>", handle.read())
 
 
 if __name__ == "__main__":
