@@ -74,8 +74,8 @@ with which references and whom to ask. It is sent only when the user says so.
    | by hand, Slack, Teams or another chat | `--to plain --copy`: links stay full URLs, which chats turn into links; say that the emphasis is lost |
 
    - To send, take the rendering from stdout, without `--copy`, to a tool with Purpose `messages`, Mode `write` and a
-     Scope that covers the destination; show what goes where (channel or recipients, subject, text) and send after
-     the user confirms. With no such tool, hand over and say it was not sent.
+     Scope that covers the destination; show exactly what goes where (channel or recipients, subject, text) and send
+     after the user confirms. With no such tool, hand over and say it was not sent.
    - Say when the clipboard was overwritten.
    - Exit 1 (a link not `http`, `https` or `mailto`, a table row not matching the header, an empty message; stderr
      names the line) follows only a change made after approval: fix it, show the draft again, then render; never
@@ -95,7 +95,7 @@ with which references and whom to ask. It is sent only when the user says so.
 
 ## Never
 
-- Never invent an owner, a deadline, a reference or a contact.
+- Never invent an owner, an ask or its "done" condition, a deadline, a reference or a contact.
 - Never write an email address, phone number or other personal contact into a register or any file in the
   project; in the message, use only addresses the user gives in the session.
 - Never mention the reason for someone's absence, or judge a person, in the message.
