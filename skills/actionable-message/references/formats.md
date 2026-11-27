@@ -51,9 +51,10 @@ start of a section title or a label, at most one each: 📌 requests, 📅 deadl
 
 ## Links
 
-Every reference with a URL is a link, in both formats: `[<key> · <short title>](<url>)`. The URL comes from the
-`issues` or `code` tool or from the user, never composed by guess. A reference with no URL in reach (a register ID
-such as `D-002`, a key that could not be checked) stays plain text and is named in the report.
+Every reference with a URL is a link, in both formats: `[<key> · <short title>](<url>)`, where the key is the issue
+key, or `#<number>` for a pull request that has none. The URL comes from the `issues` or `code` tool or from the user,
+never composed by guess. A reference with no URL in reach (a register ID such as `D-002`, a key that could not be
+checked) stays plain text and is named in the report.
 
 ## Channels
 
