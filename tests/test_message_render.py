@@ -6,6 +6,7 @@ import unittest
 from _support import SCRIPTS  # noqa: F401  (puts shared/scripts on sys.path)
 
 import message_markdown as mm
+import message_render as mr
 
 
 def _all_spans(block):
@@ -83,6 +84,44 @@ class ParseTest(unittest.TestCase):
         blocks = mm.parse("# One\n\n## Two\n\n### Three")
         self.assertEqual([b.level for b in blocks[:2]], [1, 2])
         self.assertIsInstance(blocks[2], mm.Paragraph)
+
+
+SAMPLE = ("## Requests\n\n| Who | What | By | References |\n|---|---|---|---|\n"
+          "| **Ada L.** | **Review the go-live runbook**; *done when the PR is approved* | **2026-11-30** | [PR 42 · Go-live runbook](https://example.com/acme/pull/42) |\n\n"
+          "R&D says a < b.\n\n1. Dry run: **2026-12-09**\n")
+
+
+class RenderTest(unittest.TestCase):
+    def test_html(self):
+        html = mr.render_html(mm.parse(SAMPLE))
+        self.assertIn('<a href="https://example.com/acme/pull/42">PR 42 · Go-live runbook</a>', html)
+        self.assertIn("<b>Ada L.</b>", html)
+        self.assertIn("<i>done when the PR is approved</i>", html)
+        self.assertIn("R&amp;D says a &lt; b.", html)
+        self.assertIn("border-collapse:collapse", html)
+        self.assertIn("<ol", html)
+        self.assertNotIn("<style", html)
+        self.assertNotIn("class=", html)
+        self.assertTrue(html.startswith("<html>"))
+
+    def test_html_escapes_href_and_text(self):
+        html = mr.render_html(mm.parse('[a "q" <b>](https://example.com/?x=1&y="2")'))
+        self.assertIn("&amp;y=", html)
+        self.assertNotIn("<b>]", html)
+        self.assertNotIn('"2"', html)
+
+    def test_slack(self):
+        out = mr.render_slack(mm.parse(SAMPLE))
+        self.assertIn("*Requests*", out)
+        self.assertIn("• *Ada L.* — What: *Review the go-live runbook*; _done when the PR is approved_ — By: *2026-11-30* — References: <https://example.com/acme/pull/42|PR 42 · Go-live runbook>", out)
+        self.assertIn("R&D says a < b.", out)
+        self.assertNotIn("|---", out)
+
+    def test_plain(self):
+        out = mr.render_plain(mm.parse(SAMPLE))
+        self.assertIn("- Ada L. — What: Review the go-live runbook; done when the PR is approved — By: 2026-11-30 — References: PR 42 · Go-live runbook (https://example.com/acme/pull/42)", out)
+        self.assertNotIn("*", out)
+        self.assertIn("1. Dry run: 2026-12-09", out)
 
 
 if __name__ == "__main__":
