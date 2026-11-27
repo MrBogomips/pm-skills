@@ -3,10 +3,9 @@
 Read when drafting. The draft is Markdown limited to the subset that
 `${CLAUDE_PLUGIN_ROOT}/shared/scripts/message_render.py` accepts: `#` and `##` headings, paragraphs, one-level `- `
 and `1. ` lists, pipe tables, `**bold**`, `*italic*` and `[text](url)` with `http`, `https` or `mailto` only.
-Anything else (nested lists, quotes, code, images, underline, HTML) is out: the script prints it as literal text.
-It stops with exit 1 only for a link that is not `http`, `https` or `mailto`, a table row whose cells do not match
-the header, or an empty message. Consecutive lines are joined into one paragraph, a sign-off too: a blank line separates paragraphs. Subject and
-recipients stay outside the draft.
+Anything else (nested lists, quotes, code, images, underline, HTML) is out: the script prints it as literal text
+(a code fence's lines are still read as Markdown: the draft holds none). Consecutive lines are joined into one
+paragraph, a sign-off too: a blank line separates paragraphs. Subject and recipients stay outside the draft.
 
 ## Choosing the format
 
@@ -15,7 +14,7 @@ An option the user gives, as an argument or in words, wins; then a `format` rule
 - **friendly** for a colleague on the team, with one request or a short, simple content;
 - **strong** for several owners, a client, a steering committee or a formal reminder.
 
-Say which format was chosen and why, in one line. The options: `+emoji` (below) and `-formatting`, which drops the emphasis in both formats: strong as below,
+The options: `+emoji` (below) and `-formatting`, which drops the emphasis in both formats: strong as below,
 friendly with no bold. References with a URL stay links in both.
 
 ## Strong
@@ -26,8 +25,9 @@ Greeting; section **Requests**; section **Context**; closing with the contact.
   *References*, *Contact*, in this order. The labels are plain text; the values carry the emphasis below.
 - **Three or more**: a table with the columns Who, What (with "done when" in italic after it), By, References, and
   the contact once below it.
-- **`-formatting`**: the same sections and labels as plain lines, with no bold, italic, table or list markers; each
-  field is a paragraph of its own, so separate the lines with blank lines. Links stay links.
+- **`-formatting`**: section titles stay `##` headings; everything else loses its markers (no bold, italic, table
+  or list): labels and fields are plain lines, each a paragraph of its own, separated by blank lines. Links stay
+  links.
 
 ## Friendly
 
@@ -41,8 +41,7 @@ when it is the sender.
 - **Italic**: the "done" condition, a caveat, a quoted term.
 - At most one bold per sentence (in a list or table, per field or cell); never a whole sentence; no capitals, no
   underline. In the context, only the key fact of a paragraph.
-- **Friendly**: bold only, on the deadline and the action; these two may both be bold in the request sentence.
-  Everywhere else, at most one bold per sentence stands.
+- **Friendly**: bold only, on the deadline and the action, which may share the request sentence.
 
 ## Emoji
 
@@ -56,11 +55,6 @@ Every reference with a URL is a link, in both formats: `[<key> · <short title>]
 key, or `#<number>` for a pull request that has none. The URL comes from the `issues` or `code` tool or from the user,
 never composed by guess. A reference with no URL in reach (a register ID such as `D-002`, a key that could not be
 checked) stays plain text and is named in the report.
-
-## Channels
-
-The draft is the same Markdown whatever the destination; `SKILL.md`, step 8, renders it for the channel. A chat
-pasted by hand gets the `plain` rendering: emphasis is lost there, links stay full URLs.
 
 ## Examples
 

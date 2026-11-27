@@ -52,7 +52,7 @@ Options go after the skill name as arguments, or in your words ("make it strong"
 |---|---|
 | `strong`, `friendly` | the format, whatever the audience |
 | `+emoji` | marker emoji at the start of section titles and labels (strong) or at most one at the end of a sentence (friendly); never in a formal message to a client |
-| `-formatting` | no emphasis: strong keeps its sections and labels as plain lines, with no bold, italic, table or list markers; friendly loses its bold; links stay links in both |
+| `-formatting` | no emphasis: in strong, section titles stay and the labels become plain lines, with no bold, italic, table or list markers; friendly loses its bold; links stay links in both |
 
 ```text
 /pm-skills:actionable-message strong +emoji remind Ada, Bo and Cy of their go-live tasks for 2026-12-05
@@ -71,15 +71,15 @@ An option you give wins over a `format` rule in `TAILORING.md`, and that rule wi
 
 Every reference with a URL is a link, written as `<key> · <short title>`, for example
 [ACME-142 · Go-live runbook](https://example.com/acme/pull/142); a pull request with no issue key is linked as
-`#<number> · <title>`. The URL comes from the `issues` or `code` tool
-declared in `TOOLS.md`, or from you; the skill never composes one by guess. A reference with no URL in reach, such
-as a register ID like `D-002`, stays plain text, and the skill names it in its report.
+`#<number> · <title>`. The URL comes from the `issues` or `code` tool declared in `TOOLS.md`, or from you; the
+skill never composes one by guess. A reference with no URL in reach, such as a register ID like `D-002`, stays
+plain text, and the skill names it in its report.
 
 ## Pasting into an email client
 
-Ask "give it to me for Outlook" (or Mail). Once you approve the draft, the skill renders it to HTML with
-`shared/scripts/message_render.py --to html --copy`, puts it on the clipboard, says the clipboard was overwritten and
-gives you the subject and the recipients apart, as plain text, to fill in the client's own fields.
+Ask "give it to me for Outlook" (or Mail). Once you approve the draft, the plugin renders it and puts it on the
+clipboard; the skill says the clipboard was overwritten and gives you the subject and the recipients apart, as plain
+text, to fill in the client's own fields.
 
 Pasted into Outlook on the web, Outlook for Mac or Mail, these survive: tables, bold, italic, links, one-level
 lists and emoji. The font is the client's: it applies its own to the pasted message.
@@ -96,9 +96,9 @@ There are two cases:
   sends after you confirm. A Slack tool gets the `slack` rendering, with Slack's own bold, italic and links; another
   chat tool gets what its description says it accepts, `plain` when in doubt; an email tool gets HTML when it takes
   it, else `plain`.
-- **Pasted by hand** into Slack, Teams or another chat. The skill copies the `plain` rendering (`--to plain --copy`),
-  not the `slack` one: links stay full URLs, which chats turn into links, and the emphasis is lost; the skill says
-  so. With no clipboard, the plain text is printed in the conversation for you to copy.
+- **Pasted by hand** into Slack, Teams or another chat. The skill copies the `plain` rendering, not the `slack`
+  one: links stay full URLs, which chats turn into links, and the emphasis is lost; the skill says so. With no
+  clipboard, the plain text is printed in the conversation for you to copy.
 
 With no declared tool the skill hands the message over and says it was not sent.
 

@@ -73,8 +73,10 @@ A project can set the default format per audience, and turn emoji on, with a `fo
 - Writes no project file: the message is a Markdown draft in the conversation, with references as links. Saved on
   request where you say; a copy inside the project leaves out any address you gave.
 - Once you approve the draft, renders it: HTML on the clipboard for an email client (Outlook, Mail), plain text for
-  a chat pasted by hand. With no clipboard, an HTML file in the temporary folder, to open in a browser and copy.
-- Sends only through a tool declared with Purpose `messages` and Mode `write`, after you confirm.
+  a chat pasted by hand. With no clipboard, an HTML file in the temporary folder for an email client, to open in a
+  browser and copy; for a chat, the text printed in the conversation.
+- Sends only through a tool declared with Purpose `messages`, Mode `write` and a Scope that covers the destination,
+  after you confirm.
 
 ## Requirements
 
