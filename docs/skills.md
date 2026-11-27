@@ -77,7 +77,7 @@ a register are named in [Registers and their keepers](registers-and-keepers.md).
 | `stakeholder-register` | keep the stakeholder register, with interest, influence, engagement and approach |
 | `communication-plan` | draft the communication plan: who receives what, when and how |
 | `status-report` | draft the status report for the reporting period, outcomes first |
-| `actionable-message` | write an email or chat message where every request has an owner, a deadline and references |
+| `actionable-message` | write an email or chat message where every request has an owner, a deadline and references, in a strong or friendly format, ready to paste into an email client or a chat (see [Messages](messages.md)) |
 | `publish-deliverable` | render a Markdown document into Word, PDF, slides, email or an artifact, and send it on request |
 
 ## Meetings, actions and incoming material

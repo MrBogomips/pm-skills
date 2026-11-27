@@ -27,6 +27,7 @@ to an area: the plugin as a whole, or one of the seven performance domains of th
 | [Meetings](meetings.md) | operational | How do I prepare, record and distribute a meeting? |
 | [Actions and the PM backlog](actions-and-backlog.md) | operational | How do I track what I have to do? |
 | [The inbox](inbox.md) | operational | How do I sort what lands in the project? |
+| [Messages people can act on](messages.md) | operational | How do I write a request people act on without asking back? |
 
 ## Where to start
 
