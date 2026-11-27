@@ -22,6 +22,7 @@ import shutil
 import subprocess
 import sys
 from dataclasses import replace
+from itertools import groupby
 from typing import Callable, List, Optional, Tuple
 
 from message_markdown import Block, Heading, ListBlock, MessageError, Paragraph, Spans, Table, parse
@@ -93,17 +94,23 @@ def _unbold(spans: Spans) -> Spans:
     return tuple(replace(sp, bold=False) for sp in spans)
 
 
+def _slack_span(span) -> str:
+    piece = _slack_escape(span.text)
+    if span.href is not None:
+        piece = "<%s|%s>" % (span.href.replace("|", "%7C").replace(">", "%3E"), piece)
+    return piece
+
+
 def _inline_slack(spans: Spans) -> str:
+    """Wrap each run of bold spans once in `*…*` and each run of italic spans inside it once in `_…_`."""
     out = []
-    for span in spans:
-        piece = _slack_escape(span.text)
-        if span.href is not None:
-            piece = "<%s|%s>" % (span.href.replace("|", "%7C").replace(">", "%3E"), piece)
-        if span.italic:
-            piece = "_%s_" % piece
-        if span.bold:
-            piece = "*%s*" % piece
-        out.append(piece)
+    for bold, bold_run in groupby(spans, key=lambda sp: sp.bold):
+        inner = []
+        for italic, italic_run in groupby(bold_run, key=lambda sp: sp.italic):
+            text = "".join(_slack_span(sp) for sp in italic_run)
+            inner.append("_%s_" % text if italic else text)
+        text = "".join(inner)
+        out.append("*%s*" % text if bold else text)
     return "".join(out)
 
 

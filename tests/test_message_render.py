@@ -4,11 +4,12 @@ from __future__ import annotations
 import contextlib
 import io
 import os
+import re
 import tempfile
 import unittest
 from unittest import mock
 
-from _support import SCRIPTS  # noqa: F401  (puts shared/scripts on sys.path)
+from _support import REPO, SCRIPTS  # noqa: F401  (puts shared/scripts on sys.path)
 
 import message_markdown as mm
 import message_render as mr
@@ -134,6 +135,26 @@ class RenderTest(unittest.TestCase):
         self.assertIn("• a — B: b", out)
         self.assertNotIn("**", out)
 
+    def test_slack_bold_spanning_a_link_is_one_pair(self):
+        out = mr.render_slack(mm.parse("**review [ACME-142 · Runbook](https://example.com/i/142) today**"))
+        self.assertEqual(out, "*review <https://example.com/i/142|ACME-142 · Runbook> today*\n")
+
+    def test_slack_bold_spanning_an_italic_is_one_pair(self):
+        out = mr.render_slack(mm.parse("**done *only* when approved**"))
+        self.assertEqual(out, "*done _only_ when approved*\n")
+
+    def test_slack_adjacent_bold_spans_merge(self):
+        self.assertEqual(mr.render_slack(mm.parse("**a****b**")), "*ab*\n")
+
+    def test_formats_examples_render(self):
+        text = (REPO / "skills" / "actionable-message" / "references" / "formats.md").read_text(encoding="utf-8")
+        examples = re.findall(r"^```markdown\n(.*?)^```$", text, flags=re.S | re.M)
+        self.assertGreaterEqual(len(examples), 3)
+        for example in examples:
+            blocks = mm.parse(example)
+            for render in (mr.render_html, mr.render_slack, mr.render_plain):
+                self.assertTrue(render(blocks))
+
     def test_empty_cells_and_empty_tables(self):
         text = "| A | B |\n|---|---|\n|  | **x** |\n\n| H |\n|---|\n\ntail"
         for out, bullet in ((mr.render_slack(mm.parse(text)), "•"), (mr.render_plain(mm.parse(text)), "-")):
@@ -231,6 +252,13 @@ class CliTest(unittest.TestCase):
             code = _run(["--to", "slack", "--copy"], "Hi **Ada**")[0]
         self.assertEqual(code, 0)
         self.assertEqual(text.call_args[0][0], "Hi *Ada*\n")
+
+    def test_main_copy_plain_uses_text_and_prints_nothing(self):
+        with mock.patch.object(mr, "copy_text") as text:
+            code, out, _err = _run(["--to", "plain", "--copy"], "Hi **Ada**")
+        self.assertEqual(code, 0)
+        self.assertEqual(out, "")
+        text.assert_called_once_with("Hi Ada\n")
 
     def test_main_copy_unavailable_still_writes_out(self):
         with tempfile.TemporaryDirectory() as tmp:
